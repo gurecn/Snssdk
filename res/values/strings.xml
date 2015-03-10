@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">有内涵</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_contribute">投稿</string>
+    <string name="title_activity_snssdk">详情</string>
+    <string name="word">文章</string>
+    <string name="video">视频</string>
+    <string name="image">图片</string>
+    <string name="title_activity_person">PersonActivity</string>
+    <string name="title_activity_contribute">ContributeActivity</string>
+
+</resources>

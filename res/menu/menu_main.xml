@@ -1,0 +1,26 @@
+<menu xmlns:android = "http://schemas.android.com/apk/res/android">
+	<item android:id = "@+id/menu_word"
+	      android:title = "@string/word"
+	      android:showAsAction = "always"
+	      android:icon="@drawable/document_main_full"
+	/>
+	<item android:id = "@+id/menu_image"
+	      android:title = "@string/image"
+	      android:showAsAction = "always"
+	      android:icon="@drawable/camera_main_one"
+			/>
+	<item android:id = "@+id/menu_video"
+	      android:title = "@string/video"
+	      android:showAsAction = "always"
+	      android:icon="@drawable/video_main_one"
+			/>
+	<item android:id = "@+id/menu_fing"
+	      android:title = "发现"
+	      android:showAsAction = "ifRoom"
+
+			/>
+	<item android:id = "@+id/menu_other"
+	      android:title = "其他"
+	      android:showAsAction = "ifRoom"
+			/>
+</menu>

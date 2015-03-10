@@ -1,0 +1,163 @@
+package com.qianfeng.gl4study.snssdk.activity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.qianfeng.gl4study.snssdk.R;
+import com.qianfeng.gl4study.snssdk.view.MyListView;
+import com.qianfeng.gl4study.snssdk.adapter.DiscussListAdapter;
+import com.qianfeng.gl4study.snssdk.model.Discuss;
+import com.qianfeng.gl4study.snssdk.model.Snssdk;
+import com.qianfeng.gl4study.snssdk.tasks.SnssdkTask;
+import com.qianfeng.gl4study.snssdk.tasks.TaskProcessor;
+import com.qianfeng.gl4study.snssdk.utils.FileCache;
+import com.qianfeng.gl4study.snssdk.utils.ImageCache;
+import com.qianfeng.gl4study.snssdk.utils.ImageLoader;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.LinkedList;
+
+public class SnssdkInfoActivity extends Activity implements TaskProcessor {
+
+
+	public static final String DISCUSS_URL = "http://isub.snssdk.com/2/data/get_essay_comments/?count=10&offset=20&iid=2337593504&device_id=2757969807&ac=wifi&channel=wandoujia&aid=7&app_name=joke_essay&version_code=302&device_platform=android&device_type=KFTT&os_api=15&os_version=4.0.3&openudid=b90ca6a3a19a78d6&group_id=";
+	private LinkedList<Discuss> dataFresh;
+	private LinkedList<Discuss> dataTop;
+	private DiscussListAdapter adapterHot;
+	private MyListView recyclerViewHot;
+	private SnssdkTask discussTask;
+	private MyListView recyclerViewFresh;
+	private DiscussListAdapter adapterFresh;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_snssdk_info);
+		Intent intent = getIntent();
+		Serializable serializableExtra = intent.getSerializableExtra("snssdk");
+		dataFresh = new LinkedList<Discuss>();
+		dataTop = new LinkedList<Discuss>();
+		recyclerViewHot = (MyListView) findViewById(R.id.list_view_hot_discuss);
+		recyclerViewFresh = (MyListView) findViewById(R.id.list_view_fresh_discuss);
+
+		if(null!=serializableExtra&&serializableExtra instanceof Snssdk){
+			Snssdk snssdk = (Snssdk)serializableExtra;
+			displaySnssdk(snssdk);
+			displayDiscuss(snssdk);
+		}
+	}
+
+	//显示评论信息
+	private void displayDiscuss(Snssdk snssdk){
+		discussTask = new SnssdkTask(this);
+		String url = DISCUSS_URL;
+		discussTask.execute(url+snssdk.getGroupId(),"1");
+		adapterHot = new DiscussListAdapter(this, dataFresh);
+		adapterFresh = new DiscussListAdapter(this, dataTop);
+		recyclerViewHot.setAdapter(adapterHot);
+		recyclerViewFresh.setAdapter(adapterFresh);
+		Log.d("SnssdkInfoActivity","displayDiscuss");
+	}
+
+
+	//显示段子信息
+	private void displaySnssdk(Snssdk snssdk){
+
+		TextView itemWord = (TextView) findViewById(R.id.item_fragment_word);
+		//VideoView itemVideo = (VideoView) findViewById(R.id.item_fragment_video);
+		ImageView itemImage = (ImageView) findViewById(R.id.item_fragment_image);
+		ImageView itemIconUser = (ImageView) findViewById(R.id.item_fragment_user_icon);
+		TextView itemUserName = (TextView) findViewById(R.id.item_fragment_user_name);
+		loaderImage(itemIconUser,snssdk.getAuthorInformation().getAvatarUrl());
+		itemUserName.setText(snssdk.getAuthorInformation().getName());
+
+		Log.d("SnssdkInfoActivity","displaySnssdk");
+
+		int snssdkType = snssdk.getSnssdkType();
+		if(snssdkType == 1){
+			String content = snssdk.getContent();
+			if(null!=content) {
+				itemWord.setText(content);
+			}
+		//	itemVideo.setVisibility(View.INVISIBLE);
+			itemImage.setVisibility(View.INVISIBLE);
+		}else if(snssdkType == 2){
+			String content = snssdk.getContent();
+			if(null!=content) {
+				itemWord.setText(content);
+			}
+			loaderImage(itemImage,snssdk.getImageUrl());
+	//		itemVideo.setVisibility(View.GONE);
+		}else if(snssdkType == 3){
+			//	itemVideo
+		}
+	}
+
+	//图片段子下载
+	private void loaderImage(ImageView userImage,String avatarUrl){
+		userImage.setTag(avatarUrl);
+		ImageCache imageCache = ImageCache.getInstance();
+		Bitmap bitmap = imageCache.getImage(avatarUrl);
+		if(bitmap!=null){
+			userImage.setImageBitmap(bitmap);
+		}else {
+			FileCache fileCache = FileCache.getInstance();
+			byte[] bytes = fileCache.getContent(avatarUrl);
+			if(bytes!=null&&bytes.length>0){
+				Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+				userImage.setImageBitmap(bmp);
+				imageCache.putImage(avatarUrl,bmp);
+			}else {
+				ImageLoader imageLoader = new ImageLoader(userImage);
+				imageLoader.execute(avatarUrl);
+			}
+		}
+	}
+
+	@Override
+	public void processResult(JSONObject result, String flag) {
+
+		Log.d("SnssdkInfoActivity","processResult");
+
+		if(result!=null){      //评论列表
+			try {
+				String resultFlag = result.getString("message");
+				if("success".equals(resultFlag)){
+					JSONObject dataObject = result.getJSONObject("data");
+					//int tip = dataObject.getInt("total_number");
+					JSONArray dataJSONArray = dataObject.getJSONArray("top_comments");
+					int type = Integer.parseInt(flag);
+					for (int i = 0; i < dataJSONArray.length(); i++) {
+						JSONObject jsonObject = dataJSONArray.getJSONObject(i);
+						Discuss discuss = new Discuss();
+						discuss.parseInformation(jsonObject, type);
+						dataTop.add(discuss);
+					}
+					//最热评论数据添加完成，更新List
+					adapterHot.notifyDataSetChanged();
+					dataJSONArray = dataObject.getJSONArray("recent_comments");
+					for (int i = 0; i < dataJSONArray.length(); i++) {
+						JSONObject jsonObject = dataJSONArray.getJSONObject(i);
+						Discuss discuss = new Discuss();
+						discuss.parseInformation(jsonObject, type);
+						dataFresh.add(discuss);
+					}
+					//最新评论数据添加完成，更新List
+					adapterFresh.notifyDataSetChanged();
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}

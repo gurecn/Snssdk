@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              android:orientation = "vertical"
+              android:layout_width = "match_parent"
+              android:layout_height = "wrap_content"
+              android:layout_marginBottom="10dp"
+              android:background="@drawable/ic_item_bg"
+        >
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            >
+        <ImageView
+                android:id="@+id/item_fragment_user_icon"
+                android:layout_width = "0dp"
+                android:layout_height = "40dp"
+                android:src="@drawable/ic_app"
+                android:layout_weight="1"
+                />
+        <TextView
+                android:id="@+id/item_fragment_user_name"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="小张有内涵"
+                android:textSize="20sp"
+                android:layout_weight="4"
+                android:paddingLeft="10dp"
+                />
+
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/item_fragment_common"
+            android:orientation="vertical"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            >
+        <TextView
+                android:id="@+id/item_fragment_word"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="段子"
+                />
+        <ImageView
+                android:id="@+id/item_fragment_image"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:scaleType="centerInside"
+                />
+       <!-- <VideoView
+                android:id="@+id/item_fragment_video"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                />-->
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:background="@drawable/ic_item_bg"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+
+        <!--赞-->
+        <LinearLayout
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:src="@drawable/ic_item_good"
+                    />
+            <TextView
+                android:id="@+id/item_fragment_bar_good"
+                android:layout_width = "wrap_content"
+                android:layout_height = "match_parent"
+                android:background="@drawable/ic_item_bg"
+                android:text="12万"
+                />
+
+        </LinearLayout>
+        <!--踩-->
+        <LinearLayout
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:src="@drawable/ic_item_bad"
+                    />
+            <TextView
+                    android:id="@+id/item_fragment_bar_bad"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:background="@drawable/ic_item_bg"
+                    android:text="12万"
+                    />
+
+        </LinearLayout>
+        <!--热-->
+        <LinearLayout
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:src="@drawable/id_item_hot"
+                    />
+            <TextView
+                    android:id="@+id/item_fragment_bar_hot"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:background="@drawable/ic_item_bg"
+                    android:text="12万"
+                    />
+
+        </LinearLayout>
+
+        <!--转-->
+        <LinearLayout
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:src="@drawable/ic_item_send"
+                    />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

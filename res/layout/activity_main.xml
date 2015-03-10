@@ -1,0 +1,128 @@
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+                android:layout_width = "match_parent"
+                android:layout_height = "match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/main_bg"
+               >
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:background="@drawable/ic_main_bg_top"
+            android:gravity="center"
+            >
+        <ImageButton
+                android:id="@+id/ib_user_icon"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:paddingLeft = "@dimen/activity_horizontal_margin"
+                android:paddingRight = "@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_main_default_avatar"
+                android:background="@drawable/ic_main_bg_top"
+                />
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width = "wrap_content"
+                android:layout_height = "match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/ic_main_bg_top"
+                >
+            <TextView
+                    android:id="@+id/txt_main_level"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:textSize="20sp"
+                    android:text="推荐"
+                    android:textColor="#000"
+                    />
+            <ImageView
+                    android:id="@+id/img_main_level"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:src="@drawable/ic_main_down_arrow_titlebar"
+                    />
+        </LinearLayout>
+        <ImageButton
+                android:id="@+id/ib_push_contribute"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:paddingLeft = "@dimen/activity_horizontal_margin"
+                android:paddingRight = "@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_main_publish"
+                android:background="@drawable/ic_main_bg_top"
+                />
+
+    </LinearLayout>
+    <com.qianfeng.gl4study.snssdk.view.MyListView
+            android:id="@+id/recycle_view"
+            android:layout_width = "match_parent"
+            android:layout_height = "0dp"
+            android:background="@drawable/main_bg"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="insideOverlay"
+
+            />
+
+<!--
+   <LinearLayout
+		   android:orientation="horizontal"
+		   android:layout_width = "match_parent"
+		   android:layout_height = "wrap_content"
+           android:background="@drawable/main_rg_bg"
+		   android:gravity="center"
+		   >
+	   <ImageButton
+			   android:id="@+id/ib_word"
+			   android:layout_width = "wrap_content"
+			   android:layout_height = "40dp"
+			   android:textSize="25sp"
+			   android:layout_weight="1"
+			   android:gravity="center"
+			   android:button="@null"
+               android:src="@drawable/document_main_full"
+               android:background="@drawable/main_rg_bg"
+               android:scaleType="fitCenter"
+			   />
+	   <ImageButton
+			   android:id="@+id/ib_image"
+			   android:layout_width = "wrap_content"
+			   android:layout_height = "40dp"
+			   android:textSize="25sp"
+			   android:layout_weight="1"
+			   android:gravity="center"
+			   android:button="@null"
+               android:src="@drawable/camera_main_one"
+               android:background="@drawable/main_rg_bg"
+               android:scaleType="fitCenter"
+			   />
+	   <ImageButton
+			   android:id="@+id/ib_video"
+			   android:layout_width = "wrap_content"
+			   android:layout_height = "40dp"
+			   android:textSize="25sp"
+			   android:layout_weight="1"
+			   android:gravity="center"
+			   android:button="@null"
+               android:src="@drawable/video_main_one"
+               android:background="@drawable/main_rg_bg"
+               android:scaleType="fitCenter"
+			   />
+       <ImageButton
+               android:id="@+id/ib_more"
+               android:layout_width = "wrap_content"
+               android:layout_height = "40dp"
+               android:textSize="25sp"
+               android:layout_weight="1"
+               android:gravity="center"
+               android:button="@null"
+               android:src="@drawable/chat_main_one"
+               android:background="@drawable/main_rg_bg"
+               android:scaleType="fitCenter"
+               />
+   </LinearLayout>
+-->
+
+</LinearLayout>
+

@@ -1,0 +1,30 @@
+# Lines that start with '#' are comments.
+
+# IntelliJ IDEA Project files
+
+.gradle
+.idea
+*.iml
+*.ipr
+*.iws
+out/
+build/
+
+# Eclipse Project files
+.classpath
+.project
+.settings/
+
+bin/
+gen/
+local.properties
+
+.DS_Store
+Thumbs.db
+
+*.bak
+*.tem
+*.temp
+#.swp
+*.*~
+~*.*
