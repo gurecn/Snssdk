@@ -1,57 +1,17 @@
 <ScrollView
 	    xmlns:android = "http://schemas.android.com/apk/res/android"
+	    android:id="@+id/snssdk_info_scroll_view"
         android:layout_width = "match_parent"
-        android:layout_height = "match_parent"
+        android:layout_height = "wrap_content"
         android:orientation="vertical"
         android:paddingLeft = "@dimen/activity_horizontal_margin"
         android:paddingRight = "@dimen/activity_horizontal_margin"
 	    android:background="@drawable/main_bg"
     >
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width = "match_parent"
-            android:layout_height = "match_parent"
-            android:background="@drawable/main_bg"
-            >
-	    <include
-			    layout="@layout/item_fragment_word"/>
-	    <TextView
-			    android:id="@+id/txt_hot_discuss"
-			    android:layout_width = "match_parent"
-			    android:layout_height = "wrap_content"
-			    android:text="热门评论(4)"
-			    android:textSize="17sp"
-			    android:textColor="#000"
-	            android:layout_marginTop="20dp"
-	            android:layout_marginBottom="10dp"
-			    />
-
-	    <com.qianfeng.gl4study.snssdk.view.MyListView
-				android:id="@+id/list_view_hot_discuss"
-				android:layout_width = "match_parent"
-				android:layout_height = "wrap_content"
-	            android:background="#FFF"
-	            android:dividerHeight="1dp"
-				/>
-		<TextView
-				android:id="@+id/txt_fresscuss"
-				android:layout_width = "match_parent"
-				android:layout_height = "wrap_content"
-				android:text="新鲜评论"
-				android:textSize="17sp"
-				android:textColor="#000"
-				android:layout_marginTop="20dp"
-				android:layout_marginBottom="10dp"
-				/>
-
-		<com.qianfeng.gl4study.snssdk.view.MyListView
-				android:id="@+id/list_view_fresh_discuss"
-				android:layout_width = "match_parent"
-				android:layout_height = "wrap_content"
-				android:background="#FFF"
-		        android:dividerHeight="3dp"
-
-				/>
-    </LinearLayout>
+	<com.qianfeng.gl4study.snssdk.view.SnssdkInfViewPager
+			android:id="@+id/snssdk_info_view_pager"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			/>
 </ScrollView>
 

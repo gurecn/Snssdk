@@ -43,5 +43,6 @@
 				android:name="com.qianfeng.gl4study.snssdk.activity.ContributeActivity"
 				android:label="@string/title_activity_contribute" >
 		</activity>
+		<activity android:name = ".fragment.SnssdkInfoFragment"/>
 	</application>
 </manifest>

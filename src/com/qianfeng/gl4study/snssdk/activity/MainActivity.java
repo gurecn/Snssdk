@@ -189,12 +189,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			Log.d("MainActivity","onClick=============");
 			switch (id){
 				case R.id.item_fragment_common://点击内容跳转到详情页面，文字，图片，视频
-					Intent intent = new Intent(this, SnssdkInfoActivity.class);
-					if(position>=0) {
-						intent.putExtra("snssdk", snssdks.get(position));
-					}
-					startActivity(intent);
-					Log.d("MainActivity","item_fragment_word");
+					skipToInfo(position);
 					break;
 				case R.id.item_fragment_bar_good_ll://点击顶
 					if(snssdk.getUserRepin()==1){
@@ -231,7 +226,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 					break;
 				//点击头像
 				case R.id.ib_user_icon:
-					intent = new Intent(this, PersonActivity.class);
+					Intent intent = new Intent(this, PersonActivity.class);
 					startActivity(intent);
 					break;
 
@@ -242,6 +237,16 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 					break;
 			}
 		}
+	}
+
+	private void skipToInfo(int position){
+		Intent intent = new Intent(this, SnssdkInfoActivity.class);
+		if(position>=0) {
+			intent.putExtra("position",position);
+			intent.putExtra("snssdk",snssdks.get(position));
+		}
+		startActivity(intent);
+		Log.d("MainActivity","item_fragment_word");
 	}
 
 	/**
