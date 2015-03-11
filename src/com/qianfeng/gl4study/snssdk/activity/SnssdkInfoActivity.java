@@ -168,4 +168,7 @@ public class SnssdkInfoActivity extends Activity implements TaskProcessor {
 			}
 		}
 	}
+
+
+
 }

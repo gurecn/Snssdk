@@ -21,7 +21,7 @@
             android:layout_alignTop = "@+id/ig_discuss_user_icon"
             android:layout_toRightOf="@+id/ig_discuss_user_icon"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:text = "小张有内涵"
             />
 
@@ -42,6 +42,7 @@
             android:layout_height = "wrap_content"
             android:text = "4489"
             android:textSize="15sp"
+            android:textColor="#000"
             android:layout_alignTop = "@+id/txt_discuss_user_name"
             android:layout_alignParentRight = "true"
             android:layout_marginTop="10dp"
@@ -54,8 +55,8 @@
             android:id = "@+id/imageView"
             android:layout_alignTop = "@+id/txt_discuss_good"
             android:layout_toLeftOf="@+id/txt_discuss_good"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_item_good"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_bar_digg_normal"
             />
 
     <TextView
@@ -64,10 +65,12 @@
             android:layout_height = "wrap_content"
             android:text = "评论精辟评论精辟评论精辟评论精辟评论精辟评论精辟评论精辟评论精辟评论精辟评论精辟评论精辟"
             android:layout_marginTop = "10dp"
-            android:textSize="20sp"
+            android:textSize="17sp"
+            android:textColor="#000"
             android:layout_alignLeft = "@+id/txt_discuss_time"
             android:layout_below="@id/txt_discuss_time"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             />
 
 </RelativeLayout>
