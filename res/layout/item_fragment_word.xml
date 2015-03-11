@@ -3,9 +3,9 @@
               android:orientation = "vertical"
               android:layout_width = "match_parent"
               android:layout_height = "wrap_content"
-              android:layout_marginBottom="10dp"
-              android:background="@drawable/ic_item_bg"
+              android:background="#FFF"
         >
+    <!--Title-->
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width = "match_parent"
@@ -26,24 +26,28 @@
                 android:layout_height = "wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="小张有内涵"
-                android:textSize="20sp"
+                android:textColor="#000"
+                android:textSize="14sp"
                 android:layout_weight="4"
                 android:paddingLeft="10dp"
                 />
 
     </LinearLayout>
+    <!--段子内容-->
     <LinearLayout
             android:id="@+id/item_fragment_common"
             android:orientation="vertical"
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             >
         <TextView
                 android:id="@+id/item_fragment_word"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:textSize="17sp"
+                android:textColor="#000"
                 android:text="段子"
                 />
         <ImageView
@@ -58,75 +62,77 @@
                 android:layout_height = "wrap_content"
                 />-->
     </LinearLayout>
-
+    <!--评论条-->
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:background="@drawable/ic_item_bg"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             >
 
         <!--赞-->
         <LinearLayout
+                android:id="@+id/item_fragment_bar_good_ll"
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 >
             <ImageView
+                    android:id="@+id/item_fragment_bar_good_img"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
-                    android:src="@drawable/ic_item_good"
+                    android:src="@drawable/ic_bar_digg_normal"
                     />
             <TextView
                 android:id="@+id/item_fragment_bar_good"
                 android:layout_width = "wrap_content"
                 android:layout_height = "match_parent"
-                android:background="@drawable/ic_item_bg"
                 android:text="12万"
                 />
 
         </LinearLayout>
         <!--踩-->
         <LinearLayout
+                android:id="@+id/item_fragment_bar_bad_ll"
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 >
             <ImageView
+                    android:id="@+id/item_fragment_bar_bad_img"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
-                    android:src="@drawable/ic_item_bad"
+                    android:src="@drawable/ic_bar_bury_normal"
                     />
             <TextView
                     android:id="@+id/item_fragment_bar_bad"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
-                    android:background="@drawable/ic_item_bg"
                     android:text="12万"
                     />
 
         </LinearLayout>
         <!--热-->
         <LinearLayout
+                android:id="@+id/item_fragment_bar_hot_ll"
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 >
             <ImageView
+                    android:id="@+id/item_fragment_bar_hot_img"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
-                    android:src="@drawable/id_item_hot"
+                    android:src="@drawable/ic_bar_hot_commenticon"
                     />
             <TextView
                     android:id="@+id/item_fragment_bar_hot"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
-                    android:background="@drawable/ic_item_bg"
                     android:text="12万"
                     />
 
@@ -134,15 +140,17 @@
 
         <!--转-->
         <LinearLayout
+                android:id="@+id/item_fragment_bar_forward_ll"
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 >
             <ImageView
+                    android:id="@+id/item_fragment_bar_forward_img"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
-                    android:src="@drawable/ic_item_send"
+                    android:src="@drawable/ic_bar_more_action_normal"
                     />
 
         </LinearLayout>

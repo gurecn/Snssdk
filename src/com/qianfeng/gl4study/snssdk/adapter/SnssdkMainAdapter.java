@@ -81,6 +81,24 @@ public class SnssdkMainAdapter extends BaseAdapter{
 			viewHolder.userImage = (ImageView) view.findViewById(R.id.item_fragment_user_icon);
 			viewHolder.userName = (TextView) view.findViewById(R.id.item_fragment_user_name);
 			viewHolder.layoutFragmentCommon = (LinearLayout) view.findViewById(R.id.item_fragment_common);
+			viewHolder.llGood = (LinearLayout) view.findViewById(R.id.item_fragment_bar_good_ll);
+			viewHolder.llBad = (LinearLayout) view.findViewById(R.id.item_fragment_bar_bad_ll);
+			viewHolder.llHot = (LinearLayout) view.findViewById(R.id.item_fragment_bar_hot_ll);
+
+			viewHolder.imgGood = (ImageView) view.findViewById(R.id.item_fragment_bar_good_img);
+			viewHolder.imgBad = (ImageView) view.findViewById(R.id.item_fragment_bar_bad_img);
+			viewHolder.imgHot = (ImageView) view.findViewById(R.id.item_fragment_bar_hot_img);
+			viewHolder.imgForward = (ImageView) view.findViewById(R.id.item_fragment_bar_forward_img);
+
+			viewHolder.llGood.setTag(position);
+			viewHolder.llBad.setTag(position);
+			viewHolder.llHot.setTag(position);
+			viewHolder.layoutFragmentCommon.setTag(position);
+
+			viewHolder.llGood.setOnClickListener(listener);
+			viewHolder.llBad.setOnClickListener(listener);
+			viewHolder.llHot.setOnClickListener(listener);
+			viewHolder.layoutFragmentCommon.setOnClickListener(listener);
 		}
 
 		Snssdk snssdk = snssdks.get(position);
@@ -103,15 +121,24 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		//加载头像
 		loaderImage(viewHolder.userImage,avatarUrl);
 
-		viewHolder.txtGood.setTag(position);
-		viewHolder.txtBad.setTag(position);
-		viewHolder.txtHot.setTag(position);
-		viewHolder.layoutFragmentCommon.setTag(position);
+		//评论条的显示
+		if(snssdk.getUserDigg()==1){
+			viewHolder.imgGood.setImageResource(R.drawable.ic_bar_digg_pressed);
+		}else {
+			viewHolder.imgGood.setImageResource(R.drawable.ic_bar_digg_normal);
+		}
+		if(snssdk.getUserRepin()==1){
+			viewHolder.imgBad.setImageResource(R.drawable.ic_bar_bury_pressed);
+		}else {
+			viewHolder.imgBad.setImageResource(R.drawable.ic_bar_bury_normal);
+		}
+		if(snssdk.getDiggCount()>10000){
+			viewHolder.imgHot.setImageResource(R.drawable.ic_bar_hot_commenticon_pressed);
+		}else {
+			viewHolder.imgHot.setImageResource(R.drawable.ic_bar_hot_commenticon);
+		}
 
-		viewHolder.txtHot.setOnClickListener(listener);
-		viewHolder.txtBad.setOnClickListener(listener);
-		viewHolder.txtGood.setOnClickListener(listener);
-		viewHolder.layoutFragmentCommon.setOnClickListener(listener);
+		viewHolder.imgForward.setImageResource(R.drawable.ic_bar_more_action_normal);
 
 		return view;
 	}
@@ -124,9 +151,18 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		private  TextView txtGood;
 		private  TextView txtBad;
 		private  TextView txtHot;
+		private ImageView imgGood;
+		private ImageView imgBad;
+		private ImageView imgHot;
+		private ImageView imgForward;
+
 		private  ImageView userImage;
 		private  TextView userName;
 		private  LinearLayout layoutFragmentCommon;
+
+		private LinearLayout llGood;
+		private LinearLayout llBad;
+		private LinearLayout llHot;
 
 
 	}

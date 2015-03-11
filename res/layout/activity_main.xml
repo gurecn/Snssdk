@@ -62,67 +62,9 @@
             android:layout_weight="1"
             android:scrollbars="vertical"
             android:scrollbarStyle="insideOverlay"
-
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:dividerHeight="10dp"
             />
-
-<!--
-   <LinearLayout
-		   android:orientation="horizontal"
-		   android:layout_width = "match_parent"
-		   android:layout_height = "wrap_content"
-           android:background="@drawable/main_rg_bg"
-		   android:gravity="center"
-		   >
-	   <ImageButton
-			   android:id="@+id/ib_word"
-			   android:layout_width = "wrap_content"
-			   android:layout_height = "40dp"
-			   android:textSize="25sp"
-			   android:layout_weight="1"
-			   android:gravity="center"
-			   android:button="@null"
-               android:src="@drawable/document_main_full"
-               android:background="@drawable/main_rg_bg"
-               android:scaleType="fitCenter"
-			   />
-	   <ImageButton
-			   android:id="@+id/ib_image"
-			   android:layout_width = "wrap_content"
-			   android:layout_height = "40dp"
-			   android:textSize="25sp"
-			   android:layout_weight="1"
-			   android:gravity="center"
-			   android:button="@null"
-               android:src="@drawable/camera_main_one"
-               android:background="@drawable/main_rg_bg"
-               android:scaleType="fitCenter"
-			   />
-	   <ImageButton
-			   android:id="@+id/ib_video"
-			   android:layout_width = "wrap_content"
-			   android:layout_height = "40dp"
-			   android:textSize="25sp"
-			   android:layout_weight="1"
-			   android:gravity="center"
-			   android:button="@null"
-               android:src="@drawable/video_main_one"
-               android:background="@drawable/main_rg_bg"
-               android:scaleType="fitCenter"
-			   />
-       <ImageButton
-               android:id="@+id/ib_more"
-               android:layout_width = "wrap_content"
-               android:layout_height = "40dp"
-               android:textSize="25sp"
-               android:layout_weight="1"
-               android:gravity="center"
-               android:button="@null"
-               android:src="@drawable/chat_main_one"
-               android:background="@drawable/main_rg_bg"
-               android:scaleType="fitCenter"
-               />
-   </LinearLayout>
--->
-
 </LinearLayout>
 

@@ -109,7 +109,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
 				.append(levelURL).append(level)     //推荐分类
 				.append(countURL).append(count);   //返回20个数据
-		switch (itemId){
+		switch(itemId){
 			case R.id.menu_word:
 				Toast.makeText(this,"word",Toast.LENGTH_LONG).show();
 				onClickImageButton();
@@ -136,6 +136,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			Toast.makeText(this,"examine",Toast.LENGTH_LONG).show();
 		}else {
 			snssdkTask = new SnssdkTask(this);
+			Log.d("MainActivity","开始下载======"+snssdks.size());
 			stringBuilder.append(categoryIdURL).append(category);//文本段子
 			snssdkTask.execute(stringBuilder.toString(),category+"");
 		}
@@ -195,29 +196,38 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 					startActivity(intent);
 					Log.d("MainActivity","item_fragment_word");
 					break;
-				case R.id.item_fragment_bar_good://点击顶
-
-					if(snssdk.getUserDigg()==0){
-						snssdk.setDiggCount(snssdk.getDiggCount()+1);
-						snssdk.setUserDigg(1);
+				case R.id.item_fragment_bar_good_ll://点击顶
+					if(snssdk.getUserRepin()==1){
+						Toast.makeText(this,"你已经踩了，做人不要矛盾哦",Toast.LENGTH_SHORT).show();
 					}else {
-						snssdk.setDiggCount(snssdk.getDiggCount()-1);
-						snssdk.setUserDigg(0);
+						if (snssdk.getUserDigg() == 0) {
+							snssdk.setDiggCount(snssdk.getDiggCount() + 1);
+							snssdk.setUserDigg(1);
+						} else {
+							snssdk.setDiggCount(snssdk.getDiggCount() - 1);
+							snssdk.setUserDigg(0);
+						}
+						adapter.notifyDataSetChanged();
+						Log.d("MainActivity", "item_fragment_bar_good");
 					}
-					Log.d("MainActivity","item_fragment_bar_good");
 					break;
-				case R.id.item_fragment_bar_bad://点击踩
-					if(snssdk.getUserRepin()==0){
-						snssdk.setRepinCount(snssdk.getRepinCount() + 1);
-						snssdk.setUserRepin(1);
+				case R.id.item_fragment_bar_bad_ll://点击踩
+					if(snssdk.getUserDigg() == 1){
+						Toast.makeText(this,"你已经顶了，做人不要矛盾哦",Toast.LENGTH_SHORT).show();
 					}else {
-						snssdk.setRepinCount(snssdk.getRepinCount()-1);
-						snssdk.setUserRepin(0);
+						if (snssdk.getUserRepin() == 0) {
+							snssdk.setRepinCount(snssdk.getRepinCount() + 1);
+							snssdk.setUserRepin(1);
+						} else {
+							snssdk.setRepinCount(snssdk.getRepinCount() - 1);
+							snssdk.setUserRepin(0);
+						}
+						adapter.notifyDataSetChanged();
+						Log.d("MainActivity", "item_fragment_bar_bad");
 					}
-					Log.d("MainActivity","item_fragment_bar_bad");
 					break;
-				case R.id.item_fragment_bar_hot://点击评论，跳转到评论页面
-
+				case R.id.item_fragment_bar_hot_ll://点击评论，跳转到评论页面
+					adapter.notifyDataSetChanged();
 					break;
 				//点击头像
 				case R.id.ib_user_icon:
