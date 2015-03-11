@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.adapter.SnssdkMainAdapter;
+import com.qianfeng.gl4study.snssdk.constant.Constant;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
 import com.qianfeng.gl4study.snssdk.tasks.SnssdkTask;
 import com.qianfeng.gl4study.snssdk.tasks.TaskProcessor;
@@ -27,12 +28,7 @@ import java.util.LinkedList;
 
 public class MainActivity extends Activity implements TaskProcessor, View.OnClickListener{
 
-	public static final String SNSSDK_CONTENT_WORD_URL = "http://ic.snssdk.com/2/essay/zone/category/data/?category_id=1&level=6&count=10&iid=2337593504&device_id=2757969807&ac=wifi&channel=wandoujia&aid=7&app_name=joke_essay&version_code=302&device_platform=android&device_type=KFTT&os_api=15&os_version=4.0.3&openudid=b90ca6a3a19a78d6";
-	public static final String SNSSDK_CONTENT_IMAGE_URL = "http://ic.snssdk.com/2/essay/zone/category/data/?category_id=2&level=6&count=30&iid=2337593504&device_id=2757969807&ac=wifi&channel=wandoujia&aid=7&app_name=joke_essay&version_code=302&device_platform=android&device_type=KFTT&os_api=15&os_version=4.0.3&openudid=b90ca6a3a19a78d6";
-	public static final String SNSSDK_CONTENT_VIDEO_URL = "http://ic.snssdk.com/2/essay/zone/category/data/?category_id=3&level=6&count=10&iid=2337593504&device_id=2757969807&ac=wifi&channel=wandoujia&aid=7&app_name=joke_essay&version_code=302&device_platform=android&device_type=KFTT&os_api=15&os_version=4.0.3&openudid=b90ca6a3a19a78d6";
-	public static final String CATEGORY_WORD_FLAG_SNSSDK = "1";
-	public static final String CATEGORY_IMAGE_FLAG_SNSSDK = "2";
-	public static final String CATEGORY_VOIDO_FLAG_SNSSDK = "3";
+
 	private LinkedList<Snssdk> snssdks;     //加载进内存的端子集合
 	private SnssdkMainAdapter adapter;      //显示段子的Adapter
 	private ListView listViewSnssdk;
@@ -40,6 +36,19 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private MenuItem itemWord;
 	private MenuItem itemImage;
 	private MenuItem itemVideo;
+
+	private String levelURL = "levelURL=";
+	private String categoryIdURL = "&category_id=";
+	private String countURL = "&countURL=";
+	private String minTimeURL = "&min_time=";
+	private String maxTimeURL = "&max_time=";
+
+	//标记需要获取的段子的参数
+	private int level=6;
+	private int category = 1;
+	private int count = 0;
+	private long minTime = 0;
+	private long maxTime = 0;
 
 
 	@Override
@@ -68,7 +77,13 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 //===================================================
 		//开启异步加载段子信息
 		snssdkTask = new SnssdkTask(this);
-		snssdkTask.execute(SNSSDK_CONTENT_WORD_URL, CATEGORY_WORD_FLAG_SNSSDK);
+
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
+				.append(levelURL).append(level)//推荐分类
+				.append(categoryIdURL).append(category)//文本段子
+				.append(countURL).append(count);   //返回20个数据
+		snssdkTask.execute(stringBuilder.toString(),category+"");
 
 		adapter = new SnssdkMainAdapter(this, snssdks);
 		listViewSnssdk.setAdapter(adapter);
@@ -90,42 +105,41 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 		boolean ret = false;
 		int itemId = item.getItemId();
-		String url = null;
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
+				.append(levelURL).append(level)     //推荐分类
+				.append(countURL).append(count);   //返回20个数据
 		switch (itemId){
 			case R.id.menu_word:
 				Toast.makeText(this,"word",Toast.LENGTH_LONG).show();
 				onClickImageButton();
 				item.setIcon(R.drawable.document_main_full);
-				url = SNSSDK_CONTENT_WORD_URL;
-				snssdkTask = new SnssdkTask(this);
-				snssdkTask.execute(url,CATEGORY_WORD_FLAG_SNSSDK);
+				category = Constant.TYPE_1_CATEGORY_ID_WORD_FLAG_SNSSDK;
 				break;
 			case R.id.menu_image:
 				Toast.makeText(this,"image",Toast.LENGTH_LONG).show();
 				onClickImageButton();
 				item.setIcon(R.drawable.camera_main_full);
-				url = SNSSDK_CONTENT_IMAGE_URL;
-				snssdkTask = new SnssdkTask(this);
-				snssdkTask.execute(url,CATEGORY_IMAGE_FLAG_SNSSDK);
+				category = Constant.TYPE_1_CATEGORY_ID_IMAGE_FLAG_SNSSDK;
 				break;
 			case R.id.menu_video:
 				Toast.makeText(this,"video",Toast.LENGTH_LONG).show();
 				onClickImageButton();
 				item.setIcon(R.drawable.video_main_full);
-				url = SNSSDK_CONTENT_VIDEO_URL;
-				snssdkTask = new SnssdkTask(this);
-				snssdkTask.execute(url,CATEGORY_VOIDO_FLAG_SNSSDK);
-				break;
-			case R.id.menu_find:
-				Toast.makeText(this,"find",Toast.LENGTH_LONG).show();
-				break;
-			case R.id.menu_examine:
-				Toast.makeText(this,"examine",Toast.LENGTH_LONG).show();
+				category = Constant.TYPE_1_CATEGORY_ID_VIDEO_FLAG_SNSSDK;
 				break;
 		}
 
+		if(itemId == R.id.menu_find){
+			Toast.makeText(this,"find",Toast.LENGTH_LONG).show();
+		}else if(itemId == R.id.menu_examine){
+			Toast.makeText(this,"examine",Toast.LENGTH_LONG).show();
+		}else {
+			snssdkTask = new SnssdkTask(this);
+			stringBuilder.append(categoryIdURL).append(category);//文本段子
+			snssdkTask.execute(stringBuilder.toString(),category+"");
+		}
 		ret = super.onOptionsItemSelected(item);
-
 		return ret;
 	}
 

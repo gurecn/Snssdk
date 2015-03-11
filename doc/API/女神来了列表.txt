@@ -1,0 +1,89 @@
+http://ic.snssdk.com/neihan/stream/category/data/v2/?category_id=12&level=6&message_cursor=-1&loc_mode=4&count=1&iid=2612719828&device_id=3268565220&ac=wifi&channel=meizu&aid=7&app_name=joke_essay&version_code=332&device_platform=android&device_type=M353&os_api=19&os_version=4.4.4&uuid=861138021939737&openudid=588d87bff4aa2e7e
+
+http://ic.snssdk.com/neihan/stream/category/data/v2/?category_id=12&level=6&count=1
+{
+    "message": "success",
+    "data": {
+        "has_more": true,
+        "tip": "1条新内容",
+        "has_new_message": true,
+        "max_time": 1425961017,
+        "min_time": 1425961017,
+        "data": [
+            {
+                "online_time": 1425961017,
+                "display_time": 1425961017,
+                "group": {
+                    "create_time": 1425386721,
+                    "favorite_count": 2690,
+                    "user_bury": 0,
+                    "user_favorite": 0,
+                    "bury_count": 713,
+                    "max_screen_width_percent": 0.5,
+                    "is_can_share": 1,
+                    "comment_count": 231,
+                    "share_url": "http://toutiao.com/group/4020714240/?iid=2612719828&app=joke_essay",
+                    "label": 1,
+                    "content": "",
+                    "category_type": 1,
+                    "min_screen_width_percent": 0.167,
+                    "status": 3,
+                    "has_comments": 0,
+                    "large_image": {
+                        "width": 440,
+                        "url_list": [
+                            {
+                                "url": "http://p2.pstatp.com/large/2312/4341532350"
+                            },
+                            {
+                                "url": "http://p1.pstatp.com/large/2312/4341532350"
+                            },
+                            {
+                                "url": "http://p.pstatp.com/large/2312/4341532350"
+                            }
+                        ],
+                        "uri": "large/2312/4341532350",
+                        "height": 641
+                    },
+                    "go_detail_count": 0,
+                    "status_desc": "已发表到热门列表",
+                    "user": {
+                        "avatar_url": "http://tp2.sinaimg.cn/1777878073/50/5677200941/1",
+                        "user_id": 3786156689,
+                        "name": "一起来吧妞妞",
+                        "user_verified": false
+                    },
+                    "user_digg": 0,
+                    "category_name": "女神来了",
+                    "group_id": 4020714240,
+                    "share_type": 1,
+                    "level": 4,
+                    "repin_count": 2690,
+                    "digg_count": 3645,
+                    "has_hot_comments": 1,
+                    "image_status": 1,
+                    "user_repin": 0,
+                    "category_id": 12,
+                    "middle_image": {
+                        "width": 202,
+                        "url_list": [
+                            {
+                                "url": "http://p2.pstatp.com/w202/2312/4341532350"
+                            },
+                            {
+                                "url": "http://p1.pstatp.com/w202/2312/4341532350"
+                            },
+                            {
+                                "url": "http://p.pstatp.com/w202/2312/4341532350"
+                            }
+                        ],
+                        "uri": "w202/2312/4341532350",
+                        "height": 294
+                    }
+                },
+                "comments": [],
+                "type": 1
+            }
+        ]
+    }
+}

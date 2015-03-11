@@ -1,0 +1,36 @@
+GET http://ic.snssdk.com/2/essay/get_stats/?group_ids=3950687824&iid=2612719828&device_id=3268565220&ac=wifi&channel=meizu&aid=7&app_name=joke_essay&version_code=332&device_platform=android&device_type=M353&os_api=19&os_version=4.4.4&uuid=861138021939737&openudid=588d87bff4aa2e7e HTTP/1.1
+Accept-Encoding: gzip
+Host: ic.snssdk.com
+Connection: Keep-Alive
+Cookie: alert_coverage=54; install_id=2612719828
+X-SS-Cookie: alert_coverage=54; install_id=2612719828
+
+HTTP/1.1 200 OK
+Server: nginx/1.6.2
+Date: Mon, 09 Mar 2015 11:41:26 GMT
+Content-Type: application/json
+Connection: keep-alive
+Vary: Accept-Encoding
+Vary: Accept-Encoding
+Vary: Accept-Encoding
+Content-Length: 276
+
+{
+    "message": "success",
+    "data": [
+        {
+            "status": 1,
+            "user_bury": 0,
+            "user_repin_time": 0,
+            "user_digg": 0,
+            "bury_count": 0,
+            "repin_count": 0,
+            "digg_count": 0,
+            "comment_count": 0,
+            "user_repin_time_str": "1970-01-01 08:00",
+            "user_repin": 0,
+            "group_id": 3950687824
+        }
+    ],
+    "total_number": 1
+}

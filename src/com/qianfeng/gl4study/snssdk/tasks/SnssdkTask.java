@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class SnssdkTask extends AsyncTask<String ,Integer,JSONObject> {
 
+
 	private TaskProcessor processor;
 	private String  flag = "1";
 
@@ -24,13 +25,17 @@ public class SnssdkTask extends AsyncTask<String ,Integer,JSONObject> {
 		this.processor = processor;
 	}
 
+	/**
+	 * 参数顺序：主连接URL，段子Id，异步类型标记，返回评论数量，返回评论起点
+	 * @param params
+	 * @return
+	 */
 	@Override
 	protected JSONObject doInBackground(String... params) {
 		JSONObject ret = null;
-		if(params!=null&&params.length>1){
-			String url = params[0];
-			flag  = params[1];
-			byte[] bytes = HttpTool.get(url);
+		if(params.length==2){
+			flag = params[1];
+			byte[] bytes = HttpTool.get(params[0]);
 			if(bytes!=null){
 				try {
 					String str = new String(bytes, "UTF-8");

@@ -1,0 +1,125 @@
+1，
+段子内容接口：
+	http://ic.snssdk.com/neihan/stream/category/data/v2/
+	方式：GET 
+	参数：
+	category_id=1				可选值：1：文字，2：图片，18：视频，12：女神来了，7：今天长这样，69：图写心情
+	level=6						可省略，值不同结果不同
+								值不同返回结果不同，默认值：推荐（待验证）
+								对应的值分别代表：3，新鲜	4，热门 5，精华 6, 推荐
+	
+	
+	message_cursor=-1			同上，可省略
+	loc_mode=4					同上，可省略
+	count=30					请求返回的的数据条数，可指定，返回的条数为
+										文字返回指定的数+19条
+										图片返回指定的数+20条
+										女神来了，视频返回指定的条数
+														
+	min_time=1425880600			返回数据的时间识别，下拉刷新时使用，第一次刷新无该参数
+	max_time=1425880607			返回数据的时间识别，上拉加载时使用，第一次刷新无该参数
+	
+	其他：硬件相关：可选
+	iid=2612719828
+	device_id=3268565220
+	ac=wifi
+	channel=meizu
+	aid=7
+	app_name=joke_essay
+	version_code=332
+	device_platform=android
+	device_type=M353
+	os_api=19
+	os_version=4.4.4
+	uuid=861138021939737
+	openudid=588d87bff4aa2e7e 
+	注意：
+	1，加载视频时默认加载显示large_cover参数的视频链接图片
+	
+2，
+用户信息接口：
+	点击用户头像，跳转到用户信息
+	http://isub.snssdk.com/neihan/user/profile/v1/
+	方式：GET 
+	参数：
+	user_id=2869703728		用户Id
+	app_name=joke_essay		软件名，必选
+	其他：
+	硬件相关，可选
+	
+3，	新活动数量接口，打开软件检查
+	http://ic.snssdk.com/2/essay/zone/activities/count/
+	方式：GET 
+	参数：
+	aid=7					作用位置，必选	
+	device_platform=android	设备平台，必选
+	其他：
+	硬件相关，可选
+	
+4，段子新内容信息
+	http://ic.snssdk.com/2/essay/zone/category/count/
+	方式：GET 
+	参数：
+	category_id=1				分类，不仅三类，测试可选值很多
+	
+	level=6					可选，值不同返回结果不同，默认值：推荐（待验证）
+							对应的值分别代表：3，新鲜	4，热门 5，精华 6, 推荐
+								
+	min_time=1425880432			最小时间
+	
+	返回结果同上。
+	
+5,评论列表
+	http://isub.snssdk.com/2/data/get_essay_comments/
+	方式：GET 
+	参数：
+	group_id=4039548309		段子Id
+	count=0					返回的新鲜评论数量
+	offset=0				返回的新鲜评论的起点
+	
+	注意：
+		若offset=0，则默认返回全部神评论
+		若offset！=0，则不返回神评论
+			
+6，神评论新内容数量：
+	http://ic.snssdk.com/2/essay/zone/god_comments_count/
+	方式：GET 
+	参数：
+	min_time=0		最小时间，可选，无默认为0
+		
+7,神评论获取：
+	http://ic.snssdk.com/api/2/essay/zone/god_comments/
+	方式：GET 
+	参数：
+	count=0					返回的新鲜评论数量
+	min_time=1425880600			返回数据的时间识别，下拉刷新时使用，第一次刷新无该参数
+	注意：经验证上拉加载无效
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	

@@ -1,0 +1,9 @@
+http://ic.snssdk.com/2/essay/zone/activities/count/?aid=7&device_platform=android
+
+{
+    "message": "success",
+    "data": {
+        "count": 16,
+        "tips": "有16条新活动，点击刷新"
+    }
+}

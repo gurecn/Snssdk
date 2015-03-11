@@ -1,0 +1,163 @@
+http://ic.snssdk.com/neihan/stream/category/data/v2/?category_id=18&level=6&message_cursor=-1&loc_mode=4&count=1&min_time=1425881187&iid=2612719828&device_id=3268565220&ac=wifi&channel=meizu&aid=7&app_name=joke_essay&version_code=332&device_platform=android&device_type=M353&os_api=19&os_version=4.4.4&uuid=861138021939737&openudid=588d87bff4aa2e7e
+
+{
+    "message": "success",
+    "data": {
+        "has_more": false,
+        "tip": "1条新内容",
+        "has_new_message": true,
+        "max_time": 1425897026,
+        "min_time": 1425897026,
+        "data": [
+            {
+                "online_time": 1425897026,
+                "display_time": 1425897026,
+                "group": {
+                    "360p_video": {
+                        "width": 380,
+                        "url_list": [
+                            {
+                                "url": "http://v1.pstatp.com/p360/14/4078430794"
+                            },
+                            {
+                                "url": "http://v2.pstatp.com/p360/14/4078430794"
+                            },
+                            {
+                                "url": "http://v.pstatp.com/p360/14/4078430794"
+                            }
+                        ],
+                        "uri": "p360/14/4078430794",
+                        "height": 116
+                    },
+                    "mp4_url": "http://v1.pstatp.com/p360/14/4078430794.mp4",
+                    "720p_video": {
+                        "width": 380,
+                        "url_list": [
+                            {
+                                "url": "http://v1.pstatp.com/p360/14/4078430794"
+                            },
+                            {
+                                "url": "http://v2.pstatp.com/p360/14/4078430794"
+                            },
+                            {
+                                "url": "http://v.pstatp.com/p360/14/4078430794"
+                            }
+                        ],
+                        "uri": "p360/14/4078430794",
+                        "height": 116
+                    },
+                    "digg_count": 14663,
+                    "keywords": "",
+                    "480p_video": {
+                        "width": 380,
+                        "url_list": [
+                            {
+                                "url": "http://v1.pstatp.com/p360/14/4078430794"
+                            },
+                            {
+                                "url": "http://v2.pstatp.com/p360/14/4078430794"
+                            },
+                            {
+                                "url": "http://v.pstatp.com/p360/14/4078430794"
+                            }
+                        ],
+                        "uri": "p360/14/4078430794",
+                        "height": 116
+                    },
+                    "create_time": 1423970685,
+                    "duration": 12,
+                    "favorite_count": 2462,
+                    "user_bury": 0,
+                    "m3u8_url": "",
+                    "large_cover": {
+                        "url_list": [
+                            {
+                                "url": "http://p2.pstatp.com/large/2203/5717330399"
+                            },
+                            {
+                                "url": "http://p1.pstatp.com/large/2203/5717330399"
+                            },
+                            {
+                                "url": "http://p.pstatp.com/large/2203/5717330399"
+                            }
+                        ],
+                        "uri": "large/2203/5717330399"
+                    },
+                    "user_favorite": 0,
+                    "share_type": 1,
+                    "title": "李小龙这个视频是真的！！",
+                    "max_screen_width_percent": 0.5,
+                    "is_can_share": 1,
+                    "origin_video": {
+                        "width": 380,
+                        "url_list": [
+                            {
+                                "url": "http://v1.pstatp.com/origin/14/4078430794"
+                            },
+                            {
+                                "url": "http://v2.pstatp.com/origin/14/4078430794"
+                            },
+                            {
+                                "url": "http://v.pstatp.com/origin/14/4078430794"
+                            }
+                        ],
+                        "uri": "origin/14/4078430794",
+                        "height": 116
+                    },
+                    "share_url": "http://toutiao.com/group/3960709434/?iid=2612719828&app=joke_essay",
+                    "label": 1,
+                    "content": "李小龙这个视频是真的！！",
+                    "video_height": 116,
+                    "category_type": 1,
+                    "min_screen_width_percent": 0.167,
+                    "status": 1,
+                    "has_comments": 0,
+                    "publish_time": null,
+                    "go_detail_count": 0,
+                    "comment_count": 251,
+                    "status_desc": "已发表到热门列表",
+                    "play_count": 387444,
+                    "user_repin": 0,
+                    "user": {
+                        "avatar_url": "http://p1.pstatp.com/thumb/1991/5414481595",
+                        "user_id": 3439309435,
+                        "name": "唐玄奘大师",
+                        "user_verified": false
+                    },
+                    "user_digg": 0,
+                    "video_width": 380,
+                    "category_name": "搞笑视频",
+                    "flash_url": "",
+                    "group_id": 3960709434,
+                    "bury_count": 736,
+                    "level": 4,
+                    "url": "",
+                    "repin_count": 2462,
+                    "uri": "14/4078430794",
+                    "is_public_url": 1,
+                    "has_hot_comments": 1,
+                    "cover_image_uri": "2203/5717330399",
+                    "cover_image_url": "",
+                    "category_id": 65,
+                    "is_video": 1,
+                    "medium_cover": {
+                        "url_list": [
+                            {
+                                "url": "http://p2.pstatp.com/w202/2203/5717330399"
+                            },
+                            {
+                                "url": "http://p1.pstatp.com/w202/2203/5717330399"
+                            },
+                            {
+                                "url": "http://p.pstatp.com/w202/2203/5717330399"
+                            }
+                        ],
+                        "uri": "medium/2203/5717330399"
+                    }
+                },
+                "comments": [],
+                "type": 1
+            }
+        ]
+    }
+}

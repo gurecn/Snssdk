@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.qianfeng.gl4study.snssdk.R;
+import com.qianfeng.gl4study.snssdk.constant.Constant;
 import com.qianfeng.gl4study.snssdk.view.MyListView;
 import com.qianfeng.gl4study.snssdk.adapter.DiscussListAdapter;
 import com.qianfeng.gl4study.snssdk.model.Discuss;
@@ -29,7 +31,6 @@ import java.util.LinkedList;
 public class SnssdkInfoActivity extends Activity implements TaskProcessor {
 
 
-	public static final String DISCUSS_URL = "http://isub.snssdk.com/2/data/get_essay_comments/?count=10&offset=20&iid=2337593504&device_id=2757969807&ac=wifi&channel=wandoujia&aid=7&app_name=joke_essay&version_code=302&device_platform=android&device_type=KFTT&os_api=15&os_version=4.0.3&openudid=b90ca6a3a19a78d6&group_id=";
 	private LinkedList<Discuss> dataFresh;
 	private LinkedList<Discuss> dataTop;
 	private DiscussListAdapter adapterHot;
@@ -59,8 +60,15 @@ public class SnssdkInfoActivity extends Activity implements TaskProcessor {
 	//显示评论信息
 	private void displayDiscuss(Snssdk snssdk){
 		discussTask = new SnssdkTask(this);
-		String url = DISCUSS_URL;
-		discussTask.execute(url+snssdk.getGroupId(),"1");
+		//主连接，段子Id，异步类型标记，返回评论数量，返回评论起点
+
+		StringBuilder stringBuilder = new StringBuilder();
+		String groupId="group_id="+snssdk.getGroupId();
+		String count="&count=10";		//返回的新鲜评论数量
+		String offset="&offset=0";    //返回的新鲜评论的起点
+		stringBuilder.append(Constant.DISCUSS_CONTENT_LIST_URL).append(groupId).append(count).append(offset);
+
+		discussTask.execute(stringBuilder.toString(),"1");
 		adapterHot = new DiscussListAdapter(this, dataFresh);
 		adapterFresh = new DiscussListAdapter(this, dataTop);
 		recyclerViewHot.setAdapter(adapterHot);

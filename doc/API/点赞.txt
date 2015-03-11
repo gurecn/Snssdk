@@ -1,0 +1,22 @@
+POST http://isub.snssdk.com/2/data/item_action/ HTTP/1.1
+Accept-Encoding: gzip
+Content-Length: 247
+Content-Type: application/x-www-form-urlencoded
+Host: isub.snssdk.com
+Connection: Keep-Alive
+Cookie: alert_coverage=54; install_id=2612719828
+X-SS-Cookie: alert_coverage=54; install_id=2612719828
+
+action=digg&group_id=4040753239&iid=2612719828&device_id=3268565220&ac=wifi&channel=meizu&aid=7&app_name=joke_essay&version_code=332&device_platform=android&device_type=M353&os_api=19&os_version=4.4.4&uuid=861138021939737&openudid=588d87bff4aa2e7e
+
+HTTP/1.1 200 OK
+Server: nginx/1.6.2
+Date: Mon, 09 Mar 2015 12:46:52 GMT
+Content-Type: application/json
+Connection: keep-alive
+Vary: Accept-Encoding
+Vary: Accept-Encoding
+Vary: Accept-Encoding
+Content-Length: 154
+
+{"bury_count": 1907, "repin_count": 656, "digg_count": 28349, "tag_id": 0, "comment_count": 1284, "tag": "", "message": "success", "group_id": 4040753239}
