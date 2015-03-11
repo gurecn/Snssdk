@@ -1,10 +1,18 @@
 package com.qianfeng.gl4study.snssdk.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
+import com.qianfeng.gl4study.snssdk.model.UserInformation;
+import com.qianfeng.gl4study.snssdk.utils.FileCache;
+import com.qianfeng.gl4study.snssdk.utils.ImageCache;
+import com.qianfeng.gl4study.snssdk.utils.ImageLoader;
 
 
 import java.util.List;
@@ -33,53 +41,56 @@ public class SnssdkMainAdapter extends BaseAdapter{
 
 	@Override
 	public int getCount() {
+		if(snssdks!=null){
+			return snssdks.size();
+		}
 		return 0;
 	}
 
 	@Override
 	public Object getItem(int position) {
+		if(snssdks!=null){
+			return snssdks.get(position);
+		}
 		return null;
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return 0;
+		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		return null;
-	}
-	
-	
-	
-	
-	
-/*
+		View view = null;
+		if(convertView !=null) {
+			view = convertView;
+		}else {
+			view = LayoutInflater.from(context).inflate(R.layout.item_fragment_word, parent, false);
+		}
 
-	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-		View view = LayoutInflater.from(context).inflate(R.layout.item_fragment_word, viewGroup, false);
-		//view.setOnClickListener(listener);
-		view.setTag(i);
-		return new ViewHolder(view);
-	}
+		ViewHolder viewHolder = (ViewHolder) view.getTag();
+		if(viewHolder == null){
+			viewHolder = new ViewHolder();
+			viewHolder.itemWord = (TextView) view.findViewById(R.id.item_fragment_word);
+			viewHolder.itemImage = (ImageView) view.findViewById(R.id.item_fragment_image);
+			//viewHolder.itemVideo = (VideoView) view.findViewById(R.id.item_fragment_video);
+			viewHolder.txtGood = (TextView) view.findViewById(R.id.item_fragment_bar_good);
+			viewHolder.txtBad = (TextView) view.findViewById(R.id.item_fragment_bar_bad);
+			viewHolder.txtHot = (TextView) view.findViewById(R.id.item_fragment_bar_hot);
+			viewHolder.userImage = (ImageView) view.findViewById(R.id.item_fragment_user_icon);
+			viewHolder.userName = (TextView) view.findViewById(R.id.item_fragment_user_name);
+			viewHolder.layoutFragmentCommon = (LinearLayout) view.findViewById(R.id.item_fragment_common);
+		}
 
-	@Override
-	public void onBindViewHolder(ViewHolder viewHolder, int i) {
+		Snssdk snssdk = snssdks.get(position);
 
-		Snssdk snssdk = snssdks.get(i);
-
-		Log.d("MainRecyclerAdapter","onBindViewHolder=====加载段子");
 		int snssdkType = snssdk.getSnssdkType();
 		if(snssdkType == 2){    //图片类型段子
-
 			viewHolder.itemImage.setImageResource(R.drawable.loading_icon);
-			Log.d("MainRecyclerAdapter","onBindViewHolder=====加载图片");
 			String imageUrl = snssdk.getImageUrl();
 			loaderImage(viewHolder.itemImage,imageUrl);
 		}else if(snssdkType == 3){  //视频类型段子
-
 
 		}
 		viewHolder.itemWord.setText(snssdk.getContent());
@@ -92,69 +103,32 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		//加载头像
 		loaderImage(viewHolder.userImage,avatarUrl);
 
-
-		viewHolder.txtGood.setTag(i);
-		viewHolder.txtBad.setTag(i);
-		viewHolder.txtHot.setTag(i);
-
-		//viewHolder.itemWord.setTag(i);
-		//viewHolder.itemVideo.setTag(i);
-		//viewHolder.itemImage.setTag(i);
-		viewHolder.layoutFragmentCommon.setTag(i);
+		viewHolder.txtGood.setTag(position);
+		viewHolder.txtBad.setTag(position);
+		viewHolder.txtHot.setTag(position);
+		viewHolder.layoutFragmentCommon.setTag(position);
 
 		viewHolder.txtHot.setOnClickListener(listener);
 		viewHolder.txtBad.setOnClickListener(listener);
 		viewHolder.txtGood.setOnClickListener(listener);
 		viewHolder.layoutFragmentCommon.setOnClickListener(listener);
 
-
-		if(i == snssdks.size()-1&&context instanceof MainActivity){
-			((MainActivity) context).refreshData();
-		}
-
-
+		return view;
 	}
 
-	@Override
-	public int getItemCount() {
-		if(snssdks!=null) {
-			return snssdks.size();
-		}
-		return 0;
-	}
+	public static class ViewHolder {
 
-	public static class ViewHolder extends RecyclerView.ViewHolder{
-
-		private final TextView itemWord;
-		private final ImageView itemImage;
+		private TextView itemWord;
+		private  ImageView itemImage;
 		//private final VideoView itemVideo;
-		private final TextView txtGood;
-		private final TextView txtBad;
-		private final TextView txtHot;
-		private final ImageView userImage;
-		private final TextView userName;
-		private final LinearLayout layoutFragmentCommon;
+		private  TextView txtGood;
+		private  TextView txtBad;
+		private  TextView txtHot;
+		private  ImageView userImage;
+		private  TextView userName;
+		private  LinearLayout layoutFragmentCommon;
 
-		public ViewHolder(View itemView) {
-			super(itemView);
-			itemWord = (TextView) itemView.findViewById(R.id.item_fragment_word);
-			itemImage = (ImageView) itemView.findViewById(R.id.item_fragment_image);
-			//itemVideo = (VideoView) itemView.findViewById(R.id.item_fragment_video);
-			txtGood = (TextView) itemView.findViewById(R.id.item_fragment_bar_good);
-			txtBad = (TextView) itemView.findViewById(R.id.item_fragment_bar_bad);
-			txtHot = (TextView) itemView.findViewById(R.id.item_fragment_bar_hot);
-			userImage = (ImageView) itemView.findViewById(R.id.item_fragment_user_icon);
-			userName = (TextView) itemView.findViewById(R.id.item_fragment_user_name);
-			layoutFragmentCommon = (LinearLayout) itemView.findViewById(R.id.item_fragment_common);
-		}
-	}
-	public void dataChanged(int postion){
-		notifyItemChanged(postion);
-	}
 
-	public void dataClean(){
-
-		notifyItemRangeRemoved(0,snssdks.size());
 	}
 
 	private void loaderImage(ImageView userImage,String avatarUrl){
@@ -176,8 +150,5 @@ public class SnssdkMainAdapter extends BaseAdapter{
 			}
 		}
 	}
-
-*/
-
 
 }

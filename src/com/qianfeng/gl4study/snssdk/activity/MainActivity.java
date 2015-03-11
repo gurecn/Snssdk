@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.adapter.SnssdkMainAdapter;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
@@ -20,6 +21,9 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 
+/**
+ * 整个项目的主界面显示
+ */
 
 public class MainActivity extends Activity implements TaskProcessor, View.OnClickListener{
 
@@ -29,61 +33,45 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	public static final String CATEGORY_WORD_FLAG_SNSSDK = "1";
 	public static final String CATEGORY_IMAGE_FLAG_SNSSDK = "2";
 	public static final String CATEGORY_VOIDO_FLAG_SNSSDK = "3";
-	private LinkedList<Snssdk> snssdks;
-	private SnssdkMainAdapter adapter;
-	private ListView recyclerView;
+	private LinkedList<Snssdk> snssdks;     //加载进内存的端子集合
+	private SnssdkMainAdapter adapter;      //显示段子的Adapter
+	private ListView listViewSnssdk;
 	private SnssdkTask snssdkTask;
+	private MenuItem itemWord;
+	private MenuItem itemImage;
+	private MenuItem itemVideo;
 
-	//下方转换页面的ImageButon
-	private ImageView actionbarWord;
-	private ImageView actionbarImage;
-	private ImageView actionbarVideo;
-	private ImageView actionbarMore;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		recyclerView = (ListView) findViewById(R.id.recycle_view);
-
+		listViewSnssdk = (ListView) findViewById(R.id.recycle_view);//主界面显示段子列表
 		snssdks = new LinkedList<Snssdk>();
-		//ActionBar设置
-
+//=================================================
+		//设置隐藏ActionBar隐藏标题，图标，上界面的title栏
 		ActionBar actionBar = getActionBar();
-
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.hide();
+		//设置背景色
 		//actionBar.setSplitBackgroundDrawable(new ColorDrawable(R.drawable.main_rg_bg));
+//==================================================
+		//自定义标题栏的组件获取
 
-
-
-		/*
-		actionbarWord = (ImageView) findViewById(R.id.ib_word);
-		actionbarImage = (ImageView) findViewById(R.id.ib_image);
-		actionbarVideo = (ImageView) findViewById(R.id.ib_video);
-		actionbarMore = (ImageView) findViewById(R.id.ib_more);
-		*/
-
-
+		// 用户头像
 		ImageView topUser = (ImageView) findViewById(R.id.ib_user_icon);
-		ImageView topContribute = (ImageView) findViewById(R.id.ib_push_contribute);
 		topUser.setOnClickListener(this);
-
-		/*
-		actionbarMore.setOnClickListener(this);
-		actionbarVideo.setOnClickListener(this);
-		actionbarImage.setOnClickListener(this);
-		actionbarWord.setOnClickListener(this);
-*/
+		//投稿图标
+		ImageView topContribute = (ImageView) findViewById(R.id.ib_push_contribute);
 		topContribute.setOnClickListener(this);
-
+//===================================================
+		//开启异步加载段子信息
 		snssdkTask = new SnssdkTask(this);
 		snssdkTask.execute(SNSSDK_CONTENT_WORD_URL, CATEGORY_WORD_FLAG_SNSSDK);
 
 		adapter = new SnssdkMainAdapter(this, snssdks);
-		//recyclerView.setAdapter(adapter);
+		listViewSnssdk.setAdapter(adapter);
 	}
 
 	@Override
@@ -91,7 +79,9 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_main, menu);
-
+		itemWord = menu.getItem(0);
+		itemImage = menu.getItem(1);
+		itemVideo = menu.getItem(2);
 		return true;
 	}
 
@@ -99,6 +89,40 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		boolean ret = false;
+		int itemId = item.getItemId();
+		String url = null;
+		switch (itemId){
+			case R.id.menu_word:
+				Toast.makeText(this,"word",Toast.LENGTH_LONG).show();
+				onClickImageButton();
+				item.setIcon(R.drawable.document_main_full);
+				url = SNSSDK_CONTENT_WORD_URL;
+				snssdkTask = new SnssdkTask(this);
+				snssdkTask.execute(url,CATEGORY_WORD_FLAG_SNSSDK);
+				break;
+			case R.id.menu_image:
+				Toast.makeText(this,"image",Toast.LENGTH_LONG).show();
+				onClickImageButton();
+				item.setIcon(R.drawable.camera_main_full);
+				url = SNSSDK_CONTENT_IMAGE_URL;
+				snssdkTask = new SnssdkTask(this);
+				snssdkTask.execute(url,CATEGORY_IMAGE_FLAG_SNSSDK);
+				break;
+			case R.id.menu_video:
+				Toast.makeText(this,"video",Toast.LENGTH_LONG).show();
+				onClickImageButton();
+				item.setIcon(R.drawable.video_main_full);
+				url = SNSSDK_CONTENT_VIDEO_URL;
+				snssdkTask = new SnssdkTask(this);
+				snssdkTask.execute(url,CATEGORY_VOIDO_FLAG_SNSSDK);
+				break;
+			case R.id.menu_find:
+				Toast.makeText(this,"find",Toast.LENGTH_LONG).show();
+				break;
+			case R.id.menu_examine:
+				Toast.makeText(this,"examine",Toast.LENGTH_LONG).show();
+				break;
+		}
 
 		ret = super.onOptionsItemSelected(item);
 
@@ -122,9 +146,10 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 						snssdk.parseInformation(group,type);
 						snssdks.add(snssdk);
 					}
-					//adapter.notifyItemInserted(snssdks.size());
+					Log.d("MainActivity","下载完成============="+snssdks.size());
 					//数据添加完成，更新List
-					//recyclerView.setAdapter(adapter);
+					listViewSnssdk.setAdapter(adapter);
+					//adapter.notifyDataSetChanged();
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -133,7 +158,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	}
 
 	/**
-	 * 点击RecyclerView调用
+	 * 点击listViewSnssdk调用
 	 * @param v
 	 */
 	@Override
@@ -146,110 +171,66 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		if(tag!=null) {
 			position = (Integer) tag;
 			snssdk = snssdks.get(position);
-		}
-		String url = null;
+			Log.d("MainActivity","onClick=============");
+			switch (id){
+				case R.id.item_fragment_common://点击内容跳转到详情页面，文字，图片，视频
+					Intent intent = new Intent(this, SnssdkInfoActivity.class);
+					if(position>=0) {
+						intent.putExtra("snssdk", snssdks.get(position));
+					}
+					startActivity(intent);
+					Log.d("MainActivity","item_fragment_word");
+					break;
+				case R.id.item_fragment_bar_good://点击顶
 
-		Log.d("MainActivity","onClick=============");
-		switch (id){
-			/*
-			case R.id.ib_image://点击图片
+					if(snssdk.getUserDigg()==0){
+						snssdk.setDiggCount(snssdk.getDiggCount()+1);
+						snssdk.setUserDigg(1);
+					}else {
+						snssdk.setDiggCount(snssdk.getDiggCount()-1);
+						snssdk.setUserDigg(0);
+					}
+					Log.d("MainActivity","item_fragment_bar_good");
+					break;
+				case R.id.item_fragment_bar_bad://点击踩
+					if(snssdk.getUserRepin()==0){
+						snssdk.setRepinCount(snssdk.getRepinCount() + 1);
+						snssdk.setUserRepin(1);
+					}else {
+						snssdk.setRepinCount(snssdk.getRepinCount()-1);
+						snssdk.setUserRepin(0);
+					}
+					Log.d("MainActivity","item_fragment_bar_bad");
+					break;
+				case R.id.item_fragment_bar_hot://点击评论，跳转到评论页面
 
-				onClickImageButton();
+					break;
+				//点击头像
+				case R.id.ib_user_icon:
+					intent = new Intent(this, PersonActivity.class);
+					startActivity(intent);
+					break;
 
-				actionbarImage.setImageResource(R.drawable.camera_main_full);
-
-				url = SNSSDK_CONTENT_IMAGE_URL;
-				snssdkTask = new SnssdkTask(this);
-				snssdkTask.execute(url,CATEGORY_IMAGE_FLAG_SNSSDK);
-				break;
-			case R.id.ib_video://点击视频
-
-				onClickImageButton();
-
-				actionbarVideo.setImageResource(R.drawable.video_main_full);
-				url = SNSSDK_CONTENT_VIDEO_URL;
-				snssdkTask = new SnssdkTask(this);
-				snssdkTask.execute(url,CATEGORY_VOIDO_FLAG_SNSSDK);
-				break;
-			case R.id.ib_word://点击文字
-
-				onClickImageButton();
-				actionbarWord.setImageResource(R.drawable.document_main_full);
-				url = SNSSDK_CONTENT_WORD_URL;
-				snssdkTask = new SnssdkTask(this);
-				snssdkTask.execute(url,CATEGORY_WORD_FLAG_SNSSDK);
-				break;
-
-			case R.id.ib_more://点击三点
-				onClickImageButton();
-				actionbarMore.setImageResource(R.drawable.chat_main_full);
-				break;
-
-			*/
-			case R.id.item_fragment_common://点击内容跳转到详情页面，文字，图片，视频
-				Intent intent = new Intent(this, SnssdkInfoActivity.class);
-				if(position>=0) {
-					intent.putExtra("snssdk", snssdks.get(position));
-				}
-				startActivity(intent);
-				Log.d("MainActivity","item_fragment_word");
-				break;
-			case R.id.item_fragment_bar_good://点击顶
-
-				if(snssdk.getUserDigg()==0){
-					snssdk.setDiggCount(snssdk.getDiggCount()+1);
-					snssdk.setUserDigg(1);
-				}else {
-					snssdk.setDiggCount(snssdk.getDiggCount()-1);
-					snssdk.setUserDigg(0);
-				}
-				Log.d("MainActivity","item_fragment_bar_good");
-				break;
-			case R.id.item_fragment_bar_bad://点击踩
-				if(snssdk.getUserRepin()==0){
-					snssdk.setRepinCount(snssdk.getRepinCount() + 1);
-					snssdk.setUserRepin(1);
-				}else {
-					snssdk.setRepinCount(snssdk.getRepinCount()-1);
-					snssdk.setUserRepin(0);
-				}
-				Log.d("MainActivity","item_fragment_bar_bad");
-				break;
-			case R.id.item_fragment_bar_hot://点击评论，跳转到评论页面
-
-				break;
-			//点击头像
-			case R.id.ib_user_icon:
-				intent = new Intent(this, PersonActivity.class);
-				startActivity(intent);
-				break;
-
-			//点击提交
-			case R.id.ib_push_contribute:
-				intent = new Intent(this, ContributeActivity.class);
-				startActivity(intent);
-				break;
+				//点击提交
+				case R.id.ib_push_contribute:
+					intent = new Intent(this, ContributeActivity.class);
+					startActivity(intent);
+					break;
+			}
 		}
 	}
 
 	/**
-	 * 当点击ImageButton时变换图片
+	 * 当点击ActionBar时清空显示数据并变换图片
 	 */
 	private void onClickImageButton(){
 
-		//清空显示列表
-		// 将原数据置空
-		recyclerView.setAdapter(null);
+		//清空显示列表,将原数据置空
+		listViewSnssdk.setAdapter(null);
 		snssdks.clear();
-		actionbarWord.setImageResource(R.drawable.document_main_one);
-		actionbarImage.setImageResource(R.drawable.camera_main_one);
-		actionbarVideo.setImageResource(R.drawable.video_main_one);
-		actionbarMore.setImageResource(R.drawable.chat_main_one);
+		//首先将所有图标设置成暗色，然后点击哪一个哪一个变色即可
+		itemWord.setIcon(R.drawable.document_main_one);
+		itemImage.setIcon(R.drawable.camera_main_one);
+		itemVideo.setIcon(R.drawable.video_main_one);
 	}
-
-	public void refreshData(){
-		SnssdkTask snssdkTask = new SnssdkTask(this);
-		snssdkTask.execute(SNSSDK_CONTENT_WORD_URL, CATEGORY_WORD_FLAG_SNSSDK);
-	}
-
 }

@@ -14,12 +14,12 @@
 	      android:showAsAction = "always"
 	      android:icon="@drawable/video_main_one"
 			/>
-	<item android:id = "@+id/menu_fing"
+	<item android:id = "@+id/menu_find"
 	      android:title = "发现"
 	      android:showAsAction = "ifRoom"
 
 			/>
-	<item android:id = "@+id/menu_other"
+	<item android:id = "@+id/menu_examine"
 	      android:title = "其他"
 	      android:showAsAction = "ifRoom"
 			/>

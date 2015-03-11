@@ -54,7 +54,7 @@
                 />
 
     </LinearLayout>
-    <com.qianfeng.gl4study.snssdk.view.MyListView
+    <ListView
             android:id="@+id/recycle_view"
             android:layout_width = "match_parent"
             android:layout_height = "0dp"
