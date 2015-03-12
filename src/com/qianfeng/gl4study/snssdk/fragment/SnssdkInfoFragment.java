@@ -10,10 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.adapter.DiscussListAdapter;
 import com.qianfeng.gl4study.snssdk.constant.Constant;
@@ -83,9 +80,10 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		recyclerViewFresh = (MyListView) view.findViewById(R.id.list_view_fresh_discuss);
 		freshDiscussCount = (TextView) view.findViewById(R.id.txt_fresscuss);
 		hotDiscussCount = (TextView) view.findViewById(R.id.txt_hot_discuss);
+		ScrollView discussScrollView = (ScrollView)view.findViewById(R.id.snssdk_info_scroll_view);
+		discussScrollView.scrollTo(0,0);
 		if(null!=serializable&&serializable instanceof Snssdk){
 			snssdk = (Snssdk)serializable;
-
 		}
 		return view;
 	}
