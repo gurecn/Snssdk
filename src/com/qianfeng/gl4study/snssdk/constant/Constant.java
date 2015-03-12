@@ -26,4 +26,7 @@ public class Constant {
 	public static final int TYPE_2_CATEGORY_ID_HOT_FLAG_SNSSDK = 4;//热门
 	public static final int TYPE_2_CATEGORY_ID_FRESH_FLAG_SNSSDK = 3;//新鲜
 
+
+
+
 }

@@ -4,6 +4,7 @@ package com.qianfeng.gl4study.snssdk.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.adapter.SnssdkMainAdapter;
 import com.qianfeng.gl4study.snssdk.constant.Constant;
+import com.qianfeng.gl4study.snssdk.model.SingletonVariable;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
 import com.qianfeng.gl4study.snssdk.tasks.SnssdkTask;
 import com.qianfeng.gl4study.snssdk.tasks.TaskProcessor;
@@ -82,7 +84,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
 				.append(levelURL).append(level)//推荐分类
 				.append(categoryIdURL).append(category)//文本段子
-				.append(countURL).append(count);   //返回20个数据
+				.append(countURL).append(count)  //返回20个数据
+				.append(minTimeURL).append(SingletonVariable.getMinTimeWord());
 		snssdkTask.execute(stringBuilder.toString(),category+"");
 
 		adapter = new SnssdkMainAdapter(this, snssdks);
@@ -151,6 +154,47 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				String resultFlag = result.getString("message");
 				if("success".equals(resultFlag)){
 					JSONObject data = result.getJSONObject("data");
+					double minTime1 = data.getDouble("min_time");
+					double maxTime1 = data.getDouble("max_time");
+					SharedPreferences sharedPreferences  = getSharedPreferences("config", MODE_PRIVATE);
+					SharedPreferences.Editor edit = sharedPreferences.edit();
+					if("1".equals(flag)){
+						String minTimeWordString = SingletonVariable.getMinTimeWord();
+						if(null == minTimeWordString||minTime1>Double.parseDouble(minTimeWordString)){
+							SingletonVariable.setMinTimeWord(minTime1+"");
+							edit.putString("minTimeWord",minTime1+"");
+						}
+						String maxTimeWordString = SingletonVariable.getMaxTimeWord();
+						if(null == maxTimeWordString||maxTime1<Double.parseDouble(maxTimeWordString)){
+							SingletonVariable.setMaxTimeWord(maxTime1 + "");
+							edit.putString("maxTimeWord",maxTime1+"");
+						}
+					}else if("2".equals(flag)){
+						String minTimeImageString = SingletonVariable.getMinTimeImage();
+						if(null == minTimeImageString||minTime1>Double.parseDouble(minTimeImageString)){
+							SingletonVariable.setMinTimeImage(minTime1 + "");
+							edit.putString("minTimeImage",minTime1+"");
+						}
+						String maxTimeImageString = SingletonVariable.getMaxTimeImage();
+						if(null == maxTimeImageString||maxTime1<Double.parseDouble(maxTimeImageString)){
+							SingletonVariable.setMaxTimeImage(maxTime1 + "");
+							edit.putString("maxTimeImage",maxTime1+"");
+						}
+
+					}else if("18".equals(flag)){
+						String minTimeVideoString = SingletonVariable.getMinTimeVideo();
+						if(null == minTimeVideoString||minTime1>Double.parseDouble(minTimeVideoString)){
+							SingletonVariable.setMinTimeVideo(minTime1 + "");
+							edit.putString("minTimeVideo",minTime1+"");
+						}
+						String maxTimeVideoString = SingletonVariable.getMaxTimeVideo();
+						if(null == maxTimeVideoString||maxTime1<Double.parseDouble(maxTimeVideoString)){
+							SingletonVariable.setMaxTimeVideo(maxTime1 + "");
+							edit.putString("maxTimeVideo",maxTime1+"");
+						}
+					}
+					edit.commit();
+
 					String tip = data.getString("tip");
 					JSONArray dataJSONArray = data.getJSONArray("data");
 					int type = Integer.parseInt(flag);

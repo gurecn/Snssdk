@@ -1,6 +1,7 @@
 package com.qianfeng.gl4study.snssdk.tasks;
 
 import android.os.AsyncTask;
+import com.qianfeng.gl4study.snssdk.utils.FileCache;
 import com.qianfeng.gl4study.snssdk.utils.HttpTool;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +36,21 @@ public class SnssdkTask extends AsyncTask<String ,Integer,JSONObject> {
 		JSONObject ret = null;
 		if(params.length==2){
 			flag = params[1];
-			byte[] bytes = HttpTool.get(params[0]);
+			String url = params[0];
+
+			//检查需要下载的数据是否已经存储到本地，是的话直接返回，否则进行下载
+			FileCache fileCache = FileCache.getInstance();
+
+			byte[] bytes = fileCache.getContent(url);
+
+			if(bytes==null||bytes.length<=0){
+				bytes = HttpTool.get(params[0]);
+				if(bytes!=null) {
+					FileCache.getInstance().putContent(url,bytes);
+
+					//每次缓存数据均需更新配置文件
+				}
+			}
 			if(bytes!=null){
 				try {
 					String str = new String(bytes, "UTF-8");
