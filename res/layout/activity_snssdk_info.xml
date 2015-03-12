@@ -1,17 +1,27 @@
-<ScrollView
-	    xmlns:android = "http://schemas.android.com/apk/res/android"
-	    android:id="@+id/snssdk_info_scroll_view"
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft = "@dimen/activity_horizontal_margin"
-        android:paddingRight = "@dimen/activity_horizontal_margin"
-	    android:background="@drawable/main_bg"
-    >
-	<com.qianfeng.gl4study.snssdk.view.SnssdkInfViewPager
-			android:id="@+id/snssdk_info_view_pager"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			/>
-</ScrollView>
+
+<LinearLayout
+		xmlns:android = "http://schemas.android.com/apk/res/android"
+		android:layout_width = "match_parent"
+		android:layout_height = "match_parent"
+		android:orientation="vertical"
+        >
+	<ScrollView
+			xmlns:android = "http://schemas.android.com/apk/res/android"
+			android:id="@+id/snssdk_info_scroll_view"
+			android:layout_width = "match_parent"
+			android:layout_height = "match_parent"
+			android:orientation="vertical"
+			android:paddingLeft = "@dimen/activity_horizontal_margin"
+			android:paddingRight = "@dimen/activity_horizontal_margin"
+			android:background="@drawable/main_bg"
+			>
+		<com.qianfeng.gl4study.snssdk.view.SnssdkInfViewPager
+				android:id="@+id/snssdk_info_view_pager"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				/>
+	</ScrollView>
+</LinearLayout>
+
+
 

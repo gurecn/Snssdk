@@ -95,6 +95,7 @@ public class FlyleafActivity extends Activity implements TaskProcessor {
 		if(wordTask&&imageTask){
 			Intent intent = new Intent(this, MainActivity.class);
 			startActivity(intent);
+			finish();
 		}
 	}
 }

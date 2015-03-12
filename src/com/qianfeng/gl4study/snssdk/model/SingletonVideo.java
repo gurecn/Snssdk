@@ -1,5 +1,8 @@
 package com.qianfeng.gl4study.snssdk.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * I'm glad to share my knowledge with you all.
@@ -8,6 +11,24 @@ package com.qianfeng.gl4study.snssdk.model;
  * Email:pdsfgl@live.com
  */
 public class SingletonVideo {
+
+	private static List<Snssdk> snssdks = new LinkedList<Snssdk>();
+
+	public static List<Snssdk> getSnssdks() {
+		return snssdks;
+	}
+
+	public void addSnssdks(Snssdk snssdk) {
+		snssdks.add(snssdks.size(),snssdk);
+	}
+
+	public boolean addAllSnssdks(LinkedList<Snssdk> snssdks1){
+		return snssdks.addAll(snssdks.size(),snssdks1);
+	}
+	public void removeSnssdks(int postion){
+		snssdks.remove(postion);
+	}
+
 	private static SingletonVideo ourInstance = new SingletonVideo();
 
 	public static SingletonVideo getInstance() {

@@ -49,13 +49,6 @@ public class SnssdkInfViewPager extends ViewPager {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-/*
-
-		int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
-		super.onMeasure(widthMeasureSpec, expandSpec);
-
-*/
-
 		int height = 0;
 		for (int i = 0; i < getChildCount(); i++) {
 			View child = getChildAt(i);
@@ -64,9 +57,7 @@ public class SnssdkInfViewPager extends ViewPager {
 			if (h > height)
 				height = h;
 		}
-
 		heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
-
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
 	}

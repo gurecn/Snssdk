@@ -7,6 +7,7 @@
         >
     <!--Title-->
     <LinearLayout
+            android:id="@+id/item_fragment_bar_user_ll"
             android:orientation="horizontal"
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"

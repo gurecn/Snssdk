@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import com.qianfeng.gl4study.snssdk.fragment.SnssdkInfoFragment;
+import com.qianfeng.gl4study.snssdk.model.SingletonImage;
+import com.qianfeng.gl4study.snssdk.model.SingletonVideo;
+import com.qianfeng.gl4study.snssdk.model.SingletonWord;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
 
 /**
@@ -18,18 +21,25 @@ import com.qianfeng.gl4study.snssdk.model.Snssdk;
 public class SnssdkViewPagerAdapter extends FragmentPagerAdapter {
 
 
-	private Snssdk snssdk;
-	public SnssdkViewPagerAdapter(FragmentManager fm,Snssdk snssdk) {
-		super(fm);
-		this.snssdk = snssdk;
+	private int category;
 
+	public SnssdkViewPagerAdapter(FragmentManager fm,int category) {
+		super(fm);
+		this.category = category;
 	}
 
 	@Override
 	public Fragment getItem(int i) {
-		Log.d("SnssdkViewPagerAdapter","到这里");
 		Fragment fragment = null;
 		Bundle bundle = new Bundle();
+		Snssdk snssdk = null;
+		if(category == 1){
+			snssdk = SingletonWord.getSnssdks().get(i);
+		}else if(category == 2){
+			snssdk = SingletonImage.getSnssdks().get(i);
+		}else if(category == 18){
+			snssdk = SingletonVideo.getSnssdks().get(i);
+		}
 		bundle.putSerializable("snssdk", snssdk);
 		fragment = new SnssdkInfoFragment();
 		fragment.setArguments(bundle);
@@ -38,6 +48,14 @@ public class SnssdkViewPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return 3;
+		int ret = 0;
+		if(category == 1){
+			ret = SingletonWord.getSnssdks().size();
+		}else if(category == 2){
+			ret = SingletonImage.getSnssdks().size();
+		}else if(category == 18){
+			ret = SingletonVideo.getSnssdks().size();
+		}
+		return ret;
 	}
 }

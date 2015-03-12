@@ -14,8 +14,7 @@ import android.widget.Toast;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.adapter.SnssdkMainAdapter;
 import com.qianfeng.gl4study.snssdk.constant.Constant;
-import com.qianfeng.gl4study.snssdk.model.SingletonVariable;
-import com.qianfeng.gl4study.snssdk.model.Snssdk;
+import com.qianfeng.gl4study.snssdk.model.*;
 import com.qianfeng.gl4study.snssdk.tasks.SnssdkTask;
 import com.qianfeng.gl4study.snssdk.tasks.TaskProcessor;
 import org.json.JSONArray;
@@ -31,7 +30,7 @@ import java.util.LinkedList;
 public class MainActivity extends Activity implements TaskProcessor, View.OnClickListener{
 
 
-	private LinkedList<Snssdk> snssdks;     //加载进内存的端子集合
+
 	private SnssdkMainAdapter adapter;      //显示段子的Adapter
 	private ListView listViewSnssdk;
 	private SnssdkTask snssdkTask;
@@ -58,7 +57,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		listViewSnssdk = (ListView) findViewById(R.id.recycle_view);//主界面显示段子列表
-		snssdks = new LinkedList<Snssdk>();
+
 //=================================================
 		//设置隐藏ActionBar隐藏标题，图标，上界面的title栏
 		ActionBar actionBar = getActionBar();
@@ -88,7 +87,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				.append(minTimeURL).append(SingletonVariable.getMinTimeWord());
 		snssdkTask.execute(stringBuilder.toString(),category+"");
 
-		adapter = new SnssdkMainAdapter(this, snssdks);
+		adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
 		listViewSnssdk.setAdapter(adapter);
 	}
 
@@ -139,7 +138,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			Toast.makeText(this,"examine",Toast.LENGTH_LONG).show();
 		}else {
 			snssdkTask = new SnssdkTask(this);
-			Log.d("MainActivity","开始下载======"+snssdks.size());
 			stringBuilder.append(categoryIdURL).append(category);//文本段子
 			snssdkTask.execute(stringBuilder.toString(),category+"");
 		}
@@ -153,12 +151,24 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			try {
 				String resultFlag = result.getString("message");
 				if("success".equals(resultFlag)){
+					LinkedList<Snssdk> snssdks = new LinkedList<Snssdk>();
 					JSONObject data = result.getJSONObject("data");
+					String tip = data.getString("tip");
+					JSONArray dataJSONArray = data.getJSONArray("data");
+					int type = Integer.parseInt(flag);
+					for (int i = 0; i < dataJSONArray.length(); i++) {
+						JSONObject jsonObject = dataJSONArray.getJSONObject(i);
+						JSONObject group = jsonObject.getJSONObject("group");
+						Snssdk snssdk = new Snssdk();
+						snssdk.parseInformation(group,type);
+						snssdks.add(snssdk);
+					}
 					double minTime1 = data.getDouble("min_time");
 					double maxTime1 = data.getDouble("max_time");
 					SharedPreferences sharedPreferences  = getSharedPreferences("config", MODE_PRIVATE);
 					SharedPreferences.Editor edit = sharedPreferences.edit();
-					if("1".equals(flag)){
+					if(type == 1){
+						SingletonWord.getInstance().addAllSnssdks(snssdks);
 						String minTimeWordString = SingletonVariable.getMinTimeWord();
 						if(null == minTimeWordString||minTime1>Double.parseDouble(minTimeWordString)){
 							SingletonVariable.setMinTimeWord(minTime1+"");
@@ -169,7 +179,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 							SingletonVariable.setMaxTimeWord(maxTime1 + "");
 							edit.putString("maxTimeWord",maxTime1+"");
 						}
-					}else if("2".equals(flag)){
+					}else if(type == 2){
+						SingletonImage.getInstance().addAllSnssdks(snssdks);
 						String minTimeImageString = SingletonVariable.getMinTimeImage();
 						if(null == minTimeImageString||minTime1>Double.parseDouble(minTimeImageString)){
 							SingletonVariable.setMinTimeImage(minTime1 + "");
@@ -181,7 +192,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 							edit.putString("maxTimeImage",maxTime1+"");
 						}
 
-					}else if("18".equals(flag)){
+					}else if(type == 18){
+						SingletonVideo.getInstance().addAllSnssdks(snssdks);
 						String minTimeVideoString = SingletonVariable.getMinTimeVideo();
 						if(null == minTimeVideoString||minTime1>Double.parseDouble(minTimeVideoString)){
 							SingletonVariable.setMinTimeVideo(minTime1 + "");
@@ -194,17 +206,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 						}
 					}
 					edit.commit();
-
-					String tip = data.getString("tip");
-					JSONArray dataJSONArray = data.getJSONArray("data");
-					int type = Integer.parseInt(flag);
-					for (int i = 0; i < dataJSONArray.length(); i++) {
-						JSONObject jsonObject = dataJSONArray.getJSONObject(i);
-						JSONObject group = jsonObject.getJSONObject("group");
-						Snssdk snssdk = new Snssdk();
-						snssdk.parseInformation(group,type);
-						snssdks.add(snssdk);
-					}
 					Log.d("MainActivity","下载完成============="+snssdks.size());
 					//数据添加完成，更新List
 					listViewSnssdk.setAdapter(adapter);
@@ -229,7 +230,14 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		Snssdk snssdk = null;
 		if(tag!=null) {
 			position = (Integer) tag;
-			snssdk = snssdks.get(position);
+
+			if(category == 1){
+				snssdk = SingletonWord.getSnssdks().get(position);
+			}else if(category == 2){
+				snssdk = SingletonImage.getSnssdks().get(position);
+			}else if(category == 18){
+				snssdk = SingletonVideo.getSnssdks().get(position);
+			}
 			Log.d("MainActivity","onClick=============");
 			switch (id){
 				case R.id.item_fragment_common://点击内容跳转到详情页面，文字，图片，视频
@@ -265,7 +273,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 						Log.d("MainActivity", "item_fragment_bar_bad");
 					}
 					break;
-				case R.id.item_fragment_bar_hot_ll://点击评论，跳转到评论页面
+				case R.id.item_fragment_bar_hot_ll://点击评论，跳转到分享页面
 					adapter.notifyDataSetChanged();
 					break;
 				//点击头像
@@ -287,7 +295,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		Intent intent = new Intent(this, SnssdkInfoActivity.class);
 		if(position>=0) {
 			intent.putExtra("position",position);
-			intent.putExtra("snssdk",snssdks.get(position));
+			intent.putExtra("category",category);
 		}
 		startActivity(intent);
 		Log.d("MainActivity","item_fragment_word");
@@ -300,7 +308,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 		//清空显示列表,将原数据置空
 		listViewSnssdk.setAdapter(null);
-		snssdks.clear();
+		//snssdks.clear();
 		//首先将所有图标设置成暗色，然后点击哪一个哪一个变色即可
 		itemWord.setIcon(R.drawable.document_main_one);
 		itemImage.setIcon(R.drawable.camera_main_one);
