@@ -169,6 +169,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 					SharedPreferences.Editor edit = sharedPreferences.edit();
 					if(type == 1){
 						SingletonWord.getInstance().addAllSnssdks(snssdks);
+						adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
 						String minTimeWordString = SingletonVariable.getMinTimeWord();
 						if(null == minTimeWordString||minTime1>Double.parseDouble(minTimeWordString)){
 							SingletonVariable.setMinTimeWord(minTime1+"");
@@ -181,6 +182,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 						}
 					}else if(type == 2){
 						SingletonImage.getInstance().addAllSnssdks(snssdks);
+						adapter = new SnssdkMainAdapter(this, SingletonImage.getSnssdks());
 						String minTimeImageString = SingletonVariable.getMinTimeImage();
 						if(null == minTimeImageString||minTime1>Double.parseDouble(minTimeImageString)){
 							SingletonVariable.setMinTimeImage(minTime1 + "");
@@ -194,6 +196,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 					}else if(type == 18){
 						SingletonVideo.getInstance().addAllSnssdks(snssdks);
+						adapter = new SnssdkMainAdapter(this, SingletonVideo.getSnssdks());
 						String minTimeVideoString = SingletonVariable.getMinTimeVideo();
 						if(null == minTimeVideoString||minTime1>Double.parseDouble(minTimeVideoString)){
 							SingletonVariable.setMinTimeVideo(minTime1 + "");
@@ -228,9 +231,17 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		Object tag = v.getTag();
 		int position = -1;
 		Snssdk snssdk = null;
+
+
+		if(id == R.id.ib_user_icon) {
+			Intent intent = new Intent(this, PersonActivity.class);
+			startActivity(intent);
+		}else if(id == R.id.ib_push_contribute){
+			Intent intent = new Intent(this, ContributeActivity.class);
+			startActivity(intent);
+		}
 		if(tag!=null) {
 			position = (Integer) tag;
-
 			if(category == 1){
 				snssdk = SingletonWord.getSnssdks().get(position);
 			}else if(category == 2){
@@ -275,17 +286,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 					break;
 				case R.id.item_fragment_bar_hot_ll://点击评论，跳转到分享页面
 					adapter.notifyDataSetChanged();
-					break;
-				//点击头像
-				case R.id.ib_user_icon:
-					Intent intent = new Intent(this, PersonActivity.class);
-					startActivity(intent);
-					break;
-
-				//点击提交
-				case R.id.ib_push_contribute:
-					intent = new Intent(this, ContributeActivity.class);
-					startActivity(intent);
 					break;
 			}
 		}

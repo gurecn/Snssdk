@@ -1,17 +1,59 @@
-
 <LinearLayout
 		xmlns:android = "http://schemas.android.com/apk/res/android"
 		android:layout_width = "match_parent"
 		android:layout_height = "match_parent"
 		android:orientation="vertical"
         >
-		<android.support.v4.view.ViewPager
-				android:id="@+id/snssdk_info_view_pager"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				>
-		</android.support.v4.view.ViewPager>
+	<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width = "match_parent"
+			android:layout_height = "wrap_content"
+			android:background="@drawable/ic_main_bg_top"
+			android:gravity="center"
+			>
+		<ImageView
+				android:id="@+id/ib_user_icon"
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				android:paddingLeft = "@dimen/activity_horizontal_margin"
+				android:paddingRight = "@dimen/activity_horizontal_margin"
+				android:src="@drawable/ic_back_normal"
+				/>
+		<TextView
+				android:id="@+id/txt_main_level"
+				android:layout_width = "0dp"
+				android:layout_height = "wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="20sp"
+				android:text="详情"
+				android:textColor="#000"
+				/>
+		<TextView
+				android:id="@+id/ib_push_contribute"
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				android:paddingLeft = "@dimen/activity_horizontal_margin"
+				android:paddingRight = "@dimen/activity_horizontal_margin"
+				android:textColor="#F00"
+				android:text="举报"
+				/>
 
+	</LinearLayout>
+	<android.support.v4.view.ViewPager
+			android:id="@+id/snssdk_info_view_pager"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+	        android:layout_weight="1"
+			>
+	</android.support.v4.view.ViewPager>
+	<ImageView
+			android:id="@+id/iv_publish_new_discuss"
+			android:layout_width = "match_parent"
+			android:layout_height = "wrap_content"
+	        android:src="@drawable/ic_discuss_new"
+	        android:scaleType="centerInside"
+			/>
 
 </LinearLayout>
 

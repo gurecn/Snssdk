@@ -1,5 +1,6 @@
 package com.qianfeng.gl4study.snssdk.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,9 +13,13 @@ public class PersonActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_person);
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowHomeEnabled(false);
+		actionBar.hide();
 	}
 
-
+/*
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -36,4 +41,5 @@ public class PersonActivity extends Activity {
 
 		return super.onOptionsItemSelected(item);
 	}
+	*/
 }
