@@ -11,6 +11,8 @@ import android.view.*;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.adapter.SnssdkMainAdapter;
 import com.qianfeng.gl4study.snssdk.constant.Constant;
@@ -27,12 +29,12 @@ import java.util.LinkedList;
  * 整个项目的主界面显示
  */
 
-public class MainActivity extends Activity implements TaskProcessor, View.OnClickListener{
+public class MainActivity extends Activity implements TaskProcessor, View.OnClickListener,PullToRefreshBase.OnRefreshListener2<ListView>{
 
 
 
 	private SnssdkMainAdapter adapter;      //显示段子的Adapter
-	private ListView listViewSnssdk;
+	private PullToRefreshListView refreshListView;
 	private SnssdkTask snssdkTask;
 	private MenuItem itemWord;
 	private MenuItem itemImage;
@@ -50,13 +52,23 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private int count = 0;
 	private long minTime = 0;
 	private long maxTime = 0;
+	private ListView listViewSnssdk;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		listViewSnssdk = (ListView) findViewById(R.id.recycle_view);//主界面显示段子列表
+		refreshListView = (PullToRefreshListView) findViewById(R.id.recycle_view);//主界面显示段子列表
+		listViewSnssdk = refreshListView.getRefreshableView();
+		refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+		refreshListView.setPullLabel("拉啊拉");
+		refreshListView.setRefreshingLabel("刷啊刷");
+		refreshListView.setReleaseLabel("松阿松");
+
+
+		refreshListView.setOnRefreshListener(this);
+
 
 		//设置隐藏ActionBar隐藏标题，图标，上界面的title栏
 		ActionBar actionBar = getActionBar();
@@ -74,6 +86,42 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 		adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
 		listViewSnssdk.setAdapter(adapter);
+	}
+
+
+	/**
+	 * 下拉刷新
+	 * @param refreshView
+	 */
+	@Override
+	public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+		StringBuilder stringBuilder = new StringBuilder();
+		snssdkTask = new SnssdkTask(this);
+		stringBuilder = new StringBuilder();
+		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
+				.append(levelURL).append(level)//推荐分类
+				.append(categoryIdURL).append(category)//文本段子
+				.append(countURL).append(count)   //返回20个数据
+				.append(minTimeURL).append(minTime);
+		snssdkTask.execute(stringBuilder.toString(),category+"");
+	}
+
+	/**
+	 * 上拉加载
+	 * @param refreshView
+	 */
+	@Override
+	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+		snssdkTask = new SnssdkTask(this);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
+				.append(levelURL).append(level)//推荐分类
+				.append(categoryIdURL).append(category)
+				.append(countURL).append(count)   //返回20个数据
+				.append(maxTimeURL).append(maxTime);
+		snssdkTask.execute(stringBuilder.toString(),category+"");
 	}
 
 	@Override
