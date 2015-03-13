@@ -1,41 +1,571 @@
-<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
-                android:layout_width = "match_parent"
-                android:layout_height = "match_parent"
-                android:background="#FFF"
-	>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:background="@drawable/ic_main_bg_top"
-            android:gravity="center"
-            >
-        <ImageView
-                android:id="@+id/ig_back_person"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:paddingLeft = "@dimen/activity_horizontal_margin"
-                android:paddingRight = "@dimen/activity_horizontal_margin"
-                android:src="@drawable/ic_back_normal"
-                />
-        <TextView
-                android:id="@+id/txt_main_level"
-                android:layout_width = "0dp"
-                android:layout_height = "wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:text="我的"
-                android:textColor="#000"
-                />
-        <ImageView
-                android:id="@+id/ig_setting_person"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:paddingLeft = "@dimen/activity_horizontal_margin"
-                android:paddingRight = "@dimen/activity_horizontal_margin"
-                android:src="@drawable/ic_setting_normal"
-                />
-    </LinearLayout>
 
-</RelativeLayout>
+<LinearLayout
+        xmlns:android = "http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background="@drawable/ic_main_bg_top"
+        >
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:gravity="center"
+                >
+                <ImageView
+                        android:id="@+id/ig_back_person"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:paddingLeft = "@dimen/activity_horizontal_margin"
+                        android:paddingRight = "@dimen/activity_horizontal_margin"
+                        android:src="@drawable/ic_back_normal"
+                        />
+                <TextView
+                        android:id="@+id/txt_main_level"
+                        android:layout_width = "0dp"
+                        android:layout_height = "wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:text="我的"
+                        android:textColor="#000"
+                        />
+                <ImageView
+                        android:id="@+id/ig_setting_person"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:paddingLeft = "@dimen/activity_horizontal_margin"
+                        android:paddingRight = "@dimen/activity_horizontal_margin"
+                        android:src="@drawable/ic_setting_normal"
+                        />
+        </LinearLayout>
+        <ScrollView
+                android:layout_width = "match_parent"
+                android:layout_height = "0dp"
+                android:layout_weight="1"
+                >
+                <RelativeLayout
+                        android:layout_width = "match_parent"
+                        android:layout_height = "match_parent"
+                        >
+                        <LinearLayout
+                                android:id="@+id/my_layout_top_1_ll"
+                                android:orientation="vertical"
+                                android:layout_width = "match_parent"
+                                android:layout_height = "wrap_content"
+                                android:gravity="center"
+                                android:background="#FFF"
+                                android:showDividers="end"
+                                android:divider="@drawable/my_line_horizontal"
+                                >
+                                <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width = "match_parent"
+                                        android:layout_height = "wrap_content"
+                                        >
+                                        <!--显示关注-->
+                                        <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width = "0dp"
+                                                android:layout_height = "match_parent"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                >
+                                                <TextView
+                                                        android:id="@+id/txt_person_watch_count"
+                                                        android:layout_width = "wrap_content"
+                                                        android:layout_height = "wrap_content"
+                                                        android:layout_margin="10dp"
+                                                        android:textColor="#000"
+                                                        android:text="0"
+                                                        />
+                                                <TextView
+                                                        android:layout_width = "wrap_content"
+                                                        android:layout_height = "wrap_content"
+                                                        android:textSize="17sp"
+                                                        android:text="关注"
+                                                        />
+                                        </LinearLayout>
+                                        <!--显示用户-->
+                                        <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width = "0dp"
+                                                android:layout_height = "match_parent"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                >
+                                                <ImageView
+                                                        android:id = "@+id/ig_person_user_icon"
+                                                        android:layout_width = "wrap_content"
+                                                        android:layout_height = "wrap_content"
+                                                        android:src="@drawable/my_defalut_avatar"
+                                                        android:layout_marginTop = "20dp"
+                                                        android:layout_margin="10dp"
+                                                        />
+                                                <TextView
+                                                        android:id="@+id/txt_person_user_name"
+                                                        android:layout_width = "wrap_content"
+                                                        android:layout_height = "wrap_content"
+                                                        android:textColor="#000"
+                                                        android:text="小三爱内涵"
+                                                        android:layout_marginBottom="10dp"
+                                                        />
+                                        </LinearLayout>
+                                        <!--显示粉丝-->
+                                        <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width = "0dp"
+                                                android:layout_height = "match_parent"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                >
+                                                <TextView
+                                                        android:id="@+id/txt_person_fans_count"
+                                                        android:layout_width = "wrap_content"
+                                                        android:layout_height = "wrap_content"
+                                                        android:layout_margin="10dp"
+                                                        android:textColor="#000"
+                                                        android:text="0"
+                                                        />
+                                                <TextView
+                                                        android:layout_width = "wrap_content"
+                                                        android:layout_height = "wrap_content"
+                                                        android:textSize="17sp"
+                                                        android:text="粉丝"
+                                                        />
+                                        </LinearLayout>
+                                </LinearLayout>
+                                <LinearLayout
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_margin="10dp"
+                                        android:gravity="center"
+                                        >
+                                        <ImageView
+                                                android:layout_width = "wrap_content"
+                                                android:layout_height = "wrap_content"
+                                                android:src="@drawable/my_integral_icon"
+                                                />
+                                        <TextView
+                                                android:id="@+id/txt_person_integral_count"
+                                                android:layout_width = "wrap_content"
+                                                android:layout_height = "wrap_content"
+                                                android:layout_marginLeft="10dp"
+                                                android:textSize="14sp"
+                                                android:textColor="#000"
+                                                android:text="0"
+                                                />
+                                </LinearLayout>
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_marginLeft="50dp"
+                                        android:layout_marginRight="50dp"
+                                        android:layout_marginBottom="15dp"
+                                        android:gravity="center"
+                                        android:textSize="17sp"
+                                        android:text="这个人很懒，什么也没有留下"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_marginBottom="15dp"
+                                        android:textSize="15sp"
+                                        android:textColor="#93C0D9"
+                                        android:text="编辑资料"
+                                        />
+                        </LinearLayout>
+                        <RelativeLayout
+                                android:id="@+id/my_layout_top_2_rl"
+                                android:layout_width = "match_parent"
+                                android:layout_height = "wrap_content"
+                                android:layout_below="@id/my_layout_top_1_ll"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:background="#FFF"
+                                >
+                                <ImageView
+                                        android:id="@+id/my_image_vertical_line"
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:src="@drawable/my_line_vertical"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_centerVertical="true"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/my_write_icon"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="60dp"
+                                        android:textColor="#000"
+                                        android:text="我要投稿"
+                                        />
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_toRightOf="@id/my_image_vertical_line"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/my_vote_icon"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_toRightOf="@id/my_image_vertical_line"
+                                        android:layout_marginLeft="60dp"
+                                        android:textColor="#000"
+                                        android:text="我来审核"
+                                        />
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                                android:id="@+id/my_layout_top_3_rl"
+                                android:layout_width = "match_parent"
+                                android:layout_height = "wrap_content"
+                                android:layout_below="@+id/my_layout_top_2_rl"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="#FFF"
+                                >
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/my_friends_icon"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="60dp"
+                                        android:textColor="#000"
+                                        android:text="段友圈"
+                                        />
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/icon_arrow_night"
+                                        android:scaleType="centerCrop"
+                                        />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                                android:id="@+id/my_layout_top_4_rl"
+                                android:layout_width = "match_parent"
+                                android:layout_height = "wrap_content"
+                                android:layout_below="@+id/my_layout_top_3_rl"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="#FFF"
+
+                                >
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/my_message_icon"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="60dp"
+                                        android:textColor="#000"
+                                        android:text="消息"
+                                        />
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/icon_arrow_night"
+                                        android:scaleType="centerCrop"
+                                        />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                                android:id="@+id/my_layout_top_5_rl"
+                                android:layout_width = "match_parent"
+                                android:layout_height = "wrap_content"
+                                android:layout_below="@+id/my_layout_top_4_rl"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:background="#FFF"
+                                >
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/my_private_msg_icon"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="60dp"
+                                        android:textColor="#000"
+                                        android:text="悄悄话"
+                                        />
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/icon_arrow_night"
+                                        android:scaleType="centerCrop"
+                                        />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                                android:id="@+id/my_layout_top_6_rl"
+                                android:layout_width = "match_parent"
+                                android:layout_height = "wrap_content"
+                                android:layout_below="@+id/my_layout_top_5_rl"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="#FFF"
+                                >
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/my_publish_icon"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="60dp"
+                                        android:textColor="#000"
+                                        android:text="投稿"
+                                        />
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/icon_arrow_night"
+                                        android:scaleType="centerCrop"
+                                        />
+                        </RelativeLayout>
+                        <RelativeLayout
+                                android:id="@+id/my_layout_top_7_rl"
+                                android:layout_width = "match_parent"
+                                android:layout_height = "wrap_content"
+                                android:layout_below="@+id/my_layout_top_6_rl"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:background="#FFF"
+                                >
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/my_comment_icon"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="60dp"
+                                        android:textColor="#000"
+                                        android:text="评论"
+                                        />
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/icon_arrow_night"
+                                        android:scaleType="centerCrop"
+                                        />
+                        </RelativeLayout>
+                        <RelativeLayout
+                                android:id="@+id/my_layout_top_8_rl"
+                                android:layout_width = "match_parent"
+                                android:layout_height = "wrap_content"
+                                android:layout_below="@+id/my_layout_top_7_rl"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:background="#FFF"
+                                >
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/my_favorite_icon"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="60dp"
+                                        android:textColor="#000"
+                                        android:text="收藏"
+                                        />
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/icon_arrow_night"
+                                        android:scaleType="centerCrop"
+                                        />
+                        </RelativeLayout>
+                        <RelativeLayout
+                                android:id="@+id/my_layout_top_9_rl"
+                                android:layout_width = "match_parent"
+                                android:layout_height = "wrap_content"
+                                android:layout_below="@+id/my_layout_top_8_rl"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:background="#FFF"
+                                >
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/my_play_game"
+                                        android:scaleType="centerCrop"
+                                        />
+                                <TextView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="60dp"
+                                        android:textColor="#000"
+                                        android:text="游戏"
+                                        />
+                                <ImageView
+                                        android:layout_width = "wrap_content"
+                                        android:layout_height = "wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@drawable/icon_arrow_night"
+                                        android:scaleType="centerCrop"
+                                        />
+                        </RelativeLayout>
+
+                        <ImageView
+                                android:layout_width = "match_parent"
+                                android:layout_height = "0.5dp"
+                                android:src="@drawable/my_line_horizontal"
+                                android:layout_below="@+id/my_layout_top_4_rl"
+                                android:scaleType="centerCrop"
+                                />
+                        <ImageView
+                                android:layout_width = "match_parent"
+                                android:layout_height = "0.5dp"
+                                android:src="@drawable/my_line_horizontal"
+                                android:layout_below="@+id/my_layout_top_6_rl"
+                                android:scaleType="centerCrop"
+                                />
+                        <ImageView
+                                android:layout_width = "match_parent"
+                                android:layout_height = "0.5dp"
+                                android:src="@drawable/my_line_horizontal"
+                                android:layout_below="@+id/my_layout_top_7_rl"
+                                android:scaleType="centerCrop"
+                                />
+                        <ImageView
+                                android:layout_width = "match_parent"
+                                android:layout_height = "0.5dp"
+                                android:src="@drawable/my_line_horizontal"
+                                android:layout_below="@+id/my_layout_top_8_rl"
+                                android:scaleType="centerCrop"
+                                />
+                        <ImageView
+                                android:layout_width = "match_parent"
+                                android:layout_height = "0.5dp"
+                                android:src="@drawable/my_line_horizontal"
+                                android:layout_below="@+id/my_layout_top_9_rl"
+                                android:scaleType="centerCrop"
+                                />
+                </RelativeLayout>
+        </ScrollView>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:gravity="center"
+                android:background="#FFF"
+                >
+               <TextView
+                       android:layout_width = "wrap_content"
+                       android:layout_height = "wrap_content"
+                       android:gravity="center"
+                       android:text="推荐给朋友"
+                       android:layout_weight="1"
+                       android:textColor="#93C0D9"
+                       android:textSize="20sp"
+                       />
+                <ImageView
+                        android:layout_width = "0.5dp"
+                        android:layout_height = "match_parent"
+                        android:src="@drawable/my_line_vertical"
+                        android:scaleType="centerCrop"
+                        />
+
+                <TextView
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:gravity="center"
+                        android:text="用户反馈"
+                        android:layout_weight="1"
+                        android:textColor="#93C0D9"
+                        android:textSize="20sp"
+                        />
+        </LinearLayout>
+</LinearLayout>
+
+
+
+
+
+
+

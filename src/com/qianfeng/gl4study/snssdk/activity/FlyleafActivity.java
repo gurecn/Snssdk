@@ -5,13 +5,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.adapter.SnssdkMainAdapter;
 import com.qianfeng.gl4study.snssdk.constant.Constant;
-import com.qianfeng.gl4study.snssdk.model.SingletonVariable;
+import com.qianfeng.gl4study.snssdk.model.*;
 import com.qianfeng.gl4study.snssdk.tasks.SnssdkTask;
 import com.qianfeng.gl4study.snssdk.tasks.TaskProcessor;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.LinkedList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -86,10 +91,46 @@ public class FlyleafActivity extends Activity implements TaskProcessor {
 
 	@Override
 	public void processResult(JSONObject result, String flag) {
-		if("1".equals(flag)){
-			wordTask = true;
-		}else {
-			imageTask = true;
+		if(result!=null){      //段子列表
+			try {
+				String resultFlag = result.getString("message");
+				if("success".equals(resultFlag)){
+					LinkedList<Snssdk> snssdks = new LinkedList<Snssdk>();
+					JSONObject data = result.getJSONObject("data");
+					JSONArray dataJSONArray = data.getJSONArray("data");
+					int type = Integer.parseInt(flag);
+					for (int i = 0; i < dataJSONArray.length(); i++) {
+						JSONObject jsonObject = dataJSONArray.getJSONObject(i);
+						JSONObject group = jsonObject.getJSONObject("group");
+						Snssdk snssdk = new Snssdk();
+						snssdk.parseInformation(group,type);
+						snssdks.add(snssdk);
+					}
+					double minTime1 = data.getDouble("min_time");
+					double maxTime1 = data.getDouble("max_time");
+					SharedPreferences sharedPreferences  = getSharedPreferences("config", MODE_PRIVATE);
+					SharedPreferences.Editor edit = sharedPreferences.edit();
+					if("1".equals(flag)){
+						wordTask = true;
+						SingletonWord.getInstance().addAllSnssdks(snssdks);
+						SingletonVariable.setMinTimeWord(minTime1+"");
+						edit.putString("minTimeWord",minTime1+"");
+						SingletonVariable.setMaxTimeWord(maxTime1 + "");
+						edit.putString("maxTimeWord",maxTime1+"");
+					}else if(type == 2){
+						imageTask = true;
+						SingletonImage.getInstance().addAllSnssdks(snssdks);
+						SingletonVariable.setMinTimeImage(minTime1 + "");
+						edit.putString("minTimeImage",minTime1+"");
+						SingletonVariable.setMaxTimeImage(maxTime1 + "");
+						edit.putString("maxTimeImage",maxTime1+"");
+					}
+					edit.commit();
+					Log.d("MainActivity", "初次下载完成=============" + snssdks.size());
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 
 		if(wordTask&&imageTask){

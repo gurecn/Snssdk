@@ -58,34 +58,19 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		setContentView(R.layout.activity_main);
 		listViewSnssdk = (ListView) findViewById(R.id.recycle_view);//主界面显示段子列表
 
-//=================================================
 		//设置隐藏ActionBar隐藏标题，图标，上界面的title栏
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.hide();
-		//设置背景色
-		//actionBar.setSplitBackgroundDrawable(new ColorDrawable(R.drawable.main_rg_bg));
-//==================================================
-		//自定义标题栏的组件获取
 
+		//自定义标题栏的组件获取
 		// 用户头像
 		ImageView topUser = (ImageView) findViewById(R.id.ib_user_icon);
 		topUser.setOnClickListener(this);
 		//投稿图标
 		ImageView topContribute = (ImageView) findViewById(R.id.ib_push_contribute);
 		topContribute.setOnClickListener(this);
-//===================================================
-		//开启异步加载段子信息
-		snssdkTask = new SnssdkTask(this);
-
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
-				.append(levelURL).append(level)//推荐分类
-				.append(categoryIdURL).append(category)//文本段子
-				.append(countURL).append(count)  //返回20个数据
-				.append(minTimeURL).append(SingletonVariable.getMinTimeWord());
-		snssdkTask.execute(stringBuilder.toString(),category+"");
 
 		adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
 		listViewSnssdk.setAdapter(adapter);
@@ -102,6 +87,11 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		return true;
 	}
 
+	/**
+	 * 菜单的监听事件
+	 * @param item
+	 * @return
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -145,6 +135,12 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		return ret;
 	}
 
+	/**
+	 * 异步任务接口回调，所有数据的下载均使用该异步任务<br/>
+	 * 通过该回调函数的第二个参数判断开启回调的类别
+	 * @param result        返回的下载数据
+	 * @param flag          开启的异步类别
+	 */
 	@Override
 	public void processResult(JSONObject result, String  flag) {
 		if(result!=null){      //段子列表
@@ -291,6 +287,10 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		}
 	}
 
+	/**
+	 * 跳转到段子详情
+	 * @param position
+	 */
 	private void skipToInfo(int position){
 		Intent intent = new Intent(this, SnssdkInfoActivity.class);
 		if(position>=0) {
