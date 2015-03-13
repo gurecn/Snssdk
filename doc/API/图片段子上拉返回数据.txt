@@ -313,8 +313,8 @@ ic.snssdk.com/neihan/stream/category/data/v2/?category_id=2&level=6&message_curs
                         "avatar_url": "http://p2.pstatp.com/thumb/1567/3247354668",
                         "create_time": 1424474939,
                         "is_digg": 0,
-                        "user_name": "qwhfjejd",
-                        "user_profile_image_url": "http://p2.pstatp.com/thumb/1567/3247354668"
+                        "comment_name": "qwhfjejd",
+                        "comment_profile_image_url": "http://p2.pstatp.com/thumb/1567/3247354668"
                     }
                 ],
                 "type": 1
@@ -771,8 +771,8 @@ ic.snssdk.com/neihan/stream/category/data/v2/?category_id=2&level=6&message_curs
                         "avatar_url": "http://s0.pstatp.com/image/avatar.png",
                         "create_time": 1423454249,
                         "is_digg": 0,
-                        "user_name": "qzuser9...",
-                        "user_profile_image_url": "http://s0.pstatp.com/image/avatar.png"
+                        "comment_name": "qzuser9...",
+                        "comment_profile_image_url": "http://s0.pstatp.com/image/avatar.png"
                     }
                 ],
                 "type": 1

@@ -3,6 +3,7 @@ package com.qianfeng.gl4study.snssdk.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.adapter.SnssdkMainAdapter;
 import com.qianfeng.gl4study.snssdk.constant.Constant;
+import com.qianfeng.gl4study.snssdk.databases.SnssdkDatabasesManager;
 import com.qianfeng.gl4study.snssdk.model.*;
 import com.qianfeng.gl4study.snssdk.tasks.SnssdkTask;
 import com.qianfeng.gl4study.snssdk.tasks.TaskProcessor;
@@ -29,7 +31,7 @@ import java.util.LinkedList;
  * 整个项目的主界面显示
  */
 
-public class MainActivity extends Activity implements TaskProcessor, View.OnClickListener,PullToRefreshBase.OnRefreshListener2<ListView>{
+public class MainActivity extends Activity implements TaskProcessor, View.OnClickListener,PullToRefreshBase.OnRefreshListener2<ListView>,PullToRefreshBase.OnPullEventListener<ListView> {
 
 
 
@@ -40,16 +42,16 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private MenuItem itemImage;
 	private MenuItem itemVideo;
 
-	private String levelURL = "levelURL=";
+	private String levelURL = "level=";
 	private String categoryIdURL = "&category_id=";
-	private String countURL = "&countURL=";
+	private String countURL = "&count=";
 	private String minTimeURL = "&min_time=";
 	private String maxTimeURL = "&max_time=";
 
 	//标记需要获取的段子的参数
 	private int level=6;
 	private int category = 1;
-	private int count = 0;
+	private int count = 30;
 	private long minTime = 0;
 	private long maxTime = 0;
 	private ListView listViewSnssdk;
@@ -63,8 +65,11 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		listViewSnssdk = refreshListView.getRefreshableView();
 		refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
 		refreshListView.setPullLabel("拉啊拉");
+		refreshListView.setBackgroundResource(R.drawable.main_rg_bg);
 		refreshListView.setRefreshingLabel("刷啊刷");
 		refreshListView.setReleaseLabel("松阿松");
+
+		refreshListView.setOnPullEventListener(this);
 
 
 		refreshListView.setOnRefreshListener(this);
@@ -83,8 +88,23 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		//投稿图标
 		ImageView topContribute = (ImageView) findViewById(R.id.ib_push_contribute);
 		topContribute.setOnClickListener(this);
+/*
+		if(SingletonWord.getSnssdks().size()>0) {   //若新数据加载成功则显示
+			adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
+		}else {             //是数据未加载成功，则显示缓存的数据
+			snssdkTask = new SnssdkTask(this);
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
+					.append(levelURL).append(level)//推荐分类
+					.append(categoryIdURL).append(category)
+					.append(countURL).append(count)   //返回20个数据
+					.append(maxTimeURL).append(maxTime);
+			snssdkTask.execute(stringBuilder.toString(),category+"");
+		}
+	*/
 
-		adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
+		LinkedList<Snssdk> snssdks = SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(1);
+		adapter = new SnssdkMainAdapter(this,snssdks);
 		listViewSnssdk.setAdapter(adapter);
 	}
 
@@ -96,15 +116,24 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	@Override
 	public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 
+		if(category == 1){
+			minTime = SingletonVariable.getMinTimeWord();
+		}else if(category == 2){
+			minTime = SingletonVariable.getMinTimeImage();
+		}else if(category ==18){
+			minTime = SingletonVariable.getMinTimeVideo();
+		}
+
 		StringBuilder stringBuilder = new StringBuilder();
 		snssdkTask = new SnssdkTask(this);
-		stringBuilder = new StringBuilder();
 		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
 				.append(levelURL).append(level)//推荐分类
 				.append(categoryIdURL).append(category)//文本段子
 				.append(countURL).append(count)   //返回20个数据
 				.append(minTimeURL).append(minTime);
+		Log.d("Time1","使用minTime1==="+minTime);
 		snssdkTask.execute(stringBuilder.toString(),category+"");
+
 	}
 
 	/**
@@ -114,6 +143,14 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	@Override
 	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 
+		if(category == 1){
+			maxTime = SingletonVariable.getMaxTimeWord();
+		}else if(category == 2){
+			maxTime = SingletonVariable.getMaxTimeImage();
+		}else if(category ==18){
+			maxTime = SingletonVariable.getMaxTimeVideo();
+		}
+		Log.d("Time1","使用maxTime1==="+maxTime);
 		snssdkTask = new SnssdkTask(this);
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
@@ -205,57 +242,44 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 						JSONObject group = jsonObject.getJSONObject("group");
 						Snssdk snssdk = new Snssdk();
 						snssdk.parseInformation(group,type);
+						ContentValues values = snssdk.getContentValues();
+						SnssdkDatabasesManager.createInstance(this).saveSnssdk(values);
 						snssdks.add(snssdk);
 					}
-					double minTime1 = data.getDouble("min_time");
-					double maxTime1 = data.getDouble("max_time");
+					long minTime1 = data.getLong("min_time");
+					long maxTime1 = data.getLong("max_time");
+					Log.d("Time1","minTime1==="+minTime1+"maxTime1====="+maxTime1+"snssdks=="+snssdks.size());
 					SharedPreferences sharedPreferences  = getSharedPreferences("config", MODE_PRIVATE);
 					SharedPreferences.Editor edit = sharedPreferences.edit();
 					if(type == 1){
+						SingletonWord.getInstance().removeAll();
 						SingletonWord.getInstance().addAllSnssdks(snssdks);
-						adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
-						String minTimeWordString = SingletonVariable.getMinTimeWord();
-						if(null == minTimeWordString||minTime1>Double.parseDouble(minTimeWordString)){
-							SingletonVariable.setMinTimeWord(minTime1+"");
-							edit.putString("minTimeWord",minTime1+"");
-						}
-						String maxTimeWordString = SingletonVariable.getMaxTimeWord();
-						if(null == maxTimeWordString||maxTime1<Double.parseDouble(maxTimeWordString)){
-							SingletonVariable.setMaxTimeWord(maxTime1 + "");
-							edit.putString("maxTimeWord",maxTime1+"");
-						}
+						adapter = new SnssdkMainAdapter(this,snssdks);
+						SingletonVariable.setMinTimeWord(minTime1);
+						edit.putLong("minTimeWord", minTime1);
+						SingletonVariable.setMaxTimeWord(maxTime1);
+						edit.putLong("maxTimeWord", maxTime1);
 					}else if(type == 2){
+						SingletonImage.getInstance().removeAll();
 						SingletonImage.getInstance().addAllSnssdks(snssdks);
 						adapter = new SnssdkMainAdapter(this, SingletonImage.getSnssdks());
-						String minTimeImageString = SingletonVariable.getMinTimeImage();
-						if(null == minTimeImageString||minTime1>Double.parseDouble(minTimeImageString)){
-							SingletonVariable.setMinTimeImage(minTime1 + "");
-							edit.putString("minTimeImage",minTime1+"");
-						}
-						String maxTimeImageString = SingletonVariable.getMaxTimeImage();
-						if(null == maxTimeImageString||maxTime1<Double.parseDouble(maxTimeImageString)){
-							SingletonVariable.setMaxTimeImage(maxTime1 + "");
-							edit.putString("maxTimeImage",maxTime1+"");
-						}
-
+						SingletonVariable.setMinTimeImage(minTime1);
+						edit.putLong("minTimeImage", minTime1);
+						SingletonVariable.setMaxTimeImage(maxTime1);
+						edit.putLong("maxTimeImage", maxTime1);
 					}else if(type == 18){
 						SingletonVideo.getInstance().addAllSnssdks(snssdks);
 						adapter = new SnssdkMainAdapter(this, SingletonVideo.getSnssdks());
-						String minTimeVideoString = SingletonVariable.getMinTimeVideo();
-						if(null == minTimeVideoString||minTime1>Double.parseDouble(minTimeVideoString)){
-							SingletonVariable.setMinTimeVideo(minTime1 + "");
-							edit.putString("minTimeVideo",minTime1+"");
-						}
-						String maxTimeVideoString = SingletonVariable.getMaxTimeVideo();
-						if(null == maxTimeVideoString||maxTime1<Double.parseDouble(maxTimeVideoString)){
-							SingletonVariable.setMaxTimeVideo(maxTime1 + "");
-							edit.putString("maxTimeVideo",maxTime1+"");
-						}
+						SingletonVariable.setMinTimeVideo(minTime1);
+						edit.putLong("minTimeVideo", minTime1);
+						SingletonVariable.setMaxTimeVideo(maxTime1);
+						edit.putLong("maxTimeVideo",maxTime1);
 					}
 					edit.commit();
 					Log.d("MainActivity","下载完成============="+snssdks.size());
 					//数据添加完成，更新List
 					listViewSnssdk.setAdapter(adapter);
+					refreshListView.onRefreshComplete();
 					//adapter.notifyDataSetChanged();
 				}
 			} catch (JSONException e) {
@@ -299,30 +323,30 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 					skipToInfo(position);
 					break;
 				case R.id.item_fragment_bar_good_ll://点击顶
-					if(snssdk.getUserRepin()==1){
+					if(snssdk.getUser_repin()==1){
 						Toast.makeText(this,"你已经踩了，做人不要矛盾哦",Toast.LENGTH_SHORT).show();
 					}else {
-						if (snssdk.getUserDigg() == 0) {
-							snssdk.setDiggCount(snssdk.getDiggCount() + 1);
-							snssdk.setUserDigg(1);
+						if (snssdk.getUser_digg() == 0) {
+							snssdk.setDigg_count(snssdk.getDigg_count() + 1);
+							snssdk.setUser_digg(1);
 						} else {
-							snssdk.setDiggCount(snssdk.getDiggCount() - 1);
-							snssdk.setUserDigg(0);
+							snssdk.setDigg_count(snssdk.getDigg_count() - 1);
+							snssdk.setUser_digg(0);
 						}
 						adapter.notifyDataSetChanged();
 						Log.d("MainActivity", "item_fragment_bar_good");
 					}
 					break;
 				case R.id.item_fragment_bar_bad_ll://点击踩
-					if(snssdk.getUserDigg() == 1){
+					if(snssdk.getUser_digg() == 1){
 						Toast.makeText(this,"你已经顶了，做人不要矛盾哦",Toast.LENGTH_SHORT).show();
 					}else {
-						if (snssdk.getUserRepin() == 0) {
-							snssdk.setRepinCount(snssdk.getRepinCount() + 1);
-							snssdk.setUserRepin(1);
+						if (snssdk.getUser_repin() == 0) {
+							snssdk.setRepin_count(snssdk.getRepin_count() + 1);
+							snssdk.setUser_repin(1);
 						} else {
-							snssdk.setRepinCount(snssdk.getRepinCount() - 1);
-							snssdk.setUserRepin(0);
+							snssdk.setRepin_count(snssdk.getRepin_count() - 1);
+							snssdk.setUser_repin(0);
 						}
 						adapter.notifyDataSetChanged();
 						Log.d("MainActivity", "item_fragment_bar_bad");
@@ -361,5 +385,14 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		itemWord.setIcon(R.drawable.document_main_one);
 		itemImage.setIcon(R.drawable.camera_main_one);
 		itemVideo.setIcon(R.drawable.video_main_one);
+	}
+
+	@Override
+	public void onPullEvent(PullToRefreshBase<ListView> refreshView, PullToRefreshBase.State state, PullToRefreshBase.Mode direction) {
+		int height = refreshView.getHeight();
+		Log.d("onPullEvent","height:"+height+"getX:"+refreshView.getX()+"Y:"+refreshView.getY());
+		Log.d("onPullEvent","direction=" +direction.ordinal());
+		Log.d("onPullEvent","refreshView=" +refreshView.getMeasuredHeight());
+
 	}
 }

@@ -18,62 +18,63 @@ public class SingletonVariable {
 	}
 
 	//记录时间
-	private static String minTimeWord = "";
-	private static String maxTimeWord = "";
-	private static String minTimeImage = "";
-	private static String maxTimeImage = "";
-	private static String minTimeVideo = "";
-	private static String maxTimeVideo = "";
+	private static long minTimeWord;
+	private static long maxTimeWord;
+	private static long minTimeImage;
+	private static long maxTimeImage;
+	private static long minTimeVideo;
+	private static long maxTimeVideo;
+
+	public static long getMinTimeWord() {
+		return minTimeWord;
+	}
+
+	public static void setMinTimeWord(long minTimeWord) {
+		SingletonVariable.minTimeWord = minTimeWord;
+	}
+
+	public static long getMaxTimeWord() {
+		return maxTimeWord;
+	}
+
+	public static void setMaxTimeWord(long maxTimeWord) {
+		SingletonVariable.maxTimeWord = maxTimeWord;
+	}
+
+	public static long getMinTimeImage() {
+		return minTimeImage;
+	}
+
+	public static void setMinTimeImage(long minTimeImage) {
+		SingletonVariable.minTimeImage = minTimeImage;
+	}
+
+	public static long getMaxTimeImage() {
+		return maxTimeImage;
+	}
+
+	public static void setMaxTimeImage(long maxTimeImage) {
+		SingletonVariable.maxTimeImage = maxTimeImage;
+	}
+
+	public static long getMinTimeVideo() {
+		return minTimeVideo;
+	}
+
+	public static void setMinTimeVideo(long minTimeVideo) {
+		SingletonVariable.minTimeVideo = minTimeVideo;
+	}
+
+	public static long getMaxTimeVideo() {
+		return maxTimeVideo;
+	}
+
+	public static void setMaxTimeVideo(long maxTimeVideo) {
+		SingletonVariable.maxTimeVideo = maxTimeVideo;
+	}
 
 	public static SingletonVariable getOurInstance() {
 		return ourInstance;
 	}
 
-	public static String getMinTimeWord() {
-		return minTimeWord;
-	}
-
-	public static void setMinTimeWord(String minTimeWord) {
-		SingletonVariable.minTimeWord = minTimeWord;
-	}
-
-	public static String getMaxTimeWord() {
-		return maxTimeWord;
-	}
-
-	public static void setMaxTimeWord(String maxTimeWord) {
-		SingletonVariable.maxTimeWord = maxTimeWord;
-	}
-
-	public static String getMinTimeImage() {
-		return minTimeImage;
-	}
-
-	public static void setMinTimeImage(String minTimeImage) {
-		SingletonVariable.minTimeImage = minTimeImage;
-	}
-
-	public static String getMaxTimeImage() {
-		return maxTimeImage;
-	}
-
-	public static void setMaxTimeImage(String maxTimeImage) {
-		SingletonVariable.maxTimeImage = maxTimeImage;
-	}
-
-	public static String getMinTimeVideo() {
-		return minTimeVideo;
-	}
-
-	public static void setMinTimeVideo(String minTimeVideo) {
-		SingletonVariable.minTimeVideo = minTimeVideo;
-	}
-
-	public static String getMaxTimeVideo() {
-		return maxTimeVideo;
-	}
-
-	public static void setMaxTimeVideo(String maxTimeVideo) {
-		SingletonVariable.maxTimeVideo = maxTimeVideo;
-	}
 }

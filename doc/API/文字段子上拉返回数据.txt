@@ -60,8 +60,8 @@ HTTP/1.1
                         "avatar_url": "http://p1.pstatp.com/thumb/718/3446744478",
                         "create_time": 1424084524,
                         "is_digg": 0,
-                        "user_name": "半俗半雅半疯癫...",
-                        "user_profile_image_url": "http://p1.pstatp.com/thumb/718/3446744478"
+                        "comment_name": "半俗半雅半疯癫...",
+                        "comment_profile_image_url": "http://p1.pstatp.com/thumb/718/3446744478"
                     }
                 ],
                 "type": 1
@@ -315,8 +315,8 @@ HTTP/1.1
                         "avatar_url": "http://p2.pstatp.com/thumb/1221/8346471771",
                         "create_time": 1424480395,
                         "is_digg": 0,
-                        "user_name": "改之改之之改",
-                        "user_profile_image_url": "http://p2.pstatp.com/thumb/1221/8346471771"
+                        "comment_name": "改之改之之改",
+                        "comment_profile_image_url": "http://p2.pstatp.com/thumb/1221/8346471771"
                     }
                 ],
                 "type": 1
@@ -410,8 +410,8 @@ HTTP/1.1
                         "avatar_url": "http://wx.qlogo.cn/mmopen/4elbQCnSaLJ7VWaYQj1YcLfuuC3JA5BJgDxDCGGxicI0XXen4U9lOLB6oROC3kdWOAsoT9UtrVbbIJU5oB0etQCzuw6XE9u60/46",
                         "create_time": 1424842138,
                         "is_digg": 0,
-                        "user_name": "AAA好友第一个",
-                        "user_profile_image_url": "http://wx.qlogo.cn/mmopen/4elbQCnSaLJ7VWaYQj1YcLfuuC3JA5BJgDxDCGGxicI0XXen4U9lOLB6oROC3kdWOAsoT9UtrVbbIJU5oB0etQCzuw6XE9u60/46"
+                        "comment_name": "AAA好友第一个",
+                        "comment_profile_image_url": "http://wx.qlogo.cn/mmopen/4elbQCnSaLJ7VWaYQj1YcLfuuC3JA5BJgDxDCGGxicI0XXen4U9lOLB6oROC3kdWOAsoT9UtrVbbIJU5oB0etQCzuw6XE9u60/46"
                     }
                 ],
                 "type": 1
@@ -466,8 +466,8 @@ HTTP/1.1
                         "avatar_url": "http://p1.pstatp.com/thumb/1821/4126571560",
                         "create_time": 1423885933,
                         "is_digg": 0,
-                        "user_name": "风中凌乱凌乱凌乱啦",
-                        "user_profile_image_url": "http://p1.pstatp.com/thumb/1821/4126571560"
+                        "comment_name": "风中凌乱凌乱凌乱啦",
+                        "comment_profile_image_url": "http://p1.pstatp.com/thumb/1821/4126571560"
                     }
                 ],
                 "type": 1
@@ -680,8 +680,8 @@ HTTP/1.1
                         "avatar_url": "http://p3.pstatp.com/thumb/2184/2445791318",
                         "create_time": 1423824565,
                         "is_digg": 0,
-                        "user_name": "好孩子王小明",
-                        "user_profile_image_url": "http://p3.pstatp.com/thumb/2184/2445791318"
+                        "comment_name": "好孩子王小明",
+                        "comment_profile_image_url": "http://p3.pstatp.com/thumb/2184/2445791318"
                     }
                 ],
                 "type": 1
@@ -775,8 +775,8 @@ HTTP/1.1
                         "avatar_url": "http://p2.pstatp.com/thumb/405/2741600608",
                         "create_time": 1423734179,
                         "is_digg": 0,
-                        "user_name": "窗帘后面的老陈",
-                        "user_profile_image_url": "http://p2.pstatp.com/thumb/405/2741600608"
+                        "comment_name": "窗帘后面的老陈",
+                        "comment_profile_image_url": "http://p2.pstatp.com/thumb/405/2741600608"
                     }
                 ],
                 "type": 1
@@ -871,8 +871,8 @@ HTTP/1.1
                         "avatar_url": "http://tp3.sinaimg.cn/1018205954/50/5671190702/1",
                         "create_time": 1424946433,
                         "is_digg": 0,
-                        "user_name": "一直在路上边走边唱",
-                        "user_profile_image_url": "http://tp3.sinaimg.cn/1018205954/50/5671190702/1"
+                        "comment_name": "一直在路上边走边唱",
+                        "comment_profile_image_url": "http://tp3.sinaimg.cn/1018205954/50/5671190702/1"
                     }
                 ],
                 "type": 1

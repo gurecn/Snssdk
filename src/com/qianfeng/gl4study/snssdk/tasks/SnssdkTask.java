@@ -47,10 +47,9 @@ public class SnssdkTask extends AsyncTask<String ,Integer,JSONObject> {
 				bytes = HttpTool.get(params[0]);
 				if(bytes!=null) {
 					FileCache.getInstance().putContent(url,bytes);
-
-					//每次缓存数据均需更新配置文件
 				}
 			}
+
 			if(bytes!=null){
 				try {
 					String str = new String(bytes, "UTF-8");

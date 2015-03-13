@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
-import com.qianfeng.gl4study.snssdk.model.UserInformation;
 import com.qianfeng.gl4study.snssdk.utils.FileCache;
 import com.qianfeng.gl4study.snssdk.utils.ImageCache;
 import com.qianfeng.gl4study.snssdk.utils.ImageLoader;
@@ -103,36 +102,35 @@ public class SnssdkMainAdapter extends BaseAdapter{
 
 		Snssdk snssdk = snssdks.get(position);
 
-		int snssdkType = snssdk.getSnssdkType();
+		int snssdkType = snssdk.getCategory_type();
 		if(snssdkType == 2){    //图片类型段子
 			viewHolder.itemImage.setImageResource(R.drawable.loading_icon);
-			String imageUrl = snssdk.getImageUrl();
-			loaderImage(viewHolder.itemImage,imageUrl);
+			//String imageUrl = snssdk.getImageUrl();
+			//loaderImage(viewHolder.itemImage,imageUrl);
 		}else if(snssdkType == 3){  //视频类型段子
 
 		}
 		viewHolder.itemWord.setText(snssdk.getContent());
-		viewHolder.txtGood.setText(snssdk.getDiggCount()+"");
-		viewHolder.txtBad.setText(snssdk.getRepinCount()+"");
-		viewHolder.txtHot.setText(snssdk.getFavoriteCount()+"");
-		UserInformation authorInformation = snssdk.getAuthorInformation();
-		viewHolder.userName.setText(authorInformation.getName());
-		String avatarUrl = authorInformation.getAvatarUrl();
+		viewHolder.txtGood.setText(snssdk.getDigg_count()+"");
+		viewHolder.txtBad.setText(snssdk.getRepin_count()+"");
+		viewHolder.txtHot.setText(snssdk.getComment_count()+"");
+		viewHolder.userName.setText(snssdk.getComment_name());
+		String avatarUrl = snssdk.getAvatar_url();
 		//加载头像
 		loaderImage(viewHolder.userImage,avatarUrl);
 
 		//评论条的显示
-		if(snssdk.getUserDigg()==1){
+		if(snssdk.getUser_digg()==1){
 			viewHolder.imgGood.setImageResource(R.drawable.ic_bar_digg_pressed);
 		}else {
 			viewHolder.imgGood.setImageResource(R.drawable.ic_bar_digg_normal);
 		}
-		if(snssdk.getUserRepin()==1){
+		if(snssdk.getUser_repin()==1){
 			viewHolder.imgBad.setImageResource(R.drawable.ic_bar_bury_pressed);
 		}else {
 			viewHolder.imgBad.setImageResource(R.drawable.ic_bar_bury_normal);
 		}
-		if(snssdk.getDiggCount()>10000){
+		if(snssdk.getComment_count()>500){
 			viewHolder.imgHot.setImageResource(R.drawable.ic_bar_hot_commenticon_pressed);
 		}else {
 			viewHolder.imgHot.setImageResource(R.drawable.ic_bar_hot_commenticon);

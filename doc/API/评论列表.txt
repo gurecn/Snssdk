@@ -19,8 +19,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 0,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "老衲已有爱",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/2236/115478514"
+                "comment_name": "老衲已有爱",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/2236/115478514"
             },
             {
                 "uid": 0,
@@ -36,8 +36,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 0,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "二逼侠",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/527/3794428896"
+                "comment_name": "二逼侠",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/527/3794428896"
             },
             {
                 "uid": 0,
@@ -53,8 +53,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 0,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "好_好_先生",
-                "user_profile_image_url": "http://p1.pstatp.com/thumb/1476/3560496548"
+                "comment_name": "好_好_先生",
+                "comment_profile_image_url": "http://p1.pstatp.com/thumb/1476/3560496548"
             },
             {
                 "uid": 0,
@@ -70,8 +70,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 0,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "流年里的时光",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/2387/5442952739"
+                "comment_name": "流年里的时光",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/2387/5442952739"
             },
             {
                 "uid": 0,
@@ -87,8 +87,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 0,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "Amo柠檬32161356",
-                "user_profile_image_url": "http://wx.qlogo.cn/mmopen/gTiaWLzArw22uHtXicnOVicZq9K105kSMYGcyBHmjOD8QqCL81VLCTFl5ff5H6NqvtPxibtpBto9g2Onb2IFDYMYQm9sajqBHX4n/46"
+                "comment_name": "Amo柠檬32161356",
+                "comment_profile_image_url": "http://wx.qlogo.cn/mmopen/gTiaWLzArw22uHtXicnOVicZq9K105kSMYGcyBHmjOD8QqCL81VLCTFl5ff5H6NqvtPxibtpBto9g2Onb2IFDYMYQm9sajqBHX4n/46"
             }
         ],
         "top_comments": [
@@ -105,8 +105,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 9427,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "五体投地膜拜各路大神",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/1589/3090629814"
+                "comment_name": "五体投地膜拜各路大神",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/1589/3090629814"
             },
             {
                 "uid": 0,
@@ -121,8 +121,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 1677,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "没有b要",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/527/1905090146"
+                "comment_name": "没有b要",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/527/1905090146"
             },
             {
                 "uid": 0,
@@ -137,8 +137,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 1449,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "无公害得狼",
-                "user_profile_image_url": "http://p1.pstatp.com/thumb/629/5955068882"
+                "comment_name": "无公害得狼",
+                "comment_profile_image_url": "http://p1.pstatp.com/thumb/629/5955068882"
             },
             {
                 "uid": 0,
@@ -153,8 +153,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 1388,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "英雄IoKen",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/306/4242668720"
+                "comment_name": "英雄IoKen",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/306/4242668720"
             },
             {
                 "uid": 0,
@@ -169,8 +169,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 1136,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "小和尚念经有口无心",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/562/1500945551"
+                "comment_name": "小和尚念经有口无心",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/562/1500945551"
             },
             {
                 "uid": 0,
@@ -185,8 +185,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 605,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "征途77521",
-                "user_profile_image_url": "http://p1.pstatp.com/thumb/2162/5829082096"
+                "comment_name": "征途77521",
+                "comment_profile_image_url": "http://p1.pstatp.com/thumb/2162/5829082096"
             },
             {
                 "uid": 0,
@@ -201,8 +201,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 590,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "球迷迷",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/1831/5038437716"
+                "comment_name": "球迷迷",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/1831/5038437716"
             },
             {
                 "uid": 0,
@@ -217,8 +217,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 577,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "35度体温",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/2346/1182131422"
+                "comment_name": "35度体温",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/2346/1182131422"
             },
             {
                 "uid": 0,
@@ -233,8 +233,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 392,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "思溪延",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/473/7595070600"
+                "comment_name": "思溪延",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/473/7595070600"
             },
             {
                 "uid": 0,
@@ -249,8 +249,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 390,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "rain-雨世舞双",
-                "user_profile_image_url": "http://p2.pstatp.com/thumb/2377/5454759645"
+                "comment_name": "rain-雨世舞双",
+                "comment_profile_image_url": "http://p2.pstatp.com/thumb/2377/5454759645"
             },
             {
                 "uid": 0,
@@ -265,8 +265,8 @@ http://isub.snssdk.com/2/data/get_essay_comments/?group_id=4039548309&count=0&of
                 "digg_count": 125,
                 "user_verified": false,
                 "platform": "feifei",
-                "user_name": "可爱的傻妞是你曾经的爱",
-                "user_profile_image_url": "http://p1.pstatp.com/thumb/1158/7782962878"
+                "comment_name": "可爱的傻妞是你曾经的爱",
+                "comment_profile_image_url": "http://p1.pstatp.com/thumb/1158/7782962878"
             }
         ]
     },

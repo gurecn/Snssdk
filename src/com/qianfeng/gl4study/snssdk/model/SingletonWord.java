@@ -32,6 +32,10 @@ public class SingletonWord {
 		snssdks.remove(postion);
 	}
 
+	public void removeAll(){
+		snssdks.clear();
+	}
+
 
 	public static SingletonWord getInstance() {
 		return ourInstance;

@@ -28,6 +28,10 @@ public class SingletonImage {
 		snssdks.remove(postion);
 	}
 
+	public void removeAll(){
+		snssdks.clear();
+	}
+
 
 	private static SingletonImage ourInstance = new SingletonImage();
 

@@ -98,7 +98,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		//主连接，段子Id，异步类型标记，返回评论数量，返回评论起点
 
 		StringBuilder stringBuilder = new StringBuilder();
-		String groupId="group_id="+snssdk.getGroupId();
+		String groupId="group_id="+snssdk.getGroup_id();
 		String count="&count=10";		//返回的新鲜评论数量
 		String offset="&offset=0";    //返回的新鲜评论的起点
 		stringBuilder.append(Constant.DISCUSS_CONTENT_LIST_URL).append(groupId).append(count).append(offset);
@@ -122,12 +122,12 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		ImageView itemImage = (ImageView) view.findViewById(R.id.item_fragment_image);
 		ImageView itemIconUser = (ImageView) view.findViewById(R.id.item_fragment_user_icon);
 		TextView itemUserName = (TextView) view.findViewById(R.id.item_fragment_user_name);
-		loaderImage(itemIconUser,snssdk.getAuthorInformation().getAvatarUrl());
-		itemUserName.setText(snssdk.getAuthorInformation().getName());
+		loaderImage(itemIconUser,snssdk.getAvatar_url());
+		itemUserName.setText(snssdk.getName());
 
 		Log.d("SnssdkInfoActivity","displaySnssdk");
 
-		int snssdkType = snssdk.getSnssdkType();
+		int snssdkType = snssdk.getCategory_type();
 		if(snssdkType == 1){
 			String content = snssdk.getContent();
 			if(null!=content) {
@@ -140,7 +140,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 			if(null!=content) {
 				itemWord.setText(content);
 			}
-			loaderImage(itemImage,snssdk.getImageUrl());
+			//loaderImage(itemImage,snssdk.getImageUrl());
 			//		itemVideo.setVisibility(View.GONE);
 		}else if(snssdkType == 3){
 			//	itemVideo
@@ -182,36 +182,36 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 			break;
 		case R.id.item_fragment_bar_good_ll://点击顶
 
-			if(snssdk.getUserRepin()==1){
+			if(snssdk.getUser_repin()==1){
 				Toast.makeText(getActivity(), "你已经踩了，做人不要矛盾哦", Toast.LENGTH_SHORT).show();
 			}else {
 				onClickBarImage();
-				if (snssdk.getUserDigg() == 0) {
-					snssdk.setDiggCount(snssdk.getDiggCount() + 1);
+				if (snssdk.getUser_digg() == 0) {
+					snssdk.setDigg_count(snssdk.getDigg_count() + 1);
+					snssdk.setUser_digg(1);
 					imgGood.setImageResource(R.drawable.ic_bar_digg_pressed);
-					snssdk.setUserDigg(1);
 				} else {
-					snssdk.setDiggCount(snssdk.getDiggCount() - 1);
+					snssdk.setDigg_count(snssdk.getDigg_count() - 1);
+					snssdk.setUser_digg(0);
 					imgGood.setImageResource(R.drawable.ic_bar_digg_normal);
-					snssdk.setUserDigg(0);
 				}
 				Log.d("MainActivity", "item_fragment_bar_good");
 			}
 			break;
 		case R.id.item_fragment_bar_bad_ll://点击踩
 
-			if(snssdk.getUserDigg() == 1){
+			if(snssdk.getUser_digg() == 1){
 				Toast.makeText(getActivity(),"你已经顶了，做人不要矛盾哦",Toast.LENGTH_SHORT).show();
 			}else {
 				onClickBarImage();
-				if (snssdk.getUserRepin() == 0) {
-					snssdk.setRepinCount(snssdk.getRepinCount() + 1);
+				if (snssdk.getUser_repin() == 0) {
+					snssdk.setRepin_count(snssdk.getRepin_count() + 1);
+					snssdk.setUser_repin(1);
 					imgBad.setImageResource(R.drawable.ic_bar_bury_pressed);
-					snssdk.setUserRepin(1);
 				} else {
-					snssdk.setRepinCount(snssdk.getRepinCount() - 1);
+					snssdk.setRepin_count(snssdk.getRepin_count() - 1);
+					snssdk.setUser_repin(0);
 					imgBad.setImageResource(R.drawable.ic_bar_bury_normal);
-					snssdk.setUserRepin(0);
 				}
 				Log.d("MainActivity", "item_fragment_bar_bad");
 			}
