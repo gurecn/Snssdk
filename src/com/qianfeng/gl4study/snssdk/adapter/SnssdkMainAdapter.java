@@ -80,8 +80,8 @@ public class SnssdkMainAdapter extends BaseAdapter{
 			viewHolder.userImage = (ImageView) view.findViewById(R.id.item_fragment_user_icon);
 			viewHolder.userName = (TextView) view.findViewById(R.id.item_fragment_user_name);
 			viewHolder.layoutFragmentCommon = (LinearLayout) view.findViewById(R.id.item_fragment_common);
-			viewHolder.llGood = (LinearLayout) view.findViewById(R.id.item_fragment_bar_good_ll);
-			viewHolder.llBad = (LinearLayout) view.findViewById(R.id.item_fragment_bar_bad_ll);
+			viewHolder.llGood = (RelativeLayout) view.findViewById(R.id.item_fragment_bar_good_ll);
+			viewHolder.llBad = (RelativeLayout) view.findViewById(R.id.item_fragment_bar_bad_ll);
 			viewHolder.llHot = (LinearLayout) view.findViewById(R.id.item_fragment_bar_hot_ll);
 
 			viewHolder.imgGood = (ImageView) view.findViewById(R.id.item_fragment_bar_good_img);
@@ -158,8 +158,8 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		private  TextView userName;
 		private  LinearLayout layoutFragmentCommon;
 
-		private LinearLayout llGood;
-		private LinearLayout llBad;
+		private RelativeLayout llGood;
+		private RelativeLayout llBad;
 		private LinearLayout llHot;
 
 

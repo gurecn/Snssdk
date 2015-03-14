@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android = "http://schemas.android.com/apk/res/android">
+
+	<!--
+		移动
+		android:fromYDelta="0"  代表当前位置的Y坐标
+		android:duration="2000" 执行时间
+		android:repeatCount="2" 重复执行的次数，共执行重复+1次，infinite，无限次数
+		android:repeatMode="reverse"    动画模式：reverse(终点折回)/restart（重新开始）
+	-->
+	<translate
+			android:fromYDelta="0"
+	        android:toYDelta="-17"
+	        android:duration="1000"
+	        />
+	<scale
+			android:duration="1000"
+	        android:pivotX="50%"
+	        android:pivotY="50%"
+	        android:fromXScale="1"
+	        android:toXScale="1.5"
+			android:fromYScale="1"
+			android:toYScale="1.5"
+	        android:startOffset="500"
+		/>
+
+</set>

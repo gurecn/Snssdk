@@ -2,6 +2,7 @@ package com.qianfeng.gl4study.snssdk.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +34,7 @@ public class Snssdk implements Serializable{
 	private long user_id  ; 		//作者Id
 	private String avatar_url  ; 	//作者头像	*
 	private String name  ;  	    //作者名					*
-	private long user_verified  ; 	//作者是否认证
+	private boolean user_verified  ; 	//作者是否认证
 
 	private long comment_id  ; 	            //神评论Id
 	private String comment_name; 		        //神评论作者名
@@ -138,7 +139,7 @@ public class Snssdk implements Serializable{
 		return name;
 	}
 
-	public long getUser_verified() {
+	public boolean getUser_verified() {
 		return user_verified;
 	}
 
@@ -231,7 +232,7 @@ public class Snssdk implements Serializable{
 		this.name = name;
 	}
 
-	public void setUser_verified(long user_verified) {
+	public void setUser_verified(boolean user_verified) {
 		this.user_verified = user_verified;
 	}
 
@@ -283,16 +284,24 @@ public class Snssdk implements Serializable{
 				user_bury = group.getInt("user_bury");
 				user_repin = group.getInt("user_repin");
 
-				user_id = group.getLong("user_id");
-				avatar_url = group.getString("avatar_url");
-				name = group.getString("name");
-				user_verified = group.getInt("user_verified");
-				comment_id = group.getLong("comment_id");
-				comment_name = group.getString("comment_name");
-				comment_profile_image_url = group.getString("comment_profile_image_url");
-				digg_count = group.getInt("digg_count");
-				is_digg = group.getInt("is_digg");
-				text = group.getString("text");
+				//段子用户信息
+				JSONObject user = group.getJSONObject("user");
+				user_id = user.getLong("user_id");
+				avatar_url = user.getString("avatar_url");
+				name = user.getString("name");
+				user_verified = user.getBoolean("user_verified");
+
+				//神评论信息
+				JSONArray comments = group.getJSONArray("comments");
+				if(comments.length()>0) {
+					JSONObject commentsJSONObject = comments.getJSONObject(0);
+					comment_id = commentsJSONObject.getLong("comment_id");
+					comment_name = commentsJSONObject.getString("user_name");
+					comment_profile_image_url = commentsJSONObject.getString("avatar_url");
+					digg_count = commentsJSONObject.getInt("digg_count");
+					is_digg = commentsJSONObject.getInt("is_digg");
+					text = commentsJSONObject.getString("text");
+				}
 
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -326,12 +335,11 @@ public class Snssdk implements Serializable{
 		values.put("user_id",user_id);
 		values.put("avatar_url",avatar_url);
 		values.put("name",name);
-		//values.put("user_verified",user_verified);
-
+		values.put("user_verified",user_verified);
 		values.put("comment_id",comment_id);
-	//	values.put("comment_name", comment_name);
+		values.put("comment_name", comment_name);
 		values.put("comment_profile_image_url", comment_profile_image_url);
-		values.put("digg_count",digg_count);
+		values.put("digg_count_comment",digg_count_comment);
 		values.put("is_digg",is_digg);
 		values.put("text",text);
 		return values;

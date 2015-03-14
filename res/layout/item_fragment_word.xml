@@ -67,55 +67,85 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height = "30dp"
+            android:gravity="bottom|center_horizontal"
+            android:layout_marginBottom="5dp"
             >
 
         <!--赞-->
-        <LinearLayout
+        <RelativeLayout
                 android:id="@+id/item_fragment_bar_good_ll"
                 android:layout_width = "0dp"
-                android:layout_height = "wrap_content"
+                android:layout_height = "match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 >
             <ImageView
                     android:id="@+id/item_fragment_bar_good_img"
                     android:layout_width = "wrap_content"
-                    android:layout_height = "match_parent"
+                    android:layout_height = "wrap_content"
                     android:src="@drawable/ic_bar_digg_normal"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toLeftOf="@+id/item_fragment_bar_good"
                     />
             <TextView
                 android:id="@+id/item_fragment_bar_good"
                 android:layout_width = "wrap_content"
-                android:layout_height = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="5dp"
                 android:text="12万"
                 />
+            <TextView
+                    android:id="@+id/item_fragment_bar_good_txt"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:layout_toRightOf="@+id/item_fragment_bar_good_img"
+                    android:layout_marginLeft="15dp"
+                    android:layout_alignParentBottom="true"
+                    android:text="+1"
+                    android:textColor="#F00"
+                    android:visibility="invisible"
+                    />
+        </RelativeLayout>
 
-        </LinearLayout>
         <!--踩-->
-        <LinearLayout
+        <RelativeLayout
                 android:id="@+id/item_fragment_bar_bad_ll"
                 android:layout_width = "0dp"
-                android:layout_height = "wrap_content"
+                android:layout_height = "match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 >
             <ImageView
                     android:id="@+id/item_fragment_bar_bad_img"
                     android:layout_width = "wrap_content"
-                    android:layout_height = "match_parent"
+                    android:layout_height = "wrap_content"
                     android:src="@drawable/ic_bar_bury_normal"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toLeftOf="@+id/item_fragment_bar_bad"
                     />
             <TextView
                     android:id="@+id/item_fragment_bar_bad"
                     android:layout_width = "wrap_content"
-                    android:layout_height = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="5dp"
                     android:text="12万"
                     />
-
-        </LinearLayout>
+            <TextView
+                    android:id="@+id/item_fragment_bar_bad_txt"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:layout_toRightOf="@+id/item_fragment_bar_bad_img"
+                    android:layout_alignBaseline="@+id/item_fragment_bar_bad_img"
+                    android:layout_marginLeft="15dp"
+                    android:layout_alignParentBottom="true"
+                    android:text="+1"
+                    android:textColor="#F00"
+                    android:visibility="invisible"
+                    />
+        </RelativeLayout>
         <!--热-->
         <LinearLayout
                 android:id="@+id/item_fragment_bar_hot_ll"
@@ -127,13 +157,13 @@
             <ImageView
                     android:id="@+id/item_fragment_bar_hot_img"
                     android:layout_width = "wrap_content"
-                    android:layout_height = "match_parent"
+                    android:layout_height = "wrap_content"
                     android:src="@drawable/ic_bar_hot_commenticon"
                     />
             <TextView
                     android:id="@+id/item_fragment_bar_hot"
                     android:layout_width = "wrap_content"
-                    android:layout_height = "match_parent"
+                    android:layout_height = "wrap_content"
                     android:text="12万"
                     />
 

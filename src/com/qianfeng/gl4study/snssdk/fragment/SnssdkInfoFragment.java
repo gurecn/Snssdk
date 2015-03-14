@@ -12,7 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.qianfeng.gl4study.snssdk.R;
+import com.qianfeng.gl4study.snssdk.activity.PersonActivity;
+import com.qianfeng.gl4study.snssdk.activity.PublishDiscuss;
 import com.qianfeng.gl4study.snssdk.adapter.DiscussListAdapter;
+import com.qianfeng.gl4study.snssdk.animation.MyAnimation;
 import com.qianfeng.gl4study.snssdk.constant.Constant;
 import com.qianfeng.gl4study.snssdk.model.Discuss;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
@@ -133,7 +136,6 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 			if(null!=content) {
 				itemWord.setText(content);
 			}
-			//	itemVideo.setVisibility(View.INVISIBLE);
 			itemImage.setVisibility(View.INVISIBLE);
 		}else if(snssdkType == 2){
 			String content = snssdk.getContent();
@@ -148,8 +150,8 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 
 		//控件获取点击监听
 		LinearLayout userInfo = (LinearLayout) view.findViewById(R.id.item_fragment_bar_user_ll);
-		LinearLayout clickGood = (LinearLayout) view.findViewById(R.id.item_fragment_bar_good_ll);
-		LinearLayout clickBad = (LinearLayout) view.findViewById(R.id.item_fragment_bar_bad_ll);
+		RelativeLayout clickGood = (RelativeLayout) view.findViewById(R.id.item_fragment_bar_good_ll);
+		RelativeLayout clickBad = (RelativeLayout) view.findViewById(R.id.item_fragment_bar_bad_ll);
 		LinearLayout clickHot = (LinearLayout) view.findViewById(R.id.item_fragment_bar_hot_ll);
 		LinearLayout clikForward = (LinearLayout) view.findViewById(R.id.item_fragment_bar_forward_ll);
 
@@ -157,17 +159,21 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		imgGood = (ImageView) view.findViewById(R.id.item_fragment_bar_good_img);
 		imgBad = (ImageView) view.findViewById(R.id.item_fragment_bar_bad_img);
 		imgHot = (ImageView) view.findViewById(R.id.item_fragment_bar_hot_img);
+
 		//获取TextView
 		txtGood = (TextView) view.findViewById(R.id.item_fragment_bar_good);
 		txtBad = (TextView) view.findViewById(R.id.item_fragment_bar_bad);
 		txtHot = (TextView) view.findViewById(R.id.item_fragment_bar_hot);
+
+		txtGood.setText(snssdk.getDigg_count()+"");
+		txtBad.setText(snssdk.getRepin_count()+"");
+		txtHot.setText(snssdk.getComment_count()+"");
 
 		userInfo.setOnClickListener(this);
 		clickGood.setOnClickListener(this);
 		clickBad.setOnClickListener(this);
 		clickHot.setOnClickListener(this);
 		clikForward.setOnClickListener(this);
-
 	}
 
 	/**
@@ -179,6 +185,8 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		int id = v.getId();
 		switch (id){
 		case R.id.item_fragment_bar_user_ll://点击用户
+			Intent intent = new Intent(getActivity(), PersonActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.item_fragment_bar_good_ll://点击顶
 
@@ -189,11 +197,13 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 				if (snssdk.getUser_digg() == 0) {
 					snssdk.setDigg_count(snssdk.getDigg_count() + 1);
 					snssdk.setUser_digg(1);
+					TextView txtGoodAdd = (TextView) view.findViewById(R.id.item_fragment_bar_good_txt);
+					MyAnimation.addOneAnimation(getActivity(), txtGoodAdd);
+					txtGood.setText(snssdk.getDigg_count()+"");
 					imgGood.setImageResource(R.drawable.ic_bar_digg_pressed);
-				} else {
-					snssdk.setDigg_count(snssdk.getDigg_count() - 1);
-					snssdk.setUser_digg(0);
-					imgGood.setImageResource(R.drawable.ic_bar_digg_normal);
+
+					//TODO 更新数据库数据
+
 				}
 				Log.d("MainActivity", "item_fragment_bar_good");
 			}
@@ -207,19 +217,19 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 				if (snssdk.getUser_repin() == 0) {
 					snssdk.setRepin_count(snssdk.getRepin_count() + 1);
 					snssdk.setUser_repin(1);
+					TextView txtBadAdd = (TextView) view.findViewById(R.id.item_fragment_bar_bad_txt);
+					MyAnimation.addOneAnimation(getActivity(), txtBadAdd);
+					txtBad.setText(snssdk.getRepin_count()+"");
 					imgBad.setImageResource(R.drawable.ic_bar_bury_pressed);
-				} else {
-					snssdk.setRepin_count(snssdk.getRepin_count() - 1);
-					snssdk.setUser_repin(0);
-					imgBad.setImageResource(R.drawable.ic_bar_bury_normal);
+					//TODO 更新数据库数据
 				}
-				Log.d("MainActivity", "item_fragment_bar_bad");
 			}
 			break;
 		case R.id.item_fragment_bar_hot_ll://点击评论，跳转到分享页面
+			intent = new Intent(getActivity(), PublishDiscuss.class);
+			startActivity(intent);
 			break;
 		}
-
 	}
 
 	/**
@@ -258,7 +268,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 	}
 
 	/**
-	 * 异步任务的回调
+	 * 异步任务的回调，获取段子的评论信息
 	 * @param result
 	 * @param flag
 	 */

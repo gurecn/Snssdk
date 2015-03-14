@@ -72,7 +72,7 @@ public class SnssdkDatabasesManager {
 				null,
 				"category_type = ?",
 				new String[]{category+""},
-				null, null, null
+				null, null,  "group_id ASC"
 		);
 		if(query!=null){
 			ret = new LinkedList<Snssdk>();
@@ -93,7 +93,6 @@ public class SnssdkDatabasesManager {
 	 */
 
 	public boolean saveSnssdk(ContentValues values){
-
 		/*
 		检查数据库是否打开
 		未打开进行打开操作

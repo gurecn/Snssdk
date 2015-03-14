@@ -21,10 +21,12 @@ public class SnssdktDatabasesHelper extends SQLiteOpenHelper {
 				"is_digg int default 0,"+
 				"digg_count int default 0,"+
 				"comment_id long not null,"+
-				"user_profile_image_url text,"+
 				"text text,"+
-				"user_name text,"+
+				"comment_name text,"+
+				"comment_profile_image_url text,"+
+
 				"name text,"+
+				"user_verified  boolean,"+
 				"avatar_url text,"+
 				"user_id long not null,"+
 				"user_favorite int default 0,"+
@@ -39,8 +41,8 @@ public class SnssdktDatabasesHelper extends SQLiteOpenHelper {
 				"level int default 0,"+
 				"category_type int default 0,"+
 				"group_id long not null,"+
-				"content text,"+
-				"comment_profile_image_url text)"
+				"content text)";
+
 			;
  /*
 

@@ -65,7 +65,7 @@ public class FlyleafActivity extends Activity implements TaskProcessor {
 		SingletonVariable.setMaxTimeImage(maxTimeImage);
 		SingletonVariable.setMinTimeVideo(minTimeVideo);
 		SingletonVariable.setMaxTimeVideo(maxTimeVideo);
-
+/*
 		//开启异步加载文本段子信息
 		SnssdkTask 	snssdkTask = new SnssdkTask(this);
 		StringBuilder stringBuilder = new StringBuilder();
@@ -76,7 +76,7 @@ public class FlyleafActivity extends Activity implements TaskProcessor {
 				.append(minTimeURL).append(minTimeWord);
 		Log.d("Time1","使用minTime1==="+minTimeWord);
 		snssdkTask.execute(stringBuilder.toString(),1+"");
-/*
+
 		snssdkTask = new SnssdkTask(this);
 		stringBuilder = new StringBuilder();
 		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
