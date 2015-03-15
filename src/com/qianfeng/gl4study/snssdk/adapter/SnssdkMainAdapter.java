@@ -114,7 +114,7 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		viewHolder.txtGood.setText(snssdk.getDigg_count()+"");
 		viewHolder.txtBad.setText(snssdk.getRepin_count()+"");
 		viewHolder.txtHot.setText(snssdk.getComment_count()+"");
-		viewHolder.userName.setText(snssdk.getComment_name());
+		viewHolder.userName.setText(snssdk.getName());
 		String avatarUrl = snssdk.getAvatar_url();
 		//加载头像
 		Utils.loaderImage(-1,viewHolder.userImage, avatarUrl);

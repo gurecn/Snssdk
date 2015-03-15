@@ -1,7 +1,6 @@
 package com.qianfeng.gl4study.snssdk.tasks;
 
 import android.os.AsyncTask;
-import com.qianfeng.gl4study.snssdk.utils.FileCache;
 import com.qianfeng.gl4study.snssdk.utils.HttpTool;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,8 +27,8 @@ public class SnssdkTask extends AsyncTask<String ,Integer,JSONObject> {
 
 	/**
 	 * 参数顺序：主连接URL，段子Id，异步类型标记，返回评论数量，返回评论起点
-	 * @param params
-	 * @return
+	 * @param params        可变参数
+	 * @return              JSON数据
 	 */
 	@Override
 	protected JSONObject doInBackground(String... params) {
@@ -41,7 +40,6 @@ public class SnssdkTask extends AsyncTask<String ,Integer,JSONObject> {
 				try {
 					String str = new String(bytes, "UTF-8");
 					ret = new JSONObject(str);
-
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				} catch (JSONException e) {

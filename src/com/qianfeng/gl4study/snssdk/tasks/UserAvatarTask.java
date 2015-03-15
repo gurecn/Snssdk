@@ -38,7 +38,6 @@ public class UserAvatarTask extends AsyncTask<String, Integer, byte[]> {
 	protected void onPostExecute(byte[] bytes) {
 
 		if (bytes != null) {
-
 			Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 			bitmap = Utils.getRoundedCornerBitmap(bitmap,2);
 			//更新内存缓存信息

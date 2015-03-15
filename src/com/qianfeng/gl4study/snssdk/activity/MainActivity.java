@@ -44,8 +44,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private String levelURL = "level=";
 	private String categoryIdURL = "&category_id=";
 	private String countURL = "&count=";
-	private String minTimeURL = "&min_time=";
-	private String maxTimeURL = "&max_time=";
 
 	//标记需要获取的段子的参数
 	private int level = 6;
@@ -54,7 +52,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private long minTime = 0;
 	private long maxTime = 0;
 	private ListView listViewSnssdk;
-	private PopupWindow popupWindow;
 	private TextView category2;
 
 
@@ -66,9 +63,11 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		doPullToRefreshList();
 		//设置隐藏ActionBar隐藏标题，图标，上界面的title栏
 		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayShowHomeEnabled(false);
-		actionBar.hide();
+		if(actionBar!=null) {
+			actionBar.setDisplayShowTitleEnabled(false);
+			actionBar.setDisplayShowHomeEnabled(false);
+			actionBar.hide();
+		}
 
 		//自定义标题栏的组件获取
 		// 用户头像
@@ -100,7 +99,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private void initPopupMenu() {
 		LayoutInflater lay = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View v = lay.inflate(R.layout.item_popup_mian_activity, null);
-		popupWindow = new PopupWindow(v, getApplicationContext().getResources().getDisplayMetrics().widthPixels / 3,
+		PopupWindow popupWindow = new PopupWindow(v, getApplicationContext().getResources().getDisplayMetrics().widthPixels / 3,
 				getApplicationContext().getResources().getDisplayMetrics().heightPixels / 4, true);
 
 		//设置整个popupwindow的样式。
@@ -110,7 +109,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		popupWindow.update();
 
 		//popupWindow.showAsDropDown(category2);
-		popupWindow.showAtLocation(category2,Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,200);
+		popupWindow.showAtLocation(category2, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 200);
 	}
 
 	/**
@@ -130,7 +129,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	/**
 	 * 下拉刷新
 	 *
-	 * @param refreshView
+	 * @param refreshView   需要刷新的对象
 	 */
 	@Override
 	public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -146,6 +145,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		snssdkTask = new SnssdkTask(this);
+		String minTimeURL = "&min_time=";
 		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
 				.append(levelURL).append(level)//推荐分类
 				.append(categoryIdURL).append(category)//文本段子
@@ -159,12 +159,11 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	/**
 	 * 上拉加载
 	 *
-	 * @param refreshView
+	 * @param refreshView       需要刷新的对象
 	 */
 	@Override
 	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 
-		//TODO 配置文件读取时间
 		//从文件中读取数据
 		SharedPreferences sharedPreferences  = getSharedPreferences("config", MODE_PRIVATE);
 		if (category == 1) {
@@ -176,13 +175,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		}
 		Log.d("Time1", "使用maxTime1===" + maxTime);
 		snssdkTask = new SnssdkTask(this);
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
-				.append(levelURL).append(level)//推荐分类
-				.append(categoryIdURL).append(category)
-				.append(countURL).append(count)   //返回20个数据
-				.append(maxTimeURL).append(maxTime);
-		snssdkTask.execute(stringBuilder.toString(), category + "");
+		String maxTimeURL = "&max_time=";
+		snssdkTask.execute(Constant.SNSSDK_CONTENT_LIST_URL + levelURL + level + categoryIdURL + category + countURL + count + maxTimeURL + maxTime, category + "");
 	}
 
 	@Override
@@ -199,13 +193,12 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	/**
 	 * 菜单的监听事件
 	 *
-	 * @param item
-	 * @return
+	 * @param item  菜单对象
+	 * @return      结果
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		boolean ret = false;
 		int itemId = item.getItemId();
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Constant.SNSSDK_CONTENT_LIST_URL)
@@ -238,8 +231,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			stringBuilder.append(categoryIdURL).append(category);//文本段子
 			snssdkTask.execute(stringBuilder.toString(), category + "");
 		}
-		ret = super.onOptionsItemSelected(item);
-		return ret;
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**
@@ -255,9 +248,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			try {
 				String resultFlag = result.getString("message");
 				if ("success".equals(resultFlag)) {
-					LinkedList<Snssdk> snssdks = new LinkedList<Snssdk>();
 					JSONObject data = result.getJSONObject("data");
-					String tip = data.getString("tip");
 					JSONArray dataJSONArray = data.getJSONArray("data");
 					int type = Integer.parseInt(flag);
 					for (int i = 0; i < dataJSONArray.length(); i++) {
@@ -266,10 +257,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 						snssdk.parseInformation(jsonObject, type);
 						ContentValues values = snssdk.getContentValues();
 						SnssdkDatabasesManager.createInstance(this).saveSnssdk(values);
-						snssdks.add(snssdk);
 					}
-					saveTimeToSingleton(this,type, snssdks, data.getLong("min_time"), data.getLong("max_time"));
-					Log.d("MainActivity", "下载完成=============" + snssdks.size());
+					saveTimeToSingleton(this, type, data.getLong("min_time"), data.getLong("max_time"));
 					//数据添加完成，更新List
 					listViewSnssdk.setAdapter(adapter);
 					refreshListView.onRefreshComplete();
@@ -283,40 +272,46 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	/**
 	 * 网络获取的数据保存到单例和配置文件中
 	 *
-	 * @param type
-	 * @param snssdks
-	 * @param minTime1
-	 * @param maxTime1
+	 * @param type          段子更新的类型
+	 * @param snssdks       获取的段子列表
+	 * @param minTime1      返回的时间
+	 * @param maxTime1      返回的时间
 	 */
-	private void saveTimeToSingleton(Context context,int type, LinkedList<Snssdk> snssdks, long minTime1, long maxTime1) {
+	private void saveTimeToSingleton(Context context,int type,long minTime1, long maxTime1) {
 
 		SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
-		SharedPreferences.Editor edit = sharedPreferences.edit();
+		SharedPreferences.Editor edit;
+		edit = sharedPreferences.edit();
 		if (type == 1) {
 			SingletonWord.getInstance().removeAll();
+			LinkedList<Snssdk> snssdks = SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(1);
 			SingletonWord.getInstance().addAllSnssdks(snssdks);
 			adapter = new SnssdkMainAdapter(context, snssdks);
 			edit.putLong("minTimeWord", minTime1);
 			edit.putLong("maxTimeWord", maxTime1);
 		} else if (type == 2) {
 			SingletonImage.getInstance().removeAll();
+			LinkedList<Snssdk> snssdks = SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(1);
 			SingletonImage.getInstance().addAllSnssdks(snssdks);
+			adapter = new SnssdkMainAdapter(context, snssdks);
 			adapter = new SnssdkMainAdapter(context, SingletonImage.getSnssdks());
 			edit.putLong("minTimeImage", minTime1);
 			edit.putLong("maxTimeImage", maxTime1);
 		} else if (type == 18) {
+			//SingletonVideo.getInstance().removeAll();
+			LinkedList<Snssdk> snssdks = SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(1);
 			SingletonVideo.getInstance().addAllSnssdks(snssdks);
+			adapter = new SnssdkMainAdapter(context, snssdks);
 			adapter = new SnssdkMainAdapter(context, SingletonVideo.getSnssdks());
 			edit.putLong("minTimeVideo", minTime1);
 			edit.putLong("maxTimeVideo", maxTime1);
 		}
-		edit.commit();
+		edit.apply();
 	}
-
 	/**
 	 * 点击listViewSnssdk调用
 	 *
-	 * @param v
+	 * @param v     被点击的控件
 	 */
 	@Override
 	public void onClick(View v) {
@@ -340,8 +335,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	/**
 	 * 点击段子内容或评论条
 	 *
-	 * @param id
-	 * @param position
+	 * @param id            点击的对象的Id
+	 * @param position      点击的位置
 	 */
 	private void clickDiscussBar(int id, int position, View v) {
 		Snssdk snssdk = null;
@@ -357,11 +352,13 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				skipToInfo(position);
 				break;
 			case R.id.item_fragment_bar_good_ll://点击赞
-				if (snssdk.getUser_repin() == 1) {
+				if ((snssdk != null ? snssdk.getUser_repin() : 0) == 1) {
 					makeToastForBar("你已经踩了，做人不要矛盾哦");
-				} else if (snssdk.getUser_digg() == 0) {
-					snssdk.setDigg_count(snssdk.getDigg_count() + 1);
-					snssdk.setUser_digg(1);
+				} else if ((snssdk != null ? snssdk.getUser_digg() : 0) == 0) {
+					if (snssdk != null) {
+						snssdk.setDigg_count(snssdk.getDigg_count() + 1);
+						snssdk.setUser_digg(1);
+					}
 					TextView txtGood = (TextView) v.findViewById(R.id.item_fragment_bar_good_txt);
 					MyAnimation.addOneAnimation(this, txtGood);
 				}
@@ -369,11 +366,13 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				Log.d("MainActivity", "item_fragment_bar_good");
 				break;
 			case R.id.item_fragment_bar_bad_ll://点击踩
-				if (snssdk.getUser_digg() == 1) {
+				if ((snssdk != null ? snssdk.getUser_digg() : 0) == 1) {
 					makeToastForBar("你已经顶了，做人不要矛盾哦");
-				} else if (snssdk.getUser_repin() == 0) {
-					snssdk.setRepin_count(snssdk.getRepin_count() + 1);
-					snssdk.setUser_repin(1);
+				} else if ((snssdk != null ? snssdk.getUser_repin() : 0) == 0) {
+					if (snssdk != null) {
+						snssdk.setRepin_count(snssdk.getRepin_count() + 1);
+						snssdk.setUser_repin(1);
+					}
 					TextView txtBad = (TextView) v.findViewById(R.id.item_fragment_bar_bad_txt);
 					MyAnimation.addOneAnimation(this, txtBad);
 				}
@@ -389,7 +388,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	/**
 	 * 重复点击赞或踩时弹出提醒
 	 *
-	 * @param string
+	 * @param string    弹出的提醒
 	 */
 	private void makeToastForBar(String string) {
 		Toast toast = Toast.makeText(this, string, Toast.LENGTH_SHORT);
@@ -400,7 +399,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	/**
 	 * 跳转到段子详情
 	 *
-	 * @param position
+	 * @param position  点击的段子详情位置
 	 */
 	private void skipToInfo(int position) {
 		Intent intent = new Intent(this, SnssdkInfoActivity.class);

@@ -25,15 +25,18 @@ public class Utils {
 		userImage.setTag(avatarUrl);
 		ImageCache imageCache = ImageCache.getInstance();
 		Bitmap bitmap = imageCache.getImage(avatarUrl);
+
 		if(bitmap!=null){
 			userImage.setImageBitmap(bitmap);
 		}else {
 			FileCache fileCache = FileCache.getInstance();
 			byte[] bytes = fileCache.getContent(avatarUrl);
 			if(bytes!=null&&bytes.length>0){
-				Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-				userImage.setImageBitmap(bmp);
-				imageCache.putImage(avatarUrl,bmp);
+				//文件缓存时字节数组，转化成图片还是非圆角，故，需要重新转化。
+				bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+				bitmap = Utils.getRoundedCornerBitmap(bitmap,2);
+				userImage.setImageBitmap(bitmap);
+				imageCache.putImage(avatarUrl,bitmap);
 			}else {
 				if(width == -1){//头像下载
 					UserAvatarTask imageLoaderTask = new UserAvatarTask(userImage);
@@ -44,6 +47,7 @@ public class Utils {
 				}
 			}
 		}
+
 	}
 	/**
 	 * 图片段子设置
@@ -73,14 +77,14 @@ public class Utils {
 		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(output);
 		final Paint paint = new Paint();
-		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+		int i = bitmap.getHeight()>bitmap.getWidth()?bitmap.getHeight():bitmap.getWidth();
+		final Rect rect = new Rect(0, 0, i, i);
 		final RectF rectF = new RectF(rect);
 
 		paint.setAntiAlias(true);
 		canvas.drawARGB(0, 0, 0, 0);
-		canvas.drawRoundRect(rectF, bitmap.getWidth()/ratio,
-				bitmap.getHeight()/ratio, paint);
-
+		canvas.drawRoundRect(rectF, i/ratio,
+				i/ratio, paint);
 		paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 		canvas.drawBitmap(bitmap, rect, rect, paint);
 		return output;
