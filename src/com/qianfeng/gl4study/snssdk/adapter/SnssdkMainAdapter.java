@@ -1,18 +1,13 @@
 package com.qianfeng.gl4study.snssdk.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
-import com.qianfeng.gl4study.snssdk.utils.DownloadUtils;
-import com.qianfeng.gl4study.snssdk.utils.FileCache;
-import com.qianfeng.gl4study.snssdk.utils.ImageCache;
-import com.qianfeng.gl4study.snssdk.tasks.ImageLoaderTask;
+import com.qianfeng.gl4study.snssdk.utils.Utils;
 
 
 import java.util.List;
@@ -108,10 +103,10 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		if(snssdkType == 2){    //图片类型段子
 
 			//占位图
-			viewHolder.itemImage.setScaleType(ImageView.ScaleType.FIT_XY);
+			viewHolder.itemImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			viewHolder.itemImage.setImageResource(R.drawable.loading_icon);
 			String imageUrl = snssdk.getInageContentURL();
-			DownloadUtils.loaderImage(viewHolder.itemImage, imageUrl);
+			Utils.loaderImage(view.getWidth(),viewHolder.itemImage, imageUrl);
 		}else if(snssdkType == 3){  //视频类型段子
 
 		}
@@ -122,7 +117,7 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		viewHolder.userName.setText(snssdk.getComment_name());
 		String avatarUrl = snssdk.getAvatar_url();
 		//加载头像
-		DownloadUtils.loaderImage(viewHolder.userImage, avatarUrl);
+		Utils.loaderImage(-1,viewHolder.userImage, avatarUrl);
 
 		//评论条的显示
 		if(snssdk.getUser_digg()==1){

@@ -14,6 +14,7 @@ import com.qianfeng.gl4study.snssdk.model.Discuss;
 import com.qianfeng.gl4study.snssdk.utils.FileCache;
 import com.qianfeng.gl4study.snssdk.utils.ImageCache;
 import com.qianfeng.gl4study.snssdk.tasks.ImageLoaderTask;
+import com.qianfeng.gl4study.snssdk.utils.Utils;
 
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class DiscussListAdapter extends BaseAdapter{
 		}
 
 		Discuss discuss = data.get(position);
-		loaderImage(holder.userImage,discuss.getUserVerified());
+		Utils.loaderImage(-1,holder.userImage,discuss.getUserVerified());
 		holder.userName.setText(discuss.getUserName());
 		holder.createTime.setText(discuss.getCreateTime()+"");
 		holder.txtGood.setText(discuss.getDiggCount()+"");
@@ -89,25 +90,4 @@ public class DiscussListAdapter extends BaseAdapter{
 		public  TextView discussContent;
 
 	}
-
-	private void loaderImage(ImageView userImage,String avatarUrl){
-		userImage.setTag(avatarUrl);
-		ImageCache imageCache = ImageCache.getInstance();
-		Bitmap bitmap = imageCache.getImage(avatarUrl);
-		if(bitmap!=null){
-			userImage.setImageBitmap(bitmap);
-		}else {
-			FileCache fileCache = FileCache.getInstance();
-			byte[] bytes = fileCache.getContent(avatarUrl);
-			if(bytes!=null&&bytes.length>0){
-				Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-				userImage.setImageBitmap(bmp);
-				imageCache.putImage(avatarUrl,bmp);
-			}else {
-				ImageLoaderTask imageLoaderTask = new ImageLoaderTask(userImage);
-				imageLoaderTask.execute(avatarUrl);
-			}
-		}
-	}
-
 }

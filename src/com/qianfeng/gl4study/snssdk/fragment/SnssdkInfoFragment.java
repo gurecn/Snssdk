@@ -1,8 +1,6 @@
 package com.qianfeng.gl4study.snssdk.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,10 +18,7 @@ import com.qianfeng.gl4study.snssdk.model.Discuss;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
 import com.qianfeng.gl4study.snssdk.tasks.SnssdkTask;
 import com.qianfeng.gl4study.snssdk.tasks.TaskProcessor;
-import com.qianfeng.gl4study.snssdk.utils.DownloadUtils;
-import com.qianfeng.gl4study.snssdk.utils.FileCache;
-import com.qianfeng.gl4study.snssdk.utils.ImageCache;
-import com.qianfeng.gl4study.snssdk.tasks.ImageLoaderTask;
+import com.qianfeng.gl4study.snssdk.utils.Utils;
 import com.qianfeng.gl4study.snssdk.view.MyListView;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -125,7 +120,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		ImageView itemImage = (ImageView) view.findViewById(R.id.item_fragment_image);
 		ImageView itemIconUser = (ImageView) view.findViewById(R.id.item_fragment_user_icon);
 		TextView itemUserName = (TextView) view.findViewById(R.id.item_fragment_user_name);
-		DownloadUtils.loaderImage(itemIconUser, snssdk.getAvatar_url());
+		Utils.loaderImage(-1,itemIconUser, snssdk.getAvatar_url());
 		itemUserName.setText(snssdk.getName());
 
 		Log.d("SnssdkInfoActivity","displaySnssdk");
@@ -142,7 +137,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 			if(null!=content) {
 				itemWord.setText(content);
 			}
-			DownloadUtils.loaderImage(itemImage, snssdk.getInageContentURL());
+			Utils.loaderImage(view.getWidth(),itemImage, snssdk.getInageContentURL());
 			//		itemVideo.setVisibility(View.GONE);
 		}else if(snssdkType == 3){
 			//	itemVideo

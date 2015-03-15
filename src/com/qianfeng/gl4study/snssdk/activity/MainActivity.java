@@ -122,7 +122,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
 		refreshListView.setPullLabel("继续下拉");
 		refreshListView.setBackgroundResource(R.drawable.main_rg_bg);
-		refreshListView.setRefreshingLabel("松手刷新");
+		refreshListView.setRefreshingLabel("正在刷新....");
 		refreshListView.setReleaseLabel("正在刷新....");
 		refreshListView.setOnRefreshListener(this);
 	}

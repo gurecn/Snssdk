@@ -18,7 +18,7 @@
                 android:id="@+id/item_fragment_user_icon"
                 android:layout_width = "0dp"
                 android:layout_height = "40dp"
-                android:src="@drawable/ic_app"
+                android:src="@drawable/ic_main_default_avatar"
                 android:layout_weight="1"
                 />
         <TextView
@@ -55,7 +55,7 @@
                 android:id="@+id/item_fragment_image"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
-                android:scaleType="centerCrop"
+                android:scaleType="centerInside"
                 />
        <!-- <VideoView
                 android:id="@+id/item_fragment_video"

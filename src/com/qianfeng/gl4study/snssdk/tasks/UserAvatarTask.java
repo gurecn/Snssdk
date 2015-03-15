@@ -1,13 +1,5 @@
 package com.qianfeng.gl4study.snssdk.tasks;
 
-/**
- * Created with IntelliJ IDEA.
- * I'm glad to share my knowledge with you all.
- * User:Gaolei
- * Date:2015/3/10
- * Email:pdsfgl@live.com
- */
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -18,17 +10,19 @@ import com.qianfeng.gl4study.snssdk.utils.ImageCache;
 import com.qianfeng.gl4study.snssdk.utils.Utils;
 
 /**
- * 通用的图片下载异步任务，通过方法覆盖，接受图片的ImageView
+ * Created with IntelliJ IDEA.
+ * I'm glad to share my knowledge with you all.
+ * User:Gaolei
+ * Date:2015/3/15
+ * Email:pdsfgl@live.com
  */
-public class ImageLoaderTask extends AsyncTask<String, Integer, byte[]> {
+public class UserAvatarTask extends AsyncTask<String, Integer, byte[]> {
 
 	private ImageView imageView;
-	private int width;
 	private String imgUrl;
 
-	public ImageLoaderTask(int width,ImageView imageView) {
+	public UserAvatarTask(ImageView imageView) {
 		this.imageView = imageView;
-		this.width = width;
 	}
 	@Override
 	protected byte[] doInBackground(String... params) {
@@ -46,6 +40,7 @@ public class ImageLoaderTask extends AsyncTask<String, Integer, byte[]> {
 		if (bytes != null) {
 
 			Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+			bitmap = Utils.getRoundedCornerBitmap(bitmap,2);
 			//更新内存缓存信息
 			FileCache.getInstance().putContent(imgUrl,bytes);
 			ImageCache imageCache = ImageCache.getInstance();
@@ -58,7 +53,7 @@ public class ImageLoaderTask extends AsyncTask<String, Integer, byte[]> {
 						String sTag = (String) tag;
 						if(sTag.equals(imgUrl)){
 							//当前下载地址和tag参数一致，即任务该ImageView应该显示该图片
-							Utils.setImageToView(width,imageView,bitmap);
+							imageView.setImageBitmap(bitmap);
 						}
 					}
 				}
