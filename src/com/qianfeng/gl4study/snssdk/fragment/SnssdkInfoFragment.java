@@ -89,7 +89,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 
 	/**
 	 * 显示评论信息
-	 * @param snssdk
+	 * @param snssdk 段子
 	 */
 	private void displayDiscuss(Snssdk snssdk){
 		discussTask = new SnssdkTask(this);
@@ -111,7 +111,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 
 	/**
 	 * 显示段子信息
-	 * @param snssdk
+	 * @param snssdk    段子
 	 */
 	private void displaySnssdk(Snssdk snssdk){
 
@@ -139,7 +139,9 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 			}
 			Utils.loaderImage(view.getWidth(),itemImage, snssdk.getInageContentURL());
 			//		itemVideo.setVisibility(View.GONE);
-		}else if(snssdkType == 3){
+		}
+		//TODO  添加视频信息
+		else if(snssdkType == 3){
 			//	itemVideo
 		}
 
@@ -173,7 +175,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 
 	/**
 	 * 单击段子上的组件监听
-	 * @param v
+	 * @param v     单击的组件
 	 */
 	@Override
 	public void onClick(View v) {
@@ -238,8 +240,8 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 	}
 	/**
 	 * 异步任务的回调，获取段子的评论信息
-	 * @param result
-	 * @param flag
+	 * @param result        返回的结果
+	 * @param flag          段子类别
 	 */
 	@Override
 	public void processResult(JSONObject result, String flag) {
@@ -257,7 +259,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 					for (int i = 0; i < dataJSONArray.length(); i++) {
 						JSONObject jsonObject = dataJSONArray.getJSONObject(i);
 						Discuss discuss = new Discuss();
-						discuss.parseInformation(jsonObject, type);
+						discuss.parseInformation(jsonObject);
 						dataTop.add(discuss);
 					}
 					//最热评论数据添加完成，更新List
@@ -271,7 +273,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 					for (int i = 0; i < dataJSONArray.length(); i++) {
 						JSONObject jsonObject = dataJSONArray.getJSONObject(i);
 						Discuss discuss = new Discuss();
-						discuss.parseInformation(jsonObject, type);
+						discuss.parseInformation(jsonObject);
 						dataFresh.add(discuss);
 					}
 					//最新评论数据添加完成，更新List

@@ -1,6 +1,5 @@
 package com.qianfeng.gl4study.snssdk.model;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,14 +36,7 @@ public class Discuss {
 	private String userName;
 	private String userVerified;
 
-	public Discuss(String content) {
-		this.content = content;
-	}
-
-	public Discuss() {
-	}
-
-	public Discuss parseInformation(JSONObject group,int type){
+	public Discuss parseInformation(JSONObject group){
 
 		if(group!=null){
 			try {

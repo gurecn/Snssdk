@@ -58,7 +58,7 @@ public class SnssdkMainAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = null;
+		View view;
 		if(convertView !=null) {
 			view = convertView;
 		}else {
@@ -107,9 +107,13 @@ public class SnssdkMainAdapter extends BaseAdapter{
 			viewHolder.itemImage.setImageResource(R.drawable.loading_icon);
 			String imageUrl = snssdk.getInageContentURL();
 			Utils.loaderImage(view.getWidth(),viewHolder.itemImage, imageUrl);
-		}else if(snssdkType == 3){  //视频类型段子
+		}
+		//TODO 视频信息
+		/*
+		else if(snssdkType == 3){  //视频类型段子
 
 		}
+		*/
 		viewHolder.itemWord.setText(snssdk.getContent());
 		viewHolder.txtGood.setText(snssdk.getDigg_count()+"");
 		viewHolder.txtBad.setText(snssdk.getRepin_count()+"");

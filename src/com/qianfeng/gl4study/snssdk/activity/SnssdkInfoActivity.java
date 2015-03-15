@@ -12,8 +12,6 @@ import com.qianfeng.gl4study.snssdk.adapter.SnssdkViewPagerAdapter;
 
 public class SnssdkInfoActivity extends FragmentActivity implements View.OnClickListener {
 
-	private ViewPager viewPager;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,11 +21,12 @@ public class SnssdkInfoActivity extends FragmentActivity implements View.OnClick
 		int category = intent.getIntExtra("category",0);
 
 		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayShowHomeEnabled(false);
-		actionBar.hide();
-
-		viewPager = (ViewPager) findViewById(R.id.snssdk_info_view_pager);
+		if (actionBar != null) {
+			actionBar.setDisplayShowTitleEnabled(false);
+			actionBar.setDisplayShowHomeEnabled(false);
+			actionBar.hide();
+		}
+		ViewPager viewPager = (ViewPager) findViewById(R.id.snssdk_info_view_pager);
 		ImageView publishNewDiscuss = (ImageView) findViewById(R.id.iv_publish_new_discuss);
 		publishNewDiscuss.setOnClickListener(this);
 		SnssdkViewPagerAdapter adapter = new SnssdkViewPagerAdapter(getSupportFragmentManager(),category);

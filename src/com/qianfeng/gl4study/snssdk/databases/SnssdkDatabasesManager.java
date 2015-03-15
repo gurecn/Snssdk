@@ -41,9 +41,9 @@ public class SnssdkDatabasesManager {
 
 
 	/**
-	 * 查询段子列表
-	 * @param userId
-	 * @return
+	 * 查询用户信息
+	 * @param userId    用户ID
+	 * @return  结果游标
 	 */
 	public Cursor querySnssdk(String userId){
 		SQLiteDatabase db = openDatabases();
@@ -59,21 +59,32 @@ public class SnssdkDatabasesManager {
 
 	/**
 	 * 获取段子列表
-	 * @param category
-	 * @return
+	 * @param category  段子类别
+	 * @return  返回结果集合
 	 */
 
-	public LinkedList<Snssdk> getSnssdkCollect(int category){
+	public LinkedList<Snssdk> getSnssdkCollect(int category,int level){
 
 		LinkedList<Snssdk> ret = null;
 		SQLiteDatabase db = openDatabases();
-		Cursor query = db.query(
-				SnssdktDatabasesHelper.TABLE_SNSSDK_WORD,
-				null,
-				"category_type = ?",
-				new String[]{category+""},
-				null, null,  "group_id ASC"
-		);
+		Cursor query;
+		if(level ==6){
+			query = db.query(
+					SnssdktDatabasesHelper.TABLE_SNSSDK_WORD,
+					null,
+					"category_type = ?",
+					new String[]{category+""},
+					null, null,  "group_id ASC"
+			);
+		}else {
+			query = db.query(
+					SnssdktDatabasesHelper.TABLE_SNSSDK_WORD,
+					null,
+					"category_type = ?AND level = ?",
+					new String[]{category + "", level + ""},
+					null, null, "group_id ASC"
+			);
+		}
 		if(query!=null){
 			ret = new LinkedList<Snssdk>();
 			while (query.moveToNext()){
@@ -88,8 +99,8 @@ public class SnssdkDatabasesManager {
 
 	/**
 	 * 数据库存储段子信息
-	 * @param values
-	 * @return
+	 * @param values    需要存储的信息
+	 * @return  返回存储结果
 	 */
 
 	public boolean saveSnssdk(ContentValues values){
@@ -119,7 +130,7 @@ public class SnssdkDatabasesManager {
 
 	/**
 	 * 打开数据库的操作
-	 * @return
+	 * @return      打开的数据库
 	 */
 	private SQLiteDatabase openDatabases(){
 		if(database == null){

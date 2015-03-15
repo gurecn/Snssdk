@@ -34,7 +34,9 @@ public class Utils {
 			if(bytes!=null&&bytes.length>0){
 				//文件缓存时字节数组，转化成图片还是非圆角，故，需要重新转化。
 				bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-				bitmap = Utils.getRoundedCornerBitmap(bitmap,2);
+				if(width == -1) {//头像下载
+					bitmap = Utils.getRoundedCornerBitmap(bitmap, 2);
+				}
 				userImage.setImageBitmap(bitmap);
 				imageCache.putImage(avatarUrl,bitmap);
 			}else {
@@ -47,7 +49,6 @@ public class Utils {
 				}
 			}
 		}
-
 	}
 	/**
 	 * 图片段子设置

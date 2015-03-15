@@ -34,7 +34,9 @@ public class SingletonVideo {
 	public static SingletonVideo getInstance() {
 		return ourInstance;
 	}
-
+	public void removeAll(){
+		snssdks.clear();
+	}
 	private SingletonVideo() {
 	}
 }

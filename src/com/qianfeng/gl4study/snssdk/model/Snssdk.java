@@ -2,6 +2,7 @@ package com.qianfeng.gl4study.snssdk.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -287,6 +288,8 @@ public class Snssdk implements Serializable{
 				group_id = group.getLong("group_id");
 				category_type = type;
 				level = group.getInt("level");
+
+				Log.d("parseInformation","level="+level);
 				has_comments = group.getInt("has_comments");
 				comment_count = group.getInt("comment_count");
 				repin_count = group.getInt("repin_count");

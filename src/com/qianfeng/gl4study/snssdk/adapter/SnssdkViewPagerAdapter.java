@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 import com.qianfeng.gl4study.snssdk.fragment.SnssdkInfoFragment;
 import com.qianfeng.gl4study.snssdk.model.SingletonImage;
 import com.qianfeng.gl4study.snssdk.model.SingletonVideo;
@@ -31,7 +30,7 @@ public class SnssdkViewPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public Fragment getItem(int i) {
-		Fragment fragment = null;
+		Fragment fragment;
 		Bundle bundle = new Bundle();
 		Snssdk snssdk = null;
 		if(category == 1){

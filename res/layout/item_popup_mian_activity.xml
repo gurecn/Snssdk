@@ -7,6 +7,7 @@
               android:gravity="center"
         >
     <LinearLayout
+            android:id="@+id/popup_main_ll_favor_1"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_margin="5dp"
@@ -27,6 +28,7 @@
     </LinearLayout>
 
     <LinearLayout
+            android:id="@+id/popup_main_ll_best_2"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_margin="5dp"
@@ -47,6 +49,7 @@
     </LinearLayout>
 
     <LinearLayout
+            android:id="@+id/popup_main_ll_hot_3"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_margin="5dp"
@@ -68,6 +71,7 @@
 
 
     <LinearLayout
+            android:id="@+id/popup_main_ll_new_4"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_margin="5dp"
