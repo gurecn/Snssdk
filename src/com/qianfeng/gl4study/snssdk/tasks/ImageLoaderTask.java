@@ -1,4 +1,4 @@
-package com.qianfeng.gl4study.snssdk.utils;
+package com.qianfeng.gl4study.snssdk.tasks;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,16 +12,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+import com.qianfeng.gl4study.snssdk.utils.FileCache;
+import com.qianfeng.gl4study.snssdk.utils.HttpTool;
+import com.qianfeng.gl4study.snssdk.utils.ImageCache;
 
 /**
  * 通用的图片下载异步任务，通过方法覆盖，接受图片的ImageView
  */
-public class ImageLoader extends AsyncTask<String, Integer, byte[]> {
+public class ImageLoaderTask extends AsyncTask<String, Integer, byte[]> {
 
 	private ImageView imageView;
 	private String imgUrl;
 
-	public ImageLoader(ImageView imageView) {
+	public ImageLoaderTask(ImageView imageView) {
 		this.imageView = imageView;
 	}
 	@Override

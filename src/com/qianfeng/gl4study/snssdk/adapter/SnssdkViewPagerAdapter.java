@@ -12,6 +12,7 @@ import com.qianfeng.gl4study.snssdk.model.SingletonWord;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
 
 /**
+ * 段子详情页面的ViewPager Adapter
  * Created with IntelliJ IDEA.
  * I'm glad to share my knowledge with you all.
  * User:Gaolei

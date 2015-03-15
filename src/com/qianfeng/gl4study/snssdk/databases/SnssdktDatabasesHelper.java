@@ -41,11 +41,11 @@ public class SnssdktDatabasesHelper extends SQLiteOpenHelper {
 				"level int default 0,"+
 				"category_type int default 0,"+
 				"group_id long not null,"+
+				"large_image text,"+
 				"content text)";
 
 			;
  /*
-
 			"content": ”于是等他选好手套，阿紫小声的的说：“帅哥，我还想帮我男朋友买一盒TT。。。”",
 			"group_id": 4048033285,			//段子Id
 			"category_type": 1,				//段子分类1

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              android:orientation = "vertical"
+              android:layout_width = "match_parent"
+              android:layout_height = "match_parent"
+              android:background="@drawable/main_rg_bg"
+              android:gravity="center"
+        >
+    <LinearLayout
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_margin="5dp"
+            >
+        <ImageView
+                android:id="@+id/ig_item_popup_main_1"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:src="@drawable/ic_title_favor_normal"
+                />
+        <TextView
+                android:id="@+id/txt_item_popup_main_1"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="推荐"
+                />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_margin="5dp"
+            >
+        <ImageView
+                android:id="@+id/ig_item_popup_main_2"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:src="@drawable/ic_title_best_normal"
+                />
+        <TextView
+                android:id="@+id/txt_item_popup_main_2"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="精华"
+                />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_margin="5dp"
+            >
+        <ImageView
+                android:id="@+id/ig_item_popup_main_3"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:src="@drawable/ic_title_hot_normal"
+                />
+        <TextView
+                android:id="@+id/txt_item_popup_main_3"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="热门"
+                />
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_margin="5dp"
+            >
+        <ImageView
+                android:id="@+id/ig_item_popup_main_4"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:src="@drawable/ic_title_new_normal"
+                />
+        <TextView
+                android:id="@+id/txt_item_popup_main_4"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="新鲜"
+                />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

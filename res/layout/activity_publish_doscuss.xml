@@ -14,7 +14,7 @@
             android:gravity="center"
             >
         <ImageView
-                android:id="@+id/ib_user_icon"
+                android:id="@+id/ib_back_activity_disucss"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:paddingLeft = "@dimen/activity_horizontal_margin"
@@ -22,7 +22,7 @@
                 android:src="@drawable/ic_back_normal"
                 />
         <TextView
-                android:id="@+id/txt_main_level"
+                android:id="@+id/txt_activity_disucss"
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
                 android:layout_weight="1"
@@ -32,7 +32,7 @@
                 android:textColor="#000"
                 />
         <TextView
-                android:id="@+id/ib_push_contribute"
+                android:id="@+id/ib_push_activity_disucss"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:paddingLeft = "@dimen/activity_horizontal_margin"

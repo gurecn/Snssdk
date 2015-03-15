@@ -52,20 +52,8 @@ public class FlyleafActivity extends Activity implements TaskProcessor {
 		SharedPreferences sharedPreferences  = getSharedPreferences("config", MODE_PRIVATE);
 		//从文件中读取数据
 		long minTimeWord = sharedPreferences.getLong("minTimeWord", 0);
-		long maxTimeWord = sharedPreferences.getLong("maxTimeWord", 0);
 		long minTimeImage = sharedPreferences.getLong("minTimeImage", 0);
-		long maxTimeImage = sharedPreferences.getLong("maxTimeImage", 0);
-		long minTimeVideo = sharedPreferences.getLong("minTimeVideo", 0);
-		long maxTimeVideo = sharedPreferences.getLong("maxTimeVideo", 0);
-
-		//设置程序运行中的时间，避免多次进行文件读写操作
-		SingletonVariable.setMinTimeWord(minTimeWord);
-		SingletonVariable.setMaxTimeWord(maxTimeWord);
-		SingletonVariable.setMinTimeImage(minTimeImage);
-		SingletonVariable.setMaxTimeImage(maxTimeImage);
-		SingletonVariable.setMinTimeVideo(minTimeVideo);
-		SingletonVariable.setMaxTimeVideo(maxTimeVideo);
-/*
+	/*
 		//开启异步加载文本段子信息
 		SnssdkTask 	snssdkTask = new SnssdkTask(this);
 		StringBuilder stringBuilder = new StringBuilder();
@@ -124,19 +112,15 @@ public class FlyleafActivity extends Activity implements TaskProcessor {
 						wordTask = true;
 						SingletonWord.getInstance().removeAll();
 						SingletonWord.getInstance().addAllSnssdks(snssdks);
-						SingletonVariable.setMinTimeWord(minTime1);
-						//edit.putLong("minTimeWord", minTime1);
-						SingletonVariable.setMaxTimeWord(maxTime1);
-						//edit.putLong("maxTimeWord", maxTime1);
+						edit.putLong("minTimeWord", minTime1);
+						edit.putLong("maxTimeWord", maxTime1);
 
 					}else if("2".equals(flag)){
 						imageTask = true;
 						SingletonImage.getInstance().removeAll();
 						SingletonImage.getInstance().addAllSnssdks(snssdks);
-						SingletonVariable.setMinTimeImage(minTime1);
-					//	edit.putLong("minTimeImage", minTime1);
-						SingletonVariable.setMaxTimeImage(maxTime1);
-						//edit.putLong("maxTimeImage", maxTime1);
+						edit.putLong("minTimeImage", minTime1);
+						edit.putLong("maxTimeImage", maxTime1);
 					}
 					edit.commit();
 					Log.d("MainActivity", "初次下载完成=============" + snssdks.size());

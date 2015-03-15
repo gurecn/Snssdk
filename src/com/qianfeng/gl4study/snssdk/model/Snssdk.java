@@ -17,6 +17,7 @@ import java.io.Serializable;
  */
 public class Snssdk implements Serializable{
 
+	private String inageContentURL;
 	private String content  ; 
 	private long group_id  ;             //段子Id
 	private int category_type  ;  		//段子分类1
@@ -167,6 +168,17 @@ public class Snssdk implements Serializable{
 		return text;
 	}
 
+	public String getInageContentURL() {
+		return inageContentURL;
+	}
+
+	public void setInageContentURL(String inageContentURL) {
+		this.inageContentURL = inageContentURL;
+	}
+
+	public boolean isUser_verified() {
+		return user_verified;
+	}
 
 	public void setContent(String content) {
 		this.content = content;
@@ -262,14 +274,15 @@ public class Snssdk implements Serializable{
 
 	/**
 	 * 将JSONObject数据解析成段子信息
-	 * @param group
+	 * @param jsonObject
 	 * @param type
 	 * @return
 	 */
-	public Snssdk parseInformation(JSONObject group,int type){
+	public Snssdk parseInformation(JSONObject jsonObject,int type){
 
-		if(group!=null){
+		if(jsonObject!=null){
 			try {
+				JSONObject group = jsonObject.getJSONObject("group");
 				content = group.getString("content");
 				group_id = group.getLong("group_id");
 				category_type = type;
@@ -292,7 +305,7 @@ public class Snssdk implements Serializable{
 				user_verified = user.getBoolean("user_verified");
 
 				//神评论信息
-				JSONArray comments = group.getJSONArray("comments");
+				JSONArray comments = jsonObject.getJSONArray("comments");
 				if(comments.length()>0) {
 					JSONObject commentsJSONObject = comments.getJSONObject(0);
 					comment_id = commentsJSONObject.getLong("comment_id");
@@ -302,6 +315,11 @@ public class Snssdk implements Serializable{
 					is_digg = commentsJSONObject.getInt("is_digg");
 					text = commentsJSONObject.getString("text");
 				}
+				if(type == 2){//获取图片信息
+					inageContentURL = group.getJSONObject("large_image").getJSONArray("url_list").getJSONObject(0).getString("url");
+				}
+
+
 
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -319,6 +337,7 @@ public class Snssdk implements Serializable{
 		ContentValues values = new ContentValues();
 
 		values.put("content",content);
+		values.put("large_image",inageContentURL);
 		values.put("group_id",group_id);
 		values.put("category_type",category_type);
 		values.put("level",level);
@@ -442,6 +461,11 @@ public class Snssdk implements Serializable{
 		if (index != -1) {
 			text = query.getString(index);
 		}
+		index = query.getColumnIndex("large_image");
+		if (index != -1) {
+			inageContentURL = query.getString(index);
+		}
+
 	}
 
 

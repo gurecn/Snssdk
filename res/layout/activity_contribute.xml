@@ -6,10 +6,43 @@
                 android:paddingTop = "@dimen/activity_vertical_margin"
                 android:paddingBottom = "@dimen/activity_vertical_margin"
         >
-	
-	<TextView
-			android:text = "提交"
-			android:layout_width = "wrap_content"
-			android:layout_height = "wrap_content"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:background="@drawable/ic_main_bg_top"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            >
+        <ImageView
+                android:id="@+id/ib_back_activity_contribute"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:paddingLeft = "@dimen/activity_horizontal_margin"
+                android:paddingRight = "@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_back_normal"
+                />
+        <TextView
+                android:id="@+id/txt_activity_contribute"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:text="我要投稿"
+                />
+        <TextView
+                android:id="@+id/ib_contribute_activity_contribute"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:paddingLeft = "@dimen/activity_horizontal_margin"
+                android:paddingRight = "@dimen/activity_horizontal_margin"
+                android:textColor="#A1641B"
+                android:textSize="18sp"
+                android:text="提交"
+                />
+
+    </LinearLayout>
 
 </RelativeLayout>

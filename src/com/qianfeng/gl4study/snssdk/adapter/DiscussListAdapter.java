@@ -13,7 +13,7 @@ import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.model.Discuss;
 import com.qianfeng.gl4study.snssdk.utils.FileCache;
 import com.qianfeng.gl4study.snssdk.utils.ImageCache;
-import com.qianfeng.gl4study.snssdk.utils.ImageLoader;
+import com.qianfeng.gl4study.snssdk.tasks.ImageLoaderTask;
 
 import java.util.List;
 
@@ -104,8 +104,8 @@ public class DiscussListAdapter extends BaseAdapter{
 				userImage.setImageBitmap(bmp);
 				imageCache.putImage(avatarUrl,bmp);
 			}else {
-				ImageLoader imageLoader = new ImageLoader(userImage);
-				imageLoader.execute(avatarUrl);
+				ImageLoaderTask imageLoaderTask = new ImageLoaderTask(userImage);
+				imageLoaderTask.execute(avatarUrl);
 			}
 		}
 	}

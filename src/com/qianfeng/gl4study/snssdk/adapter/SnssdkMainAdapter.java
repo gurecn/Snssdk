@@ -9,14 +9,16 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
+import com.qianfeng.gl4study.snssdk.utils.DownloadUtils;
 import com.qianfeng.gl4study.snssdk.utils.FileCache;
 import com.qianfeng.gl4study.snssdk.utils.ImageCache;
-import com.qianfeng.gl4study.snssdk.utils.ImageLoader;
+import com.qianfeng.gl4study.snssdk.tasks.ImageLoaderTask;
 
 
 import java.util.List;
 
 /**
+ * 主界面ListView的Adapter
  * Created with IntelliJ IDEA.
  * I'm glad to share my knowledge with you all.
  * User:Gaolei
@@ -104,9 +106,12 @@ public class SnssdkMainAdapter extends BaseAdapter{
 
 		int snssdkType = snssdk.getCategory_type();
 		if(snssdkType == 2){    //图片类型段子
+
+			//占位图
+			viewHolder.itemImage.setScaleType(ImageView.ScaleType.FIT_XY);
 			viewHolder.itemImage.setImageResource(R.drawable.loading_icon);
-			//String imageUrl = snssdk.getImageUrl();
-			//loaderImage(viewHolder.itemImage,imageUrl);
+			String imageUrl = snssdk.getInageContentURL();
+			DownloadUtils.loaderImage(viewHolder.itemImage, imageUrl);
 		}else if(snssdkType == 3){  //视频类型段子
 
 		}
@@ -117,7 +122,7 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		viewHolder.userName.setText(snssdk.getComment_name());
 		String avatarUrl = snssdk.getAvatar_url();
 		//加载头像
-		loaderImage(viewHolder.userImage,avatarUrl);
+		DownloadUtils.loaderImage(viewHolder.userImage, avatarUrl);
 
 		//评论条的显示
 		if(snssdk.getUser_digg()==1){
@@ -162,27 +167,5 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		private RelativeLayout llBad;
 		private LinearLayout llHot;
 
-
 	}
-
-	private void loaderImage(ImageView userImage,String avatarUrl){
-		userImage.setTag(avatarUrl);
-		ImageCache imageCache = ImageCache.getInstance();
-		Bitmap bitmap = imageCache.getImage(avatarUrl);
-		if(bitmap!=null){
-			userImage.setImageBitmap(bitmap);
-		}else {
-			FileCache fileCache = FileCache.getInstance();
-			byte[] bytes = fileCache.getContent(avatarUrl);
-			if(bytes!=null&&bytes.length>0){
-				Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-				userImage.setImageBitmap(bmp);
-				imageCache.putImage(avatarUrl,bmp);
-			}else {
-				ImageLoader imageLoader = new ImageLoader(userImage);
-				imageLoader.execute(avatarUrl);
-			}
-		}
-	}
-
 }

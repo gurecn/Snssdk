@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +20,10 @@ import com.qianfeng.gl4study.snssdk.model.Discuss;
 import com.qianfeng.gl4study.snssdk.model.Snssdk;
 import com.qianfeng.gl4study.snssdk.tasks.SnssdkTask;
 import com.qianfeng.gl4study.snssdk.tasks.TaskProcessor;
+import com.qianfeng.gl4study.snssdk.utils.DownloadUtils;
 import com.qianfeng.gl4study.snssdk.utils.FileCache;
 import com.qianfeng.gl4study.snssdk.utils.ImageCache;
-import com.qianfeng.gl4study.snssdk.utils.ImageLoader;
+import com.qianfeng.gl4study.snssdk.tasks.ImageLoaderTask;
 import com.qianfeng.gl4study.snssdk.view.MyListView;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -125,7 +125,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		ImageView itemImage = (ImageView) view.findViewById(R.id.item_fragment_image);
 		ImageView itemIconUser = (ImageView) view.findViewById(R.id.item_fragment_user_icon);
 		TextView itemUserName = (TextView) view.findViewById(R.id.item_fragment_user_name);
-		loaderImage(itemIconUser,snssdk.getAvatar_url());
+		DownloadUtils.loaderImage(itemIconUser, snssdk.getAvatar_url());
 		itemUserName.setText(snssdk.getName());
 
 		Log.d("SnssdkInfoActivity","displaySnssdk");
@@ -142,7 +142,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 			if(null!=content) {
 				itemWord.setText(content);
 			}
-			//loaderImage(itemImage,snssdk.getImageUrl());
+			DownloadUtils.loaderImage(itemImage, snssdk.getInageContentURL());
 			//		itemVideo.setVisibility(View.GONE);
 		}else if(snssdkType == 3){
 			//	itemVideo
@@ -241,32 +241,6 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		imgGood.setImageResource(R.drawable.ic_bar_digg_normal);
 		imgBad.setImageResource(R.drawable.ic_bar_bury_normal);
 	}
-
-	/**
-	 * 图片段子下载
-	 * @param userImage
-	 * @param avatarUrl
-	 */
-	private void loaderImage(ImageView userImage,String avatarUrl){
-		userImage.setTag(avatarUrl);
-		ImageCache imageCache = ImageCache.getInstance();
-		Bitmap bitmap = imageCache.getImage(avatarUrl);
-		if(bitmap!=null){
-			userImage.setImageBitmap(bitmap);
-		}else {
-			FileCache fileCache = FileCache.getInstance();
-			byte[] bytes = fileCache.getContent(avatarUrl);
-			if(bytes!=null&&bytes.length>0){
-				Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-				userImage.setImageBitmap(bmp);
-				imageCache.putImage(avatarUrl,bmp);
-			}else {
-				ImageLoader imageLoader = new ImageLoader(userImage);
-				imageLoader.execute(avatarUrl);
-			}
-		}
-	}
-
 	/**
 	 * 异步任务的回调，获取段子的评论信息
 	 * @param result
