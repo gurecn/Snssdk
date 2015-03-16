@@ -13,6 +13,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qianfeng.gl4study.snssdk.R;
@@ -297,7 +299,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 						Snssdk snssdk = new Snssdk();
 						snssdk.parseInformation(jsonObject, type);
 						ContentValues values = snssdk.getContentValues();
-						SnssdkDatabasesManager.createInstance(this).saveSnssdk(values);
+						SnssdkDatabasesManager.createInstance(this).saveSnssdk(values,snssdk.getGroup_id());
 					}
 					saveTimeToSingleton(this,type,data.getLong("min_time"),data.getLong("max_time"));
 					//数据添加完成，更新List
@@ -418,6 +420,27 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	}
 
 	/**
+	 * 第三方分享功能测试
+	 *
+	 * @param context
+	 */
+	private void showShare(Context context,String content) {
+		// 这个方法必须调用，初始化ShareSDK
+		ShareSDK.initSDK(context);
+		// 一键分享的代码
+		OnekeyShare oks = new OnekeyShare();
+		// 分享时Notification的图标和文字
+		oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+		// 分享的文字内容
+		oks.setText(content);
+		// 设置分享的图片
+		//oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/05/21/oESpJ78_533x800.jpg");
+		// 启动分享GUI
+		oks.show(context);
+		Log.d("showShare","showShare");
+	}
+
+	/**
 	 * 点击PopupWindow会首先清除之前的显示状态
 	 */
 	private void clearPopupeWindow(){
@@ -523,6 +546,9 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				break;
 			case R.id.item_fragment_bar_hot_ll://点击评论，跳转到分享页面
 				adapter.notifyDataSetChanged();
+				break;
+			case R.id.item_fragment_bar_forward_ll://点击分享
+				showShare(this,snssdk.getContent());
 				break;
 		}
 	}

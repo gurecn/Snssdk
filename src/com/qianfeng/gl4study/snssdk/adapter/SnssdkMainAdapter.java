@@ -78,26 +78,29 @@ public class SnssdkMainAdapter extends BaseAdapter{
 			viewHolder.userName = (TextView) view.findViewById(R.id.item_fragment_user_name);
 			viewHolder.layoutFragmentCommon = (LinearLayout) view.findViewById(R.id.item_fragment_common);
 			viewHolder.layoutFragmentUser = (LinearLayout) view.findViewById(R.id.item_fragment_bar_user_ll);
+			viewHolder.imgForward = (ImageView) view.findViewById(R.id.item_fragment_bar_forward_img);
+
 			viewHolder.llGood = (RelativeLayout) view.findViewById(R.id.item_fragment_bar_good_ll);
 			viewHolder.llBad = (RelativeLayout) view.findViewById(R.id.item_fragment_bar_bad_ll);
 			viewHolder.llHot = (LinearLayout) view.findViewById(R.id.item_fragment_bar_hot_ll);
-
+			viewHolder.layoutFragmenForward = (LinearLayout) view.findViewById(R.id.item_fragment_bar_forward_ll);
 			viewHolder.imgGood = (ImageView) view.findViewById(R.id.item_fragment_bar_good_img);
 			viewHolder.imgBad = (ImageView) view.findViewById(R.id.item_fragment_bar_bad_img);
 			viewHolder.imgHot = (ImageView) view.findViewById(R.id.item_fragment_bar_hot_img);
-			viewHolder.imgForward = (ImageView) view.findViewById(R.id.item_fragment_bar_forward_img);
 
 			viewHolder.llGood.setTag(position);
 			viewHolder.llBad.setTag(position);
 			viewHolder.llHot.setTag(position);
 			viewHolder.layoutFragmentCommon.setTag(position);
 			viewHolder.layoutFragmentUser.setTag(position);
+			viewHolder.layoutFragmenForward.setTag(position);
 
 			viewHolder.llGood.setOnClickListener(listener);
 			viewHolder.llBad.setOnClickListener(listener);
 			viewHolder.llHot.setOnClickListener(listener);
 			viewHolder.layoutFragmentCommon.setOnClickListener(listener);
 			viewHolder.layoutFragmentUser.setOnClickListener(listener);
+			viewHolder.layoutFragmenForward.setOnClickListener(listener);
 		}
 
 		Snssdk snssdk = snssdks.get(position);
@@ -163,6 +166,7 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		private  ImageView userImage;
 		private  TextView userName;
 		private  LinearLayout layoutFragmentCommon;
+		private  LinearLayout layoutFragmenForward;
 		private  LinearLayout layoutFragmentUser;
 
 		private RelativeLayout llGood;

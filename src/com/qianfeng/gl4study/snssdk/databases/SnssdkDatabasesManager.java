@@ -41,17 +41,17 @@ public class SnssdkDatabasesManager {
 
 
 	/**
-	 * 查询用户信息
-	 * @param userId    用户ID
+	 * 查询段子信息
+	 * @param group_id    段子Id
 	 * @return  结果游标
 	 */
-	public Cursor querySnssdk(String userId){
+	public Cursor querySnssdk(long group_id){
 		SQLiteDatabase db = openDatabases();
 		Cursor query = db.query(
 				SnssdktDatabasesHelper.TABLE_SNSSDK_WORD,
 				null,
-				"user_id = ?",
-				new String[]{userId},
+				"group_id = ?",
+				new String[]{group_id+""},
 				null, null, null
 		);
 		return query;
@@ -103,7 +103,7 @@ public class SnssdkDatabasesManager {
 	 * @return  返回存储结果
 	 */
 
-	public boolean saveSnssdk(ContentValues values){
+	public boolean saveSnssdk(ContentValues values,long groupId){
 		/*
 		检查数据库是否打开
 		未打开进行打开操作
@@ -113,10 +113,13 @@ public class SnssdkDatabasesManager {
 			if(values!=null) {
 				try {
 					db.beginTransaction();
-					long rid = db.insert(SnssdktDatabasesHelper.TABLE_SNSSDK_WORD, null, values);
-					ret = rid!=-1;
-					if(ret){
-						db.setTransactionSuccessful();
+					//检查段子是否存在
+					if(querySnssdk(groupId)==null||querySnssdk(groupId).getCount()<=0){
+						long rid = db.insert(SnssdktDatabasesHelper.TABLE_SNSSDK_WORD, null, values);
+						ret = rid!=-1;
+						if(ret){
+							db.setTransactionSuccessful();
+						}
 					}
 				}catch (Exception ex){
 					ex.printStackTrace();

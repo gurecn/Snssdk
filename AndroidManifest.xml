@@ -15,6 +15,19 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<!-- 拍照权限 -->
 	<uses-permission android:name="android.permission.CALL_PHONE" />
+
+	<!--第三方分享-->
+	<uses-permission android:name="android.permission.GET_TASKS" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+
 	<uses-sdk android:minSdkVersion="14"/>
 	<application
 			android:name="com.qianfeng.gl4study.snssdk.utils.MyApplication"
@@ -45,5 +58,29 @@
 		</activity>
 		<activity android:name = ".activity.PublishDiscuss"/>
 		<activity android:name = ".activity.AuthorActivity"/>
+
+		<!--第三方分享-->
+		<!--ShareSDK分享界面-->
+		<activity
+				android:name="cn.sharesdk.framework.ShareSDKUIShell"
+				android:theme="@android:style/Theme.Translucent.NoTitleBar"
+				android:configChanges="keyboardHidden|orientation|screenSize"
+				android:screenOrientation="portrait"
+				android:windowSoftInputMode="stateHidden|adjustResize" >
+			<intent-filter>
+				<data android:scheme="tencent100371282" />
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+
+		<!--微信分享回调 -->
+		<activity
+				android:name=".wxapi.WXEntryActivity"
+				android:theme="@android:style/Theme.Translucent.NoTitleBar"
+				android:configChanges="keyboardHidden|orientation|screenSize"
+				android:exported="true"
+				android:screenOrientation="portrait" />
 	</application>
 </manifest>
