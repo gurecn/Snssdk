@@ -4,6 +4,7 @@ import android.graphics.*;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import com.qianfeng.gl4study.snssdk.constant.Constant;
 import com.qianfeng.gl4study.snssdk.tasks.ImageLoaderTask;
 import com.qianfeng.gl4study.snssdk.tasks.UserAvatarTask;
 
@@ -36,8 +37,10 @@ public class Utils {
 				bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 				if(width == -1) {//头像下载
 					bitmap = Utils.getRoundedCornerBitmap(bitmap, 2);
+					userImage.setImageBitmap(bitmap);
+				}else {
+					Utils.setImageToView(width,userImage,bitmap);
 				}
-				userImage.setImageBitmap(bitmap);
 				imageCache.putImage(avatarUrl,bitmap);
 			}else {
 				if(width == -1){//头像下载
@@ -58,13 +61,15 @@ public class Utils {
 	 */
 	public static void setImageToView(int width,ImageView imageView,Bitmap bitmap){
 		if(imageView!=null) {
-			int cWidth = width;
-			float cHeight = (float) cWidth / bitmap.getWidth() * bitmap.getHeight();
+			int cWidth = Constant.DISPLAYMETRICS_WIDTH - 50;
+			float cHeight = (float) cWidth * bitmap.getHeight()/ bitmap.getWidth() ;
 			ViewGroup.LayoutParams params = imageView.getLayoutParams();
 			params.height = (int) cHeight;
 			params.width = cWidth;
 			imageView.setLayoutParams(params);
 			imageView.setImageBitmap(bitmap);
+
+			Log.d("setImageToView","cWidth:"+cWidth+"cHeight:"+cHeight+"bitmap.getWidth:"+bitmap.getWidth()+"height"+bitmap.getHeight());
 		}
 	}
 	/**

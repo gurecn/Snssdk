@@ -2,6 +2,7 @@ package com.qianfeng.gl4study.snssdk.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import com.qianfeng.gl4study.snssdk.R;
 
@@ -17,5 +18,9 @@ public class PersonActivity extends Activity {
 			actionBar.setDisplayShowHomeEnabled(false);
 			actionBar.hide();
 		}
+
+		Intent intent = getIntent();
+
+
 	}
 }

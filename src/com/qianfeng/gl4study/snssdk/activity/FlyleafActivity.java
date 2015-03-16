@@ -3,8 +3,10 @@ package com.qianfeng.gl4study.snssdk.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import com.qianfeng.gl4study.snssdk.R;
 
 /**
@@ -27,13 +29,28 @@ public class FlyleafActivity extends Activity{
 			actionBar.setDisplayShowHomeEnabled(false);
 			actionBar.hide();
 		}
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				Intent intent = new Intent(FlyleafActivity.this, MainActivity.class);
-				startActivity(intent);
-				FlyleafActivity.this.finish();
-			}
-		}, 3000);
+
+		SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
+		//判断是否是第一次运行
+		boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
+		Log.d("FlyleafActivity","isFirstRun:"+isFirstRun);
+		if(isFirstRun){
+			SharedPreferences.Editor edit;
+			edit = sharedPreferences.edit();
+			edit.putBoolean("isFirstRun", false);
+			edit.apply();
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					Intent intent = new Intent(FlyleafActivity.this, MainActivity.class);
+					startActivity(intent);
+					FlyleafActivity.this.finish();
+				}
+			}, 3000);
+		}else {
+			Intent intent = new Intent(FlyleafActivity.this, MainActivity.class);
+			startActivity(intent);
+			FlyleafActivity.this.finish();
+		}
 	}
 }

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
@@ -88,6 +89,14 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				}
 		});
 
+		//获取手机的宽高
+		DisplayMetrics metric = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metric);
+		Constant.DISPLAYMETRICS_WIDTH = metric.widthPixels;     // 屏幕宽度（像素）
+		Constant.DISPLAYMETRICS_HEIGHT = metric.heightPixels;   // 屏幕高度（像素）
+		float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
+		int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
+
 		//投稿图标
 		ImageView topContribute = (ImageView) findViewById(R.id.ib_push_contribute);
 		topContribute.setOnClickListener(this);
@@ -101,8 +110,11 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				Constant.TYPE_1_CATEGORY_ID_IMAGE_FLAG_SNSSDK,
 				Constant.TYPE_2_CATEGORY_ID_RECOEND_FLAG_SNSSDK));
 
-		adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
-		listViewSnssdk.setAdapter(adapter);
+		onPullDownToRefreshIml();
+
+//		adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
+//		listViewSnssdk.setAdapter(adapter);
+//
 	}
 
 	/**
@@ -312,8 +324,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private void saveTimeToSingleton(Context context,int type,long minTime1, long maxTime1) {
 
 		SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
-		SharedPreferences.Editor edit;
-		edit = sharedPreferences.edit();
+		SharedPreferences.Editor edit = sharedPreferences.edit();
 		if (type == 1) {
 			SingletonWord.getInstance().removeAll();
 			LinkedList<Snssdk> snssdks =
@@ -356,9 +367,17 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 		int id = v.getId();
 		if (id == R.id.ib_user_icon) {
-			Intent intent = new Intent(this, PersonActivity.class);
-			startActivity(intent);
-		} else if (id == R.id.ib_push_contribute) {
+			//TODO 判断用户是否登陆
+			if(Constant.SNSSDK_USER_ID == 0){
+				Toast.makeText(this,"用户未登录，请登录!",Toast.LENGTH_LONG).show();
+			}else {
+				Intent intent = new Intent(this, PersonActivity.class);
+
+				startActivity(intent);
+			}
+
+
+		} else if (id == R.id.ib_push_contribute) {     //发布段子
 			Intent intent = new Intent(this, ContributeActivity.class);
 			startActivity(intent);
 		}else if(id == R.id.popup_main_ll_favor_1|| //点击PopupWindow监听
@@ -370,17 +389,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			popupWindow.dismiss();
 			refreshListView.setRefreshing(true);
 			imgCategory2.setImageResource(R.drawable.ic_main_down_arrow_titlebar);
-
-//
-//			//重新从数据库检索数据
-//			SingletonWord.getInstance().removeAll();
-//			LinkedList<Snssdk> snssdks =
-//					SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
-//							category,level);
-//			SingletonWord.getInstance().addAllSnssdks(snssdks);
-//			adapter = new SnssdkMainAdapter(this, snssdks);
-//
-
 			onPullDownToRefreshIml();
 		}else {
 			Object tag = v.getTag();

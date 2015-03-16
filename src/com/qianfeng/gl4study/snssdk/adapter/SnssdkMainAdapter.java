@@ -103,7 +103,6 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		if(snssdkType == 2){    //图片类型段子
 
 			//占位图
-			viewHolder.itemImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			viewHolder.itemImage.setImageResource(R.drawable.loading_icon);
 			String imageUrl = snssdk.getInageContentURL();
 			Utils.loaderImage(view.getWidth(),viewHolder.itemImage, imageUrl);
