@@ -77,6 +77,7 @@ public class SnssdkMainAdapter extends BaseAdapter{
 			viewHolder.userImage = (ImageView) view.findViewById(R.id.item_fragment_user_icon);
 			viewHolder.userName = (TextView) view.findViewById(R.id.item_fragment_user_name);
 			viewHolder.layoutFragmentCommon = (LinearLayout) view.findViewById(R.id.item_fragment_common);
+			viewHolder.layoutFragmentUser = (LinearLayout) view.findViewById(R.id.item_fragment_bar_user_ll);
 			viewHolder.llGood = (RelativeLayout) view.findViewById(R.id.item_fragment_bar_good_ll);
 			viewHolder.llBad = (RelativeLayout) view.findViewById(R.id.item_fragment_bar_bad_ll);
 			viewHolder.llHot = (LinearLayout) view.findViewById(R.id.item_fragment_bar_hot_ll);
@@ -90,11 +91,13 @@ public class SnssdkMainAdapter extends BaseAdapter{
 			viewHolder.llBad.setTag(position);
 			viewHolder.llHot.setTag(position);
 			viewHolder.layoutFragmentCommon.setTag(position);
+			viewHolder.layoutFragmentUser.setTag(position);
 
 			viewHolder.llGood.setOnClickListener(listener);
 			viewHolder.llBad.setOnClickListener(listener);
 			viewHolder.llHot.setOnClickListener(listener);
 			viewHolder.layoutFragmentCommon.setOnClickListener(listener);
+			viewHolder.layoutFragmentUser.setOnClickListener(listener);
 		}
 
 		Snssdk snssdk = snssdks.get(position);
@@ -160,6 +163,7 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		private  ImageView userImage;
 		private  TextView userName;
 		private  LinearLayout layoutFragmentCommon;
+		private  LinearLayout layoutFragmentUser;
 
 		private RelativeLayout llGood;
 		private RelativeLayout llBad;

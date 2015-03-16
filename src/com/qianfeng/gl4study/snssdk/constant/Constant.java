@@ -16,7 +16,7 @@ public class Constant {
 	public static final String DISCUSS_CONTENT_LIST_URL= "http://isub.snssdk.com/2/data/get_essay_comments/?";
 
 	//用户信息获取
-	public static final String SNSSDK_USER_INFOMATION_URL= "http://isub.snssdk.com/neihan/user/profile/v1/?";
+	public static final String SNSSDK_USER_INFOMATION_URL= "http://isub.snssdk.com/neihan/user/profile/v1/?app_name=joke_essay&user_id=";
 
 	//端子数据分类1
 	public static final int TYPE_1_CATEGORY_ID_WORD_FLAG_SNSSDK = 1;

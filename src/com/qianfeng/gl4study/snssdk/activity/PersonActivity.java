@@ -20,6 +20,8 @@ public class PersonActivity extends Activity {
 		}
 
 		Intent intent = getIntent();
+		long userId = intent.getLongExtra("userId",0);
+
 
 
 	}

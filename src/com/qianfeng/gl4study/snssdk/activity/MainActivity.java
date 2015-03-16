@@ -105,16 +105,14 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
 				Constant.TYPE_1_CATEGORY_ID_WORD_FLAG_SNSSDK,
 				Constant.TYPE_2_CATEGORY_ID_RECOEND_FLAG_SNSSDK));
-		SingletonImage.getInstance().addAllSnssdks(
-				SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
-				Constant.TYPE_1_CATEGORY_ID_IMAGE_FLAG_SNSSDK,
-				Constant.TYPE_2_CATEGORY_ID_RECOEND_FLAG_SNSSDK));
+		if(SingletonWord.getSnssdks().size()==0) {
 
-		onPullDownToRefreshIml();
+			onPullDownToRefreshIml();
+		}else {
+			adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
+			listViewSnssdk.setAdapter(adapter);
 
-//		adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
-//		listViewSnssdk.setAdapter(adapter);
-//
+		}
 	}
 
 	/**
@@ -366,16 +364,15 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	public void onClick(View v) {
 
 		int id = v.getId();
-		if (id == R.id.ib_user_icon) {
+		if (id == R.id.ib_user_icon) {      //用户自己的头像
 			//TODO 判断用户是否登陆
 			if(Constant.SNSSDK_USER_ID == 0){
 				Toast.makeText(this,"用户未登录，请登录!",Toast.LENGTH_LONG).show();
 			}else {
 				Intent intent = new Intent(this, PersonActivity.class);
-
+				intent.putExtra("userId",Constant.SNSSDK_USER_ID);
 				startActivity(intent);
 			}
-
 
 		} else if (id == R.id.ib_push_contribute) {     //发布段子
 			Intent intent = new Intent(this, ContributeActivity.class);
@@ -488,6 +485,11 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			snssdk = SingletonVideo.getSnssdks().get(position);
 		}
 		switch (id) {
+			case R.id.item_fragment_bar_user_ll://跳转到个人中心
+				Intent intent = new Intent(this, AuthorActivity.class);
+				intent.putExtra("userId",snssdk.getUser_id());
+				startActivity(intent);
+				break;
 			case R.id.item_fragment_common://点击段子内容跳转到详情页面
 				skipToInfo(position);
 				break;

@@ -44,5 +44,6 @@
 			</intent-filter>
 		</activity>
 		<activity android:name = ".activity.PublishDiscuss"/>
+		<activity android:name = ".activity.AuthorActivity"/>
 	</application>
 </manifest>

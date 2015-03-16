@@ -1,10 +1,9 @@
-<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
                 android:layout_width = "match_parent"
                 android:layout_height = "match_parent"
-                android:paddingLeft = "@dimen/activity_horizontal_margin"
-                android:paddingRight = "@dimen/activity_horizontal_margin"
-                android:paddingTop = "@dimen/activity_vertical_margin"
                 android:paddingBottom = "@dimen/activity_vertical_margin"
+                android:background="#FFF"
+                android:orientation="vertical"
         >
 
     <LinearLayout
@@ -12,8 +11,8 @@
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
             android:background="@drawable/ic_main_bg_top"
-            android:layout_marginBottom="10dp"
             android:gravity="center"
+            android:id = "@+id/linearLayout"
             >
         <ImageView
                 android:id="@+id/ib_back_activity_contribute"
@@ -44,5 +43,55 @@
                 />
 
     </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:id = "@+id/relativeLayout"
+            android:layout_weight="1"
+            >
+        <EditText
+                android:layout_width = "0dp"
+                android:layout_height = "match_parent"
+                android:gravity="top"
+                android:textSize="15sp"
+                android:layout_weight="1"
+                android:hint="你的投稿经过段友审核才能发布哦!我们的目标是：专注内涵，拒绝黄反!可以矫情，不要煽情!警告：发布色情敏感内容会被封号处理。"
+                android:background="#FFF"
+                />
+        <ImageView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_publish_upload_icon"
+                />
 
-</RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="right"
+            >
+        <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text="还能输入"
+                />
+        <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text="0"
+                android:textColor="#000"
+                />
+        <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text="个子"
+                />
+
+    </LinearLayout>
+
+
+</LinearLayout>

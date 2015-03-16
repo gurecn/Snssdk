@@ -64,8 +64,8 @@ public class Utils {
 			int cWidth = Constant.DISPLAYMETRICS_WIDTH - 50;
 			float cHeight = (float) cWidth * bitmap.getHeight()/ bitmap.getWidth() ;
 			ViewGroup.LayoutParams params = imageView.getLayoutParams();
-			params.height = (int) cHeight;
-			params.width = cWidth;
+			params.height = bitmap.getHeight();
+			params.width = bitmap.getWidth();
 			imageView.setLayoutParams(params);
 			imageView.setImageBitmap(bitmap);
 
