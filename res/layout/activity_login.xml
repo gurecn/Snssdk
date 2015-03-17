@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              android:orientation = "vertical"
+              android:layout_width = "match_parent"
+              android:layout_height = "match_parent"
+              android:background="#FFF"
+        >
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:background="@drawable/ic_main_bg_top"
+            android:gravity="center"
+            >
+        <ImageView
+                android:id="@+id/author_ig_back"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft = "@dimen/activity_horizontal_margin"
+                android:paddingRight = "@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_back_normal"
+                />
+        <TextView
+                android:id="@+id/author_txt_name"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:text="登录"
+                />
+
+        <TextView
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                />
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            android:gravity="center"
+            >
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="30dp"
+                >
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_platform_weixin_normal"
+                    />
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_platform_qq_normal"
+                    />
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_platform_sina_normal"
+                    />
+
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="10dp"
+                >
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_platform_tencent_normal"
+                    />
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_platform_renren_normal"
+                    />
+            <ImageView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_platform_kaixin_normal"
+                    />
+
+        </LinearLayout>
+        <CheckBox
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text="我同意《内涵段子用户使用协议》"
+                android:textColor="#000"
+                />
+
+    </LinearLayout>
+
+</LinearLayout>

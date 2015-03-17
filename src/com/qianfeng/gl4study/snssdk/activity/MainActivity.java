@@ -370,6 +370,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			//TODO 判断用户是否登陆
 			if(Constant.SNSSDK_USER_ID == 0){
 				Toast.makeText(this,"用户未登录，请登录!",Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(this, LoginActivity.class);
+				startActivity(intent);
 			}else {
 				Intent intent = new Intent(this, PersonActivity.class);
 				intent.putExtra("userId",Constant.SNSSDK_USER_ID);
