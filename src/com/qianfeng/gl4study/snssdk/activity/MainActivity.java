@@ -118,6 +118,34 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	}
 
 	/**
+	 * 显示Activity时判断位置
+	 */
+	@Override
+	protected void onStart() {
+		super.onStart();
+		getPositionForList();
+
+	}
+
+	/**
+	 * 查询需要显示的位置
+	 */
+	private void getPositionForList(){
+		Log.d("onPullUpToRefresh","准备显示:"+Constant.MAIN_ACTIVITY_LIST_WORD_POSITION);
+		switch (category){
+			case Constant.TYPE_1_CATEGORY_ID_WORD_FLAG_SNSSDK:
+				listViewSnssdk.setSelection(Constant.MAIN_ACTIVITY_LIST_WORD_POSITION);
+				break;
+			case Constant.TYPE_1_CATEGORY_ID_IMAGE_FLAG_SNSSDK:
+				listViewSnssdk.setSelection(Constant.MAIN_ACTIVITY_LIST_IMAGE_POSITION);
+				break;
+			case Constant.TYPE_1_CATEGORY_ID_VIDEO_FLAG_SNSSDK:
+				listViewSnssdk.setSelection(Constant.MAIN_ACTIVITY_LIST_VIDEO_POSITION);
+				break;
+		}
+	}
+
+	/**
 	 * 初始化分类2的PopupWindow
 	 */
 	private void initPopupMenu() {
@@ -172,7 +200,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			minTime = sharedPreferences.getLong("minTimeWord", 0);
 		} else if (category == 2) {
 			minTime = sharedPreferences.getLong("minTimeImage", 0);
-		}else if (category == 3) {
+		}else if (category == 18) {
 			minTime = sharedPreferences.getLong("minTimeVideo", 0);
 		}
 		StringBuilder stringBuilder = new StringBuilder();
@@ -194,7 +222,20 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	 */
 	@Override
 	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+		switch (category){
+			case Constant.TYPE_1_CATEGORY_ID_WORD_FLAG_SNSSDK:
+				Constant.MAIN_ACTIVITY_LIST_WORD_POSITION = listViewSnssdk.getLastVisiblePosition();
+				break;
+			case Constant.TYPE_1_CATEGORY_ID_IMAGE_FLAG_SNSSDK:
+				Constant.MAIN_ACTIVITY_LIST_IMAGE_POSITION = listViewSnssdk.getLastVisiblePosition();
+				break;
+			case Constant.TYPE_1_CATEGORY_ID_VIDEO_FLAG_SNSSDK:
+				Constant.MAIN_ACTIVITY_LIST_VIDEO_POSITION = listViewSnssdk.getLastVisiblePosition();
+				break;
+
+		}
 		onPullUpToRefreshIml();
+		getPositionForList();
 	}
 
 	/**
@@ -269,12 +310,14 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			Toast.makeText(this, "find", Toast.LENGTH_LONG).show();
 		} else if (itemId == R.id.menu_examine) {
 			Toast.makeText(this, "examine", Toast.LENGTH_LONG).show();
-		} else {
+		}
+		/*
+		else {
 			snssdkTask = new SnssdkTask(this);
 			stringBuilder.append(categoryIdURL).append(category);//文本段子
 			snssdkTask.execute(stringBuilder.toString(), category + "");
 		}
-
+*/
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -350,7 +393,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 					SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
 							Constant.TYPE_1_CATEGORY_ID_VIDEO_FLAG_SNSSDK,level);
 			SingletonVideo.getInstance().addAllSnssdks(snssdks);
-			adapter = new SnssdkMainAdapter(context, snssdks);
 			adapter = new SnssdkMainAdapter(context, SingletonVideo.getSnssdks());
 			edit.putLong("minTimeVideo", minTime1);
 			edit.putLong("maxTimeVideo", maxTime1);
@@ -391,7 +433,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			refreshListView.setRefreshing(true);
 			imgCategory2.setImageResource(R.drawable.ic_main_down_arrow_titlebar);
 			onPullDownToRefreshIml();
-		}else {
+		}else {     //点击评论条
 			Object tag = v.getTag();
 			if (tag != null) {
 				Log.d("MainActivity", "onClick=============");
@@ -516,7 +558,17 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				startActivity(intent);
 				break;
 			case R.id.item_fragment_common://点击段子内容跳转到详情页面
-				skipToInfo(position);
+				//TODO 点击视频进行播放
+				if(category == 18){
+					VideoView videoView = (VideoView) v.findViewById(R.id.item_fragment_video);
+					if(videoView.isPlaying()){
+						videoView.pause();
+					}else {
+						videoView.start();
+					}
+				}else {
+					skipToInfo(position);
+				}
 				break;
 			case R.id.item_fragment_bar_good_ll://点击赞
 				if ((snssdk != null ? snssdk.getUser_repin() : 0) == 1) {
@@ -546,8 +598,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				adapter.notifyDataSetChanged();
 				Log.d("MainActivity", "item_fragment_bar_bad");
 				break;
-			case R.id.item_fragment_bar_hot_ll://点击评论，跳转到分享页面
-				adapter.notifyDataSetChanged();
+			case R.id.item_fragment_bar_hot_ll://点击评论，跳转到详情页面
+				skipToInfo(position);
 				break;
 			case R.id.item_fragment_bar_forward_ll://点击分享
 				showShare(this,snssdk.getContent());

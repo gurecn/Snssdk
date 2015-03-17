@@ -1,28 +1,26 @@
 package com.qianfeng.gl4study.snssdk.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+import android.widget.VideoView;
 
 /**
  * Created with IntelliJ IDEA.
  * I'm glad to share my knowledge with you all.
  * User:Gaolei
- * Date:2015/3/16
+ * Date:2015/3/17
  * Email:pdsfgl@live.com
  */
-public class FullDisplayImageView extends ImageView {
-	public FullDisplayImageView(Context context) {
+public class FullScreenVideoView extends VideoView {
+	public FullScreenVideoView(Context context) {
 		super(context);
 	}
 
-	public FullDisplayImageView(Context context, AttributeSet attrs) {
+	public FullScreenVideoView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public FullDisplayImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public FullScreenVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 	}
 
@@ -30,6 +28,10 @@ public class FullDisplayImageView extends ImageView {
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		int width = MeasureSpec.getSize(widthMeasureSpec);
 		int height = MeasureSpec.getSize(widthMeasureSpec);
+		//若未调用super，则必须调用setMeasuredDimension（）。
 		setMeasuredDimension(width,height);
+
+//
+//		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 }

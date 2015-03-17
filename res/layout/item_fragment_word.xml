@@ -55,14 +55,16 @@
                 android:id="@+id/item_fragment_image"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
-                android:scaleType="center"
+                android:scaleType="fitXY"
                 android:layout_gravity="center_horizontal"
+                android:visibility="invisible"
                 />
-       <!-- <VideoView
+        <com.qianfeng.gl4study.snssdk.view.FullScreenVideoView
                 android:id="@+id/item_fragment_video"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
-                />-->
+                android:visibility="gone"
+                />
     </LinearLayout>
     <!--评论条-->
     <LinearLayout

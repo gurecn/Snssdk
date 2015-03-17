@@ -82,7 +82,7 @@ public class SnssdkDatabasesManager {
 					null,
 					"category_type = ?AND level = ?",
 					new String[]{category + "", level + ""},
-					null, null, "group_id ASC"
+					null, null, "_id ASC"
 			);
 		}
 		if(query!=null){

@@ -1,14 +1,17 @@
 package com.qianfeng.gl4study.snssdk.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.qianfeng.gl4study.snssdk.R;
+import com.qianfeng.gl4study.snssdk.activity.AuthorActivity;
 import com.qianfeng.gl4study.snssdk.activity.PersonActivity;
 import com.qianfeng.gl4study.snssdk.activity.PublishDiscuss;
 import com.qianfeng.gl4study.snssdk.adapter.DiscussListAdapter;
@@ -65,6 +68,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		super.onStart();
 		displaySnssdk(snssdk);
 		displayDiscuss(snssdk);
+
 	}
 
 	@Override
@@ -116,7 +120,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 	private void displaySnssdk(Snssdk snssdk){
 
 		TextView itemWord = (TextView) view.findViewById(R.id.item_fragment_word);
-		//VideoView itemVideo = (VideoView) view.findViewById(R.id.item_fragment_video);
+		VideoView itemVideo = (VideoView) view.findViewById(R.id.item_fragment_video);
 		ImageView itemImage = (ImageView) view.findViewById(R.id.item_fragment_image);
 		ImageView itemIconUser = (ImageView) view.findViewById(R.id.item_fragment_user_icon);
 		TextView itemUserName = (TextView) view.findViewById(R.id.item_fragment_user_name);
@@ -131,18 +135,26 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 			if(null!=content) {
 				itemWord.setText(content);
 			}
-			itemImage.setVisibility(View.INVISIBLE);
+			//itemImage.setVisibility(View.INVISIBLE);
 		}else if(snssdkType == 2){
 			String content = snssdk.getContent();
 			if(null!=content) {
 				itemWord.setText(content);
 			}
+			itemImage.setVisibility(View.VISIBLE);
+			itemImage.setImageResource(R.drawable.loading_icon);
 			Utils.loaderImage(view.getWidth(),itemImage, snssdk.getInageContentURL());
-			//		itemVideo.setVisibility(View.GONE);
+			//itemVideo.setVisibility(View.GONE);
 		}
-		//TODO  添加视频信息
-		else if(snssdkType == 3){
-			//	itemVideo
+		else if(snssdkType == 18){
+			//itemImage.setVisibility(View.GONE);
+			//TODO 实际过程应该是视频下载完成，进行隐藏图片，播放视频的操作
+			itemVideo.setVisibility(View.VISIBLE);
+			String videoContentURL = snssdk.getVideoContentURL();
+			if(!TextUtils.isEmpty(videoContentURL)) {
+				itemVideo.setVideoURI(Uri.parse(videoContentURL));
+				itemVideo.start();
+			}
 		}
 
 		//控件获取点击监听
@@ -182,7 +194,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		int id = v.getId();
 		switch (id){
 		case R.id.item_fragment_bar_user_ll://点击用户
-			Intent intent = new Intent(getActivity(), PersonActivity.class);
+			Intent intent = new Intent(getActivity(), AuthorActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.item_fragment_bar_good_ll://点击顶

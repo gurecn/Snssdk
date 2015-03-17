@@ -39,5 +39,10 @@ public class Constant {
 
 	public static boolean ISFIRSTRUN = false;
 
+	//标记显示的位置
+	public static int MAIN_ACTIVITY_LIST_WORD_POSITION = 0;
+	public static int MAIN_ACTIVITY_LIST_IMAGE_POSITION = 0;
+	public static int MAIN_ACTIVITY_LIST_VIDEO_POSITION = 0;
+
 
 }

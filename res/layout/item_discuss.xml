@@ -23,7 +23,6 @@
             android:layout_toRightOf="@+id/ig_discuss_user_icon"
             android:layout_marginLeft="10dp"
             android:textSize="17sp"
-            android:text = "小张有内涵"
             />
 
     <TextView

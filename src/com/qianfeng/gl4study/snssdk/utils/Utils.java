@@ -61,11 +61,11 @@ public class Utils {
 	 */
 	public static void setImageToView(int width,ImageView imageView,Bitmap bitmap){
 		if(imageView!=null) {
-			int cWidth = Constant.DISPLAYMETRICS_WIDTH - 50;
+			int cWidth = Constant.DISPLAYMETRICS_WIDTH - 40;
 			float cHeight = (float) cWidth * bitmap.getHeight()/ bitmap.getWidth() ;
 			ViewGroup.LayoutParams params = imageView.getLayoutParams();
-			params.height = bitmap.getHeight();
-			params.width = bitmap.getWidth();
+			params.height =(int)cHeight;
+			params.width = cWidth;
 			imageView.setLayoutParams(params);
 			imageView.setImageBitmap(bitmap);
 

@@ -1,6 +1,8 @@
 package com.qianfeng.gl4study.snssdk.adapter;
 
 import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +72,7 @@ public class SnssdkMainAdapter extends BaseAdapter{
 			viewHolder = new ViewHolder();
 			viewHolder.itemWord = (TextView) view.findViewById(R.id.item_fragment_word);
 			viewHolder.itemImage = (ImageView) view.findViewById(R.id.item_fragment_image);
-			//viewHolder.itemVideo = (VideoView) view.findViewById(R.id.item_fragment_video);
+			viewHolder.itemVideo = (VideoView) view.findViewById(R.id.item_fragment_video);
 			viewHolder.txtGood = (TextView) view.findViewById(R.id.item_fragment_bar_good);
 			viewHolder.txtBad = (TextView) view.findViewById(R.id.item_fragment_bar_bad);
 			viewHolder.txtHot = (TextView) view.findViewById(R.id.item_fragment_bar_hot);
@@ -106,19 +108,27 @@ public class SnssdkMainAdapter extends BaseAdapter{
 		Snssdk snssdk = snssdks.get(position);
 
 		int snssdkType = snssdk.getCategory_type();
-		if(snssdkType == 2){    //图片类型段子
 
-			//占位图
-			viewHolder.itemImage.setImageResource(R.drawable.loading_icon);
-			String imageUrl = snssdk.getInageContentURL();
-			Utils.loaderImage(view.getWidth(),viewHolder.itemImage, imageUrl);
+		switch (snssdkType) {
+			case 2:                     //图片类型段子
+				//显示图片组件
+				viewHolder.itemImage.setVisibility(View.VISIBLE);
+				//占位图
+				viewHolder.itemImage.setImageResource(R.drawable.loading_icon);
+				String imageUrl = snssdk.getInageContentURL();
+				Utils.loaderImage(view.getWidth(), viewHolder.itemImage, imageUrl);
+				break;
+			case 18:                    //视频类型段子
+				//viewHolder.itemImage.setVisibility(View.GONE);
+				//TODO 实际过程应该是视频下载完成，进行隐藏图片，播放视频的操作
+				viewHolder.itemVideo.setVisibility(View.VISIBLE);
+				String videoContentURL = snssdk.getVideoContentURL();
+				if(!TextUtils.isEmpty(videoContentURL)) {
+					viewHolder.itemVideo.setVideoURI(Uri.parse(videoContentURL));
+				}
+				break;
 		}
-		//TODO 视频信息
-		/*
-		else if(snssdkType == 3){  //视频类型段子
 
-		}
-		*/
 		viewHolder.itemWord.setText(snssdk.getContent());
 		viewHolder.txtGood.setText(snssdk.getDigg_count()+"");
 		viewHolder.txtBad.setText(snssdk.getRepin_count()+"");
@@ -153,11 +163,11 @@ public class SnssdkMainAdapter extends BaseAdapter{
 	public static class ViewHolder {
 
 		private TextView itemWord;
-		private  ImageView itemImage;
-		//private final VideoView itemVideo;
-		private  TextView txtGood;
-		private  TextView txtBad;
-		private  TextView txtHot;
+		private ImageView itemImage;
+		private VideoView itemVideo;
+		private TextView txtGood;
+		private TextView txtBad;
+		private TextView txtHot;
 		private ImageView imgGood;
 		private ImageView imgBad;
 		private ImageView imgHot;

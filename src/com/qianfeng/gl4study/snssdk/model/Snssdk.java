@@ -18,8 +18,9 @@ import java.io.Serializable;
  */
 public class Snssdk implements Serializable{
 
-	private String inageContentURL;
-	private String content  ; 
+	private String videoContentURL;     //段子视频信息
+	private String inageContentURL;     //段子图片信息
+	private String content  ;           //段子内容
 	private long group_id  ;             //段子Id
 	private int category_type  ;  		//段子分类1
 	private int level  ;  					//段子分类2
@@ -44,7 +45,11 @@ public class Snssdk implements Serializable{
 	private int digg_count_comment  ;  		    //神评论赞
 	private int is_digg  ; 		                //本人是否赞
 	private String text  ; 	                    //神评论内容
-	
+
+	public String getVideoContentURL() {
+		return videoContentURL;
+	}
+
 	//有数据库得出需要的参数
 	 /*
 
@@ -289,7 +294,6 @@ public class Snssdk implements Serializable{
 				category_type = type;
 				level = group.getInt("level");
 
-				Log.d("parseInformation","level="+level);
 				has_comments = group.getInt("has_comments");
 				comment_count = group.getInt("comment_count");
 				repin_count = group.getInt("repin_count");
@@ -320,9 +324,11 @@ public class Snssdk implements Serializable{
 				}
 				if(type == 2){//获取图片信息
 					inageContentURL = group.getJSONObject("large_image").getJSONArray("url_list").getJSONObject(0).getString("url");
+				}else if(type == 18){
+					inageContentURL = group.getJSONObject("medium_cover").getJSONArray("url_list").getJSONObject(0).getString("url");
+					videoContentURL = group.getJSONObject("origin_video").getJSONArray("url_list").getJSONObject(0).getString("url");
+					Log.d("parseInformation","videoContentURL:"+videoContentURL);
 				}
-
-
 
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -341,6 +347,7 @@ public class Snssdk implements Serializable{
 
 		values.put("content",content);
 		values.put("large_image",inageContentURL);
+		values.put("origin_video",videoContentURL);
 		values.put("group_id",group_id);
 		values.put("category_type",category_type);
 		values.put("level",level);
@@ -467,6 +474,10 @@ public class Snssdk implements Serializable{
 		index = query.getColumnIndex("large_image");
 		if (index != -1) {
 			inageContentURL = query.getString(index);
+		}
+		index = query.getColumnIndex("origin_video");
+		if (index != -1) {
+			videoContentURL = query.getString(index);
 		}
 
 	}
