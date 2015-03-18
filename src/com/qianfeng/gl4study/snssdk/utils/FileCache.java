@@ -52,7 +52,7 @@ public class FileCache {
 			String state = Environment.getExternalStorageState();
 			if(Environment.MEDIA_MOUNTED.equals(state)){
 				File directory = Environment.getExternalStorageDirectory();
-				fileCacheDir = new File(directory,".youshare");
+				fileCacheDir = new File(directory,".snssdk");
 			}else {
 				throw new IllegalArgumentException("FileCache must set Context or devace has a SDCard");
 			}

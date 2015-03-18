@@ -561,9 +561,14 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				//TODO 点击视频进行播放
 				if(category == 18){
 					VideoView videoView = (VideoView) v.findViewById(R.id.item_fragment_video);
+					ImageView imageView = (ImageView) v.findViewById(R.id.item_fragment_image);
 					if(videoView.isPlaying()){
+						videoView.setVisibility(View.GONE);
+						imageView.setVisibility(View.VISIBLE);
 						videoView.pause();
 					}else {
+						imageView.setVisibility(View.GONE);
+						videoView.setVisibility(View.VISIBLE);
 						videoView.start();
 					}
 				}else {

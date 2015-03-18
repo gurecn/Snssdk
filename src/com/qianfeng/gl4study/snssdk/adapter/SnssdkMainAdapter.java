@@ -119,9 +119,15 @@ public class SnssdkMainAdapter extends BaseAdapter{
 				Utils.loaderImage(view.getWidth(), viewHolder.itemImage, imageUrl);
 				break;
 			case 18:                    //视频类型段子
+
+				viewHolder.itemImage.setVisibility(View.VISIBLE);
+				//占位图
+				viewHolder.itemImage.setImageResource(R.drawable.loading_icon);
+				imageUrl = snssdk.getInageContentURL();
+				Utils.loaderImage(view.getWidth(), viewHolder.itemImage, imageUrl);
 				//viewHolder.itemImage.setVisibility(View.GONE);
 				//TODO 实际过程应该是视频下载完成，进行隐藏图片，播放视频的操作
-				viewHolder.itemVideo.setVisibility(View.VISIBLE);
+				//viewHolder.itemVideo.setVisibility(View.VISIBLE);
 				String videoContentURL = snssdk.getVideoContentURL();
 				if(!TextUtils.isEmpty(videoContentURL)) {
 					viewHolder.itemVideo.setVideoURI(Uri.parse(videoContentURL));

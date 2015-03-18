@@ -52,18 +52,21 @@
                 android:layout_marginBottom="30dp"
                 >
             <ImageView
+                    android:id="@+id/iv_login_activity_weixin"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
                     android:layout_weight="1"
                     android:src="@drawable/ic_platform_weixin_normal"
                     />
             <ImageView
+                    android:id="@+id/iv_login_activity_qq"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
                     android:layout_weight="1"
                     android:src="@drawable/ic_platform_qq_normal"
                     />
             <ImageView
+                    android:id="@+id/iv_login_activity_sina"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
                     android:layout_weight="1"
@@ -78,18 +81,21 @@
                 android:layout_marginBottom="10dp"
                 >
             <ImageView
+                    android:id="@+id/iv_login_activity_tencent"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
                     android:layout_weight="1"
                     android:src="@drawable/ic_platform_tencent_normal"
                     />
             <ImageView
+                    android:id="@+id/iv_login_activity_renren"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
                     android:layout_weight="1"
                     android:src="@drawable/ic_platform_renren_normal"
                     />
             <ImageView
+                    android:id="@+id/iv_login_activity_kaixin"
                     android:layout_width = "wrap_content"
                     android:layout_height = "match_parent"
                     android:layout_weight="1"
@@ -98,6 +104,7 @@
 
         </LinearLayout>
         <CheckBox
+                android:id="@+id/cb_login_activity_protocol"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:text="我同意《内涵段子用户使用协议》"

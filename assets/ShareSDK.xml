@@ -59,9 +59,9 @@
     <SinaWeibo
         Id="1"
         SortId="3"
-        AppKey="568898243"
-        AppSecret="38a4f8204cc784f81f9f0daaf31e02e3"
-        RedirectUrl="http://www.sharesdk.cn"
+        AppKey="884958970"
+        AppSecret="3c96c51a7b0da961acbebcfc349b48eb"
+        RedirectUrl="https://api.weibo.com/oauth2/default.html"
         ShareByAppClient="true"
         Enable="true" />
 
