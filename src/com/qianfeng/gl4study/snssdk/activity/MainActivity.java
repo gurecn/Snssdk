@@ -8,7 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
@@ -60,6 +63,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private PopupWindow popupWindow;
 	private View viewPopupWindow;
 	private ImageView imgCategory2;
+	private ImageView rightbtn;
 
 
 	@Override
@@ -115,6 +119,12 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			listViewSnssdk.setAdapter(adapter);
 
 		}
+
+		//初始化悬浮按钮
+		initFloatView();
+		//显示悬浮框
+		createRightFloatView();
+		showFloatView();
 	}
 
 	/**
@@ -652,5 +662,124 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		itemVideo.setIcon(R.drawable.video_main_one);
 	}
 
+
+
+	//悬浮按钮实现
+
+	private WindowManager wm=null;
+	private WindowManager.LayoutParams wmParams=null;
+
+	private void initFloatView(){
+		//获取WindowManager
+		wm=(WindowManager)getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+		//设置LayoutParams(全局变量）相关参数
+		wmParams = new WindowManager.LayoutParams();
+
+		wmParams.type= WindowManager.LayoutParams.TYPE_PHONE;   //设置window type
+		wmParams.format= PixelFormat.RGBA_8888;   //设置图片格式，效果为背景透明
+		//设置Window flag
+		wmParams.flags= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+				| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+
+		//以屏幕右下角为原点，设置x、y初始值
+		wmParams.x=Constant.DISPLAYMETRICS_WIDTH;
+		wmParams.y=Constant.DISPLAYMETRICS_HEIGHT;
+		//设置悬浮窗口长宽数据
+		wmParams.width=50;
+		wmParams.height=50;
+	}
+
+	/**
+	 * 创建右边悬浮按钮
+	 */
+	private void createRightFloatView(){
+		rightbtn =new ImageView(this);
+		rightbtn.setImageResource(R.drawable.ic_launcher);
+		rightbtn.setAlpha(0);
+		rightbtn.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View arg0) {
+				Log.d("MainActivity","点击悬浮");
+				onPullDownToRefreshIml();
+			}
+		});
+		//调整悬浮窗口
+		//wmParams.gravity=Gravity.RIGHT|Gravity.BOTTOM;
+		wmParams.horizontalMargin = 15;
+		wmParams.verticalMargin = 15;
+		//显示myFloatView图像
+		wm.addView(rightbtn, wmParams);
+	}
+
+	// ImageView的alpha值
+	private int mAlpha = 0;
+	private boolean isHide;
+	/**
+	 * 图片渐变显示处理
+	 */
+	private Handler mHandler = new Handler()
+	{
+		public void handleMessage(Message msg) {
+			if(msg.what==1 && mAlpha<255){
+				//System.out.println("---"+mAlpha);
+				mAlpha += 50;
+				if(mAlpha>255)
+					mAlpha=255;
+				rightbtn.setAlpha(mAlpha);
+				rightbtn.invalidate();
+				if(!isHide && mAlpha<255)
+					mHandler.sendEmptyMessageDelayed(1, 100);
+			}else if(msg.what==0 && mAlpha>0){
+				//System.out.println("---"+mAlpha);
+				mAlpha -= 10;
+				if(mAlpha<0)
+					mAlpha=0;
+				rightbtn.setAlpha(mAlpha);
+				rightbtn.invalidate();
+				if(isHide && mAlpha>0)
+					mHandler.sendEmptyMessageDelayed(0, 100);
+			}
+		}
+	};
+	private void showFloatView(){
+		isHide = false;
+		mHandler.sendEmptyMessage(1);
+	}
+
+	private void hideFloatView(){
+		new Thread(){
+			public void run() {
+				try {
+					Thread.sleep(1500);
+					isHide = true;
+					mHandler.sendEmptyMessage(0);
+				} catch (Exception e) {
+					;
+				}
+			}
+		}.start();
+	}
+/*
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		switch (event.getAction()) {
+			case MotionEvent.ACTION_MOVE:
+			case MotionEvent.ACTION_DOWN:
+				//System.out.println("========ACTION_DOWN");
+				showFloatView();
+				break;
+			case MotionEvent.ACTION_UP:
+				//System.out.println("========ACTION_UP");
+				hideFloatView();
+				break;
+		}
+		return true;
+	}
+	*/
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		//在程序退出(Activity销毁）时销毁悬浮窗口
+		wm.removeView(rightbtn);
+	}
 
 }
