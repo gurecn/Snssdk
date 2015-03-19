@@ -67,6 +67,7 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 	@Override
 	public void onStart() {
 		super.onStart();
+		startPoint = 0;
 		displaySnssdk(snssdk);
 		displayDiscuss(snssdk);
 
@@ -289,6 +290,9 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 							Discuss discuss = new Discuss();
 							discuss.parseInformation(jsonObject);
 							dataTop.add(discuss);
+							if(dataFresh.size()>50){
+								dataFresh.removeFirst();
+							}
 						}
 						//最热评论数据添加完成，更新List
 						if (dataTop.size() == 0) {

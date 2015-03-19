@@ -690,13 +690,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		wmParams.format= PixelFormat.RGBA_8888;   //设置图片格式，效果为背景透明
 		//设置Window flag
 		wmParams.flags= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-
-		//以屏幕右下角为原点，设置x、y初始值
-		//wmParams.x=Constant.DISPLAYMETRICS_WIDTH-500;
-		//wmParams.y=Constant.DISPLAYMETRICS_HEIGHT-200;
-
-		//wmParams.gravity = Gravity.CENTER;
-		//设置悬浮窗口长宽数据
 		wmParams.width=100;
 		wmParams.height=100;
 	}
@@ -709,21 +702,11 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		rightbtn.setImageResource(R.drawable.wap_refresh_normal);
 		rightbtn.setAlpha(0);
 		rightbtn.setScaleType(ImageView.ScaleType.CENTER_CROP);
-		rightbtn.setPivotX(0.5f);
-		rightbtn.setPivotY(0.5f);
-		rightbtn.setRotation(45);
-
-
-
 		final Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_rotate);
-
-
 		rightbtn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
 				Log.d("MainActivity","点击悬浮");
 				showFloatView();
-//				MyAnimation.addRotateAnimation(getApplicationContext(),rightbtn);
-//				rightbtn.startAnimation(animation);
 				animation.startNow();
 				onPullDownToRefreshIml();
 
@@ -732,16 +715,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 		//调整悬浮窗口
 		wmParams.gravity=Gravity.RIGHT|Gravity.BOTTOM;
-//		wmParams.horizontalWeight = 1;
-//		wmParams.verticalWeight = 1;
-//		wmParams.horizontalMargin = 15;
-//		wmParams.verticalMargin = 15;
-		//显示myFloatView图像
 		wmParams.windowAnimations = R.anim.anim_move_up;
 		wm.addView(rightbtn, wmParams);
-
-
-
 		rightbtn.setAnimation(animation);
 	}
 
@@ -756,7 +731,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		public void handleMessage(Message msg) {
 
 			if(msg.what==1 && mAlpha<255){
-				//System.out.println("---"+mAlpha);
 				mAlpha += 50;
 				if(mAlpha>255)
 					mAlpha=255;
@@ -765,7 +739,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				if(!isHide && mAlpha<255)
 					mHandler.sendEmptyMessageDelayed(1, 100);
 			}else if(msg.what==0 && mAlpha>0){
-				//System.out.println("---"+mAlpha);
 				mAlpha -= 10;
 				if(mAlpha<0)
 					mAlpha=0;
@@ -791,7 +764,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 					isHide = true;
 					mHandler.sendEmptyMessage(0);
 				} catch (Exception e) {
-					;
 				}
 			}
 		}.start();
@@ -800,27 +772,9 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	@Override
 	protected void onStop() {
 		super.onStop();
-		//hideFloatView();
+		hideFloatView();
 
 	}
-
-	/*
-		@Override
-		public boolean onTouchEvent(MotionEvent event) {
-			switch (event.getAction()) {
-				case MotionEvent.ACTION_MOVE:
-				case MotionEvent.ACTION_DOWN:
-					//System.out.println("========ACTION_DOWN");
-					showFloatView();
-					break;
-				case MotionEvent.ACTION_UP:
-					//System.out.println("========ACTION_UP");
-					hideFloatView();
-					break;
-			}
-			return true;
-		}
-		*/
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
