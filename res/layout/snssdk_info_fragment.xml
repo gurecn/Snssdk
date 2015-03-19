@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<com.qianfeng.gl4study.snssdk.view.SnssdkInfoScrollView
         xmlns:android = "http://schemas.android.com/apk/res/android"
         android:id="@+id/snssdk_info_scroll_view"
         android:layout_width = "match_parent"
@@ -53,4 +53,4 @@
 
                 />
     </LinearLayout>
-</ScrollView>
+</com.qianfeng.gl4study.snssdk.view.SnssdkInfoScrollView>

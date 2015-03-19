@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import com.qianfeng.gl4study.snssdk.R;
 import com.qianfeng.gl4study.snssdk.activity.AuthorActivity;
@@ -23,6 +21,7 @@ import com.qianfeng.gl4study.snssdk.tasks.SnssdkTask;
 import com.qianfeng.gl4study.snssdk.tasks.TaskProcessor;
 import com.qianfeng.gl4study.snssdk.utils.Utils;
 import com.qianfeng.gl4study.snssdk.view.MyListView;
+import com.qianfeng.gl4study.snssdk.view.SnssdkInfoScrollView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +38,7 @@ import java.util.LinkedList;
  * Date:2015/3/11
  * Email:pdsfgl@live.com
  */
-public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.OnClickListener {
+public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.OnClickListener, SnssdkInfoScrollView.ScrollBottomListener {
 
 	private LinkedList<Discuss> dataFresh;
 	private LinkedList<Discuss> dataTop;
@@ -58,6 +57,8 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 	private TextView txtGood;
 	private TextView txtBad;
 	private TextView txtHot;
+	private int startPoint = 0;
+	private int currentPoint = 0;
 
 
 	/**
@@ -82,8 +83,9 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		recyclerViewFresh = (MyListView) view.findViewById(R.id.list_view_fresh_discuss);
 		freshDiscussCount = (TextView) view.findViewById(R.id.txt_fresscuss);
 		hotDiscussCount = (TextView) view.findViewById(R.id.txt_hot_discuss);
-		ScrollView discussScrollView = (ScrollView)view.findViewById(R.id.snssdk_info_scroll_view);
+		SnssdkInfoScrollView discussScrollView = (SnssdkInfoScrollView)view.findViewById(R.id.snssdk_info_scroll_view);
 		discussScrollView.scrollTo(0,0);
+		discussScrollView.setScrollBottomListener(this);
 		if(null!=serializable&&serializable instanceof Snssdk){
 			snssdk = (Snssdk)serializable;
 		}
@@ -96,16 +98,8 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 	 * @param snssdk 段子
 	 */
 	private void displayDiscuss(Snssdk snssdk){
-		discussTask = new SnssdkTask(this);
-		//主连接，段子Id，异步类型标记，返回评论数量，返回评论起点
 
-		StringBuilder stringBuilder = new StringBuilder();
-		String groupId="group_id="+snssdk.getGroup_id();
-		String count="&count=10";		//返回的新鲜评论数量
-		String offset="&offset=0";    //返回的新鲜评论的起点
-		stringBuilder.append(Constant.DISCUSS_CONTENT_LIST_URL).append(groupId).append(count).append(offset);
-
-		discussTask.execute(stringBuilder.toString(),"1");
+		downLoaderDiscuss();
 		adapterHot = new DiscussListAdapter(getActivity(), dataTop);
 		adapterFresh = new DiscussListAdapter(getActivity(),dataFresh );
 		recyclerViewHot.setAdapter(adapterHot);
@@ -113,6 +107,19 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		Log.d("SnssdkInfoActivity", "displayDiscuss");
 	}
 
+	/**
+	 * 获取评论
+	 */
+	private void downLoaderDiscuss(){
+		discussTask = new SnssdkTask(this);
+		//主连接，段子Id，异步类型标记，返回评论数量，返回评论起点
+		StringBuilder stringBuilder = new StringBuilder();
+		String groupId="group_id="+snssdk.getGroup_id();
+		String count="&count=10";		//返回的新鲜评论数量
+		String offset="&offset=" + startPoint;    //返回的新鲜评论的起点
+		stringBuilder.append(Constant.DISCUSS_CONTENT_LIST_URL).append(groupId).append(count).append(offset);
+		discussTask.execute(stringBuilder.toString(),"1");
+	}
 	/**
 	 * 显示段子信息
 	 * @param snssdk    段子
@@ -266,34 +273,39 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 				if("success".equals(resultFlag)){
 					JSONObject dataObject = result.getJSONObject("data");
 					int tip = result.getInt("total_number");
-					JSONArray dataJSONArray = dataObject.getJSONArray("top_comments");
 					int type = Integer.parseInt(flag);
-					for (int i = 0; i < dataJSONArray.length(); i++) {
-						JSONObject jsonObject = dataJSONArray.getJSONObject(i);
-						Discuss discuss = new Discuss();
-						discuss.parseInformation(jsonObject);
-						dataTop.add(discuss);
-					}
-					//最热评论数据添加完成，更新List
-					if(dataTop.size()==0){
-						hotDiscussCount.setVisibility(View.INVISIBLE);
-					}else {
-						hotDiscussCount.setText("热门评论(" + dataTop.size() + ")");
-					}
-					adapterHot.notifyDataSetChanged();
-					dataJSONArray = dataObject.getJSONArray("recent_comments");
+
+					JSONArray dataJSONArray = dataObject.getJSONArray("recent_comments");
 					for (int i = 0; i < dataJSONArray.length(); i++) {
 						JSONObject jsonObject = dataJSONArray.getJSONObject(i);
 						Discuss discuss = new Discuss();
 						discuss.parseInformation(jsonObject);
 						dataFresh.add(discuss);
 					}
+					if(startPoint == 0) {
+						dataJSONArray = dataObject.getJSONArray("top_comments");
+						for (int i = 0; i < dataJSONArray.length(); i++) {
+							JSONObject jsonObject = dataJSONArray.getJSONObject(i);
+							Discuss discuss = new Discuss();
+							discuss.parseInformation(jsonObject);
+							dataTop.add(discuss);
+						}
+						//最热评论数据添加完成，更新List
+						if (dataTop.size() == 0) {
+							hotDiscussCount.setVisibility(View.INVISIBLE);
+						} else {
+							hotDiscussCount.setText("热门评论(" + dataTop.size() + ")");
+						}
+						adapterHot.notifyDataSetChanged();
+					}
 					//最新评论数据添加完成，更新List
 					if (tip == 0) {
 						freshDiscussCount.setVisibility(View.INVISIBLE);
 					}else {
 						freshDiscussCount.setText("新鲜评论("+tip+")");
+						startPoint = dataFresh.size();
 					}
+					Log.d("SnssdkInfoActivity","新鲜："+dataFresh.size()+"热门:"+dataTop.size());
 					adapterFresh.notifyDataSetChanged();
 				}
 			} catch (JSONException e) {
@@ -302,6 +314,8 @@ public class SnssdkInfoFragment extends Fragment implements TaskProcessor, View.
 		}
 	}
 
-
-
+	@Override
+	public void scrollBottom() {
+		downLoaderDiscuss();
+	}
 }

@@ -15,6 +15,8 @@ import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.*;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -70,7 +72,11 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		doPullToRefreshList();
+		//初始化悬浮按钮
+		initFloatView();
+		//显示悬浮框
+		createRightFloatView();
+		showFloatView();
 		//设置隐藏ActionBar隐藏标题，图标，上界面的title栏
 		ActionBar actionBar = getActionBar();
 		if(actionBar!=null) {
@@ -95,6 +101,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				}
 		});
 
+		doPullToRefreshList();
+
 		//获取手机的宽高
 		DisplayMetrics metric = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -102,6 +110,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		Constant.DISPLAYMETRICS_HEIGHT = metric.heightPixels;   // 屏幕高度（像素）
 		float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
 		int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
+
+
 
 		//投稿图标
 		ImageView topContribute = (ImageView) findViewById(R.id.ib_push_contribute);
@@ -120,11 +130,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 		}
 
-		//初始化悬浮按钮
-		initFloatView();
-		//显示悬浮框
-		createRightFloatView();
-		showFloatView();
 	}
 
 	/**
@@ -204,6 +209,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	 * 下拉刷新的实现
 	 */
 	private void onPullDownToRefreshIml(){
+
 		//从文件中读取数据
 		SharedPreferences sharedPreferences  = getSharedPreferences("config", MODE_PRIVATE);
 		if (category == 1) {
@@ -224,6 +230,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		Log.d("parseInformation", "使用minTime1===" + minTime);
 		snssdkTask.execute(stringBuilder.toString(), category + "");
 		Log.d("onPullDownToRefresh",stringBuilder.toString());
+		refreshListView.setRefreshing(true);
 	}
 
 	/**
@@ -439,7 +446,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				id == R.id.popup_main_ll_new_4
 				) {
 			onClickPopupWindow(v);
-			popupWindow.dismiss();
+		//	popupWindow.dismiss();
 			refreshListView.setRefreshing(true);
 			imgCategory2.setImageResource(R.drawable.ic_main_down_arrow_titlebar);
 			onPullDownToRefreshIml();
@@ -520,31 +527,35 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 		switch (level) {
 			case Constant.TYPE_2_CATEGORY_ID_RECOEND_FLAG_SNSSDK:
-				popupImage1 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_1);
-				popupText1 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_1);
+				//popupImage1 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_1);
+				//popupText1 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_1);
 				popupImage1.setImageResource(R.drawable.ic_title_favor_pressed);
 				popupText1.setTextColor(Color.RED);
 				break;
 
 			case Constant.TYPE_2_CATEGORY_ID_ESSENCE_FLAG_SNSSDK:
-				popupImage2 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_2);
-				popupText2 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_2);
+				//popupImage2 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_2);
+				//popupText2 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_2);
 				popupImage2.setImageResource(R.drawable.ic_title_best_pressed);
 				popupText2.setTextColor(Color.RED);
 				break;
 			case Constant.TYPE_2_CATEGORY_ID_HOT_FLAG_SNSSDK:
-				popupImage3 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_3);
-				popupText3 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_3);
+				//popupImage3 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_3);
+				//popupText3 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_3);
 				popupImage3.setImageResource(R.drawable.ic_title_hot_pressed);
 				popupText3.setTextColor(Color.RED);
 				break;
 			case Constant.TYPE_2_CATEGORY_ID_FRESH_FLAG_SNSSDK:
-				popupImage4 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_4);
-				popupImage4.setImageResource(R.drawable.ic_title_new_pressed);
+				//popupImage4 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_4);
+				//popupImage4.setImageResource(R.drawable.ic_title_new_pressed);
 				popupText4 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_4);
 				popupText4.setTextColor(Color.RED);
 				break;
 		}
+		MyAnimation.addRotateAnimation(this,popupImage1);
+		MyAnimation.addRotateAnimation(this,popupImage2);
+		MyAnimation.addRotateAnimation(this,popupImage3);
+		MyAnimation.addRotateAnimation(this,popupImage4);
 	}
 
 	/**
@@ -678,15 +689,16 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		wmParams.type= WindowManager.LayoutParams.TYPE_PHONE;   //设置window type
 		wmParams.format= PixelFormat.RGBA_8888;   //设置图片格式，效果为背景透明
 		//设置Window flag
-		wmParams.flags= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-				| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+		wmParams.flags= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 
 		//以屏幕右下角为原点，设置x、y初始值
-		wmParams.x=Constant.DISPLAYMETRICS_WIDTH;
-		wmParams.y=Constant.DISPLAYMETRICS_HEIGHT;
+		//wmParams.x=Constant.DISPLAYMETRICS_WIDTH-500;
+		//wmParams.y=Constant.DISPLAYMETRICS_HEIGHT-200;
+
+		//wmParams.gravity = Gravity.CENTER;
 		//设置悬浮窗口长宽数据
-		wmParams.width=50;
-		wmParams.height=50;
+		wmParams.width=100;
+		wmParams.height=100;
 	}
 
 	/**
@@ -694,20 +706,43 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	 */
 	private void createRightFloatView(){
 		rightbtn =new ImageView(this);
-		rightbtn.setImageResource(R.drawable.ic_launcher);
+		rightbtn.setImageResource(R.drawable.wap_refresh_normal);
 		rightbtn.setAlpha(0);
+		rightbtn.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		rightbtn.setPivotX(0.5f);
+		rightbtn.setPivotY(0.5f);
+		rightbtn.setRotation(45);
+
+
+
+		final Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_rotate);
+
+
 		rightbtn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
 				Log.d("MainActivity","点击悬浮");
+				showFloatView();
+//				MyAnimation.addRotateAnimation(getApplicationContext(),rightbtn);
+//				rightbtn.startAnimation(animation);
+				animation.startNow();
 				onPullDownToRefreshIml();
+
 			}
 		});
+
 		//调整悬浮窗口
-		//wmParams.gravity=Gravity.RIGHT|Gravity.BOTTOM;
-		wmParams.horizontalMargin = 15;
-		wmParams.verticalMargin = 15;
+		wmParams.gravity=Gravity.RIGHT|Gravity.BOTTOM;
+//		wmParams.horizontalWeight = 1;
+//		wmParams.verticalWeight = 1;
+//		wmParams.horizontalMargin = 15;
+//		wmParams.verticalMargin = 15;
 		//显示myFloatView图像
+		wmParams.windowAnimations = R.anim.anim_move_up;
 		wm.addView(rightbtn, wmParams);
+
+
+
+		rightbtn.setAnimation(animation);
 	}
 
 	// ImageView的alpha值
@@ -719,6 +754,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private Handler mHandler = new Handler()
 	{
 		public void handleMessage(Message msg) {
+
 			if(msg.what==1 && mAlpha<255){
 				//System.out.println("---"+mAlpha);
 				mAlpha += 50;
@@ -735,9 +771,11 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 					mAlpha=0;
 				rightbtn.setAlpha(mAlpha);
 				rightbtn.invalidate();
+				//rightbtn.setClickable(false);
 				if(isHide && mAlpha>0)
 					mHandler.sendEmptyMessageDelayed(0, 100);
 			}
+
 		}
 	};
 	private void showFloatView(){
@@ -758,23 +796,31 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			}
 		}.start();
 	}
-/*
+
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_MOVE:
-			case MotionEvent.ACTION_DOWN:
-				//System.out.println("========ACTION_DOWN");
-				showFloatView();
-				break;
-			case MotionEvent.ACTION_UP:
-				//System.out.println("========ACTION_UP");
-				hideFloatView();
-				break;
-		}
-		return true;
+	protected void onStop() {
+		super.onStop();
+		//hideFloatView();
+
 	}
-	*/
+
+	/*
+		@Override
+		public boolean onTouchEvent(MotionEvent event) {
+			switch (event.getAction()) {
+				case MotionEvent.ACTION_MOVE:
+				case MotionEvent.ACTION_DOWN:
+					//System.out.println("========ACTION_DOWN");
+					showFloatView();
+					break;
+				case MotionEvent.ACTION_UP:
+					//System.out.println("========ACTION_UP");
+					hideFloatView();
+					break;
+			}
+			return true;
+		}
+		*/
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
