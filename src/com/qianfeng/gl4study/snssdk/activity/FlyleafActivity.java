@@ -43,7 +43,7 @@ import java.util.LinkedList;
  * Date:2015/3/12
  * Email:pdsfgl@live.com
  */
-public class FlyleafActivity extends Activity implements TaskProcessor, View.OnClickListener {
+public class FlyleafActivity extends Activity implements TaskProcessor, View.OnClickListener,Runnable {
 
 	private String levelURL = "level=";
 	private String categoryIdURL = "&category_id=";
@@ -55,6 +55,7 @@ public class FlyleafActivity extends Activity implements TaskProcessor, View.OnC
 	private int count = 20;
 	private long minTime = 0;
 	private boolean isFirstRun;
+	private boolean isStopping;
 	private AlertDialog dialog;
 
 	@Override
@@ -69,23 +70,6 @@ public class FlyleafActivity extends Activity implements TaskProcessor, View.OnC
 			actionBar.setDisplayShowHomeEnabled(false);
 			actionBar.hide();
 		}
-
-		if(getAPNType(this) == -1){//无网络连接
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			LayoutInflater inflater = LayoutInflater.from(this);
-			View view = inflater.inflate(R.layout.item_dialog_menu,null);
-			ImageView wifiImage = (ImageView) view.findViewById(R.id.ig_dialog_wifi);
-			ImageView netImage = (ImageView) view.findViewById(R.id.ig_dialog_net);
-			Button offButton = (Button) view.findViewById(R.id.btn_dialog_off);
-			wifiImage.setOnClickListener(this);
-			netImage.setOnClickListener(this);
-			offButton.setOnClickListener(this);
-			Log.d("onCreate","无网络");
-			builder.setTitle("提示：").setView(view);
-			dialog = builder.create();
-			dialog.show();
-		}
-		getNewDataFromntent();
 		interTutorial();
 	}
 
@@ -106,15 +90,25 @@ public class FlyleafActivity extends Activity implements TaskProcessor, View.OnC
 			startActivity(intent);
 			FlyleafActivity.this.finish();
 		}else {
-			//等待5秒进入主界面
-			new Handler().postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					Intent intent = new Intent(FlyleafActivity.this, MainActivity.class);
-					startActivity(intent);
-					FlyleafActivity.this.finish();
-				}
-			}, 4000);
+
+			//等待对话框被点击的子线程
+			new Thread(this).start();
+
+			if(getAPNType(this) == -1){//无网络连接
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				LayoutInflater inflater = LayoutInflater.from(this);
+				View view = inflater.inflate(R.layout.item_dialog_menu,null);
+				ImageView wifiImage = (ImageView) view.findViewById(R.id.ig_dialog_wifi);
+				ImageView netImage = (ImageView) view.findViewById(R.id.ig_dialog_net);
+				Button offButton = (Button) view.findViewById(R.id.btn_dialog_off);
+				wifiImage.setOnClickListener(this);
+				netImage.setOnClickListener(this);
+				offButton.setOnClickListener(this);
+				Log.d("onCreate","无网络");
+				builder.setTitle("提示：").setView(view);
+				dialog = builder.create();
+				dialog.show();
+			}
 		}
 	}
 	@Override
@@ -124,23 +118,22 @@ public class FlyleafActivity extends Activity implements TaskProcessor, View.OnC
 			case R.id.ig_dialog_wifi:
 				((ImageView)v).setImageResource(R.drawable.ic_dialog_wifi_on);
 				setStateWIFI();
+				dialog.dismiss();
+				isStopping = true;
+				getNewDataFromntent();
 				break;
 			case R.id.ig_dialog_net:
 				((ImageView)v).setImageResource(R.drawable.ic_dialog_net_on);
 				setMobileDataStatus(this,true);
+				dialog.dismiss();
+				isStopping = true;
+				getNewDataFromntent();
 				break;
 			case R.id.btn_dialog_off:
+				dialog.dismiss();
+				isStopping = true;
 				break;
 		}
-
-		//休息3秒，消失对话框
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-			}
-		}, 3000);
-		dialog.dismiss();
-
 	}
 
 
@@ -310,4 +303,28 @@ public class FlyleafActivity extends Activity implements TaskProcessor, View.OnC
 		return netType;
 	}
 
+	@Override
+	public void run() {
+
+		//循环等待对话框的点击事件
+		do{
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}while (!isStopping);
+
+		//等待5秒调节网络事件使网络通常进入主界面
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		Intent intent = new Intent(FlyleafActivity.this, MainActivity.class);
+		startActivity(intent);
+		FlyleafActivity.this.finish();
+
+	}
 }
