@@ -102,11 +102,15 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				}
 		});
 
+		//获取手机屏幕信息
 		getDeviceInfo();
 		doPullToRefreshList();
 		//投稿图标
 		ImageView topContribute = (ImageView) findViewById(R.id.ib_push_contribute);
 		topContribute.setOnClickListener(this);
+		//显示以前的信息
+		adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
+		listViewSnssdk.setAdapter(adapter);
 	}
 
 	private void getDeviceInfo(){
@@ -125,12 +129,23 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	@Override
 	protected void onStart() {
 		super.onStart();
+		if(SingletonWord.getSnssdks().size()==0) {
+			SingletonWord.getInstance().addAllSnssdks(
+					SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
+							category,
+							level));
+		}
+		//TODO 待做
+		if(SingletonWord.getSnssdks().size()==0) {
+			onPullDownToRefreshIml();
+			adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
+			listViewSnssdk.setAdapter(adapter);
+		}
 		getPositionForList();
-
 	}
 
 	/**
-	 * 查询需要显示的位置
+	 * 显示需要显示的位置
 	 */
 	private void getPositionForList(){
 		Log.d("onPullUpToRefresh","准备显示:"+Constant.MAIN_ACTIVITY_LIST_WORD_POSITION);
@@ -291,6 +306,9 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				onClickImageButton();
 				item.setIcon(R.drawable.document_main_full);
 				category = Constant.TYPE_1_CATEGORY_ID_WORD_FLAG_SNSSDK;
+				SingletonWord.getInstance().removeAll();
+				SingletonWord.getInstance().addAllSnssdks(SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
+						Constant.TYPE_1_CATEGORY_ID_WORD_FLAG_SNSSDK,level));
 				adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
 				listViewSnssdk.setAdapter(adapter);
 				break;
@@ -298,6 +316,9 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				onClickImageButton();
 				item.setIcon(R.drawable.camera_main_full);
 				category = Constant.TYPE_1_CATEGORY_ID_IMAGE_FLAG_SNSSDK;
+				SingletonImage.getInstance().removeAll();
+				SingletonImage.getInstance().addAllSnssdks(SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
+						Constant.TYPE_1_CATEGORY_ID_IMAGE_FLAG_SNSSDK,level));
 				adapter = new SnssdkMainAdapter(this, SingletonImage.getSnssdks());
 				listViewSnssdk.setAdapter(adapter);
 				break;
@@ -305,6 +326,9 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				onClickImageButton();
 				item.setIcon(R.drawable.video_main_full);
 				category = Constant.TYPE_1_CATEGORY_ID_VIDEO_FLAG_SNSSDK;
+				SingletonVideo.getInstance().removeAll();
+				SingletonVideo.getInstance().addAllSnssdks(SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
+						Constant.TYPE_1_CATEGORY_ID_VIDEO_FLAG_SNSSDK,level));
 				adapter = new SnssdkMainAdapter(this, SingletonVideo.getSnssdks());
 				listViewSnssdk.setAdapter(adapter);
 				break;
@@ -315,13 +339,12 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 		} else if (itemId == R.id.menu_examine) {
 			Toast.makeText(this, "examine", Toast.LENGTH_LONG).show();
 		}
-		/*
-		else {
+
+/*		else {
 			snssdkTask = new SnssdkTask(this);
 			stringBuilder.append(categoryIdURL).append(category);//文本段子
 			snssdkTask.execute(stringBuilder.toString(), category + "");
-		}
-*/
+		}*/
 		return super.onOptionsItemSelected(item);
 	}
 
