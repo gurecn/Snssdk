@@ -108,6 +108,8 @@ public class FlyleafActivity extends Activity implements TaskProcessor, View.OnC
 				builder.setTitle("提示：").setView(view);
 				dialog = builder.create();
 				dialog.show();
+			}else {
+				isStopping = true;
 			}
 		}
 	}

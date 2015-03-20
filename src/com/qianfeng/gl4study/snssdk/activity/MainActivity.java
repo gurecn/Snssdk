@@ -457,7 +457,8 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				) {
 			onClickPopupWindow(v);
 			popupWindow.dismiss();
-			refreshListView.setRefreshing(true);
+			//refreshListView.setRefreshing(true);
+			refreshListView.setRefreshing();
 			imgCategory2.setImageResource(R.drawable.ic_main_down_arrow_titlebar);
 			onPullDownToRefreshIml();
 		}else {     //点击评论条

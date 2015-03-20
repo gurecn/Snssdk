@@ -5,16 +5,17 @@
               android:layout_height = "wrap_content"
               android:layout_margin="30dp"
               android:layout_gravity="center"
-              android:background="#FFF"
+              android:background="@drawable/ic_dialog_bg"
         >
 
     <TextView
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:text="请开启您的网络连接"
-            android:textSize="25sp"
+            android:textSize="20sp"
             />
     <LinearLayout
             android:layout_marginTop="20dp"
