@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import com.qianfeng.gl4study.snssdk.R;
+import com.qianfeng.gl4study.snssdk.adapter.SnssdkMainAdapter;
+import com.qianfeng.gl4study.snssdk.constant.Constant;
+import com.qianfeng.gl4study.snssdk.databases.SnssdkDatabasesManager;
+import com.qianfeng.gl4study.snssdk.model.SingletonWord;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,10 +51,31 @@ public class FlyleafActivity extends Activity{
 					FlyleafActivity.this.finish();
 				}
 			}, 3000);
+
+			Intent intent = new Intent(FlyleafActivity.this, TutorialActivity.class);
+			startActivity(intent);
 		}else {
 			Intent intent = new Intent(FlyleafActivity.this, MainActivity.class);
 			startActivity(intent);
-			FlyleafActivity.this.finish();
 		}
+		FlyleafActivity.this.finish();
 	}
+
+	/*
+	private void initSnssdkInfo(){
+		SingletonWord.getInstance().addAllSnssdks(
+				SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
+						Constant.TYPE_1_CATEGORY_ID_WORD_FLAG_SNSSDK,
+						Constant.TYPE_2_CATEGORY_ID_RECOEND_FLAG_SNSSDK));
+		if(SingletonWord.getSnssdks().size()==0) {
+
+			onPullDownToRefreshIml();
+		}else {
+			adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
+			listViewSnssdk.setAdapter(adapter);
+
+		}
+
+	}
+	*/
 }

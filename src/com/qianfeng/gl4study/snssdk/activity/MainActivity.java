@@ -85,6 +85,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 			actionBar.hide();
 		}
 
+
 		//自定义标题栏的组件获取
 		// 用户头像
 		ImageView topUser = (ImageView) findViewById(R.id.ib_user_icon);
@@ -101,34 +102,20 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				}
 		});
 
+		getDeviceInfo();
 		doPullToRefreshList();
+		//投稿图标
+		ImageView topContribute = (ImageView) findViewById(R.id.ib_push_contribute);
+		topContribute.setOnClickListener(this);
+	}
 
+	private void getDeviceInfo(){
 		//获取手机的宽高
 		DisplayMetrics metric = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metric);
 		Constant.DISPLAYMETRICS_WIDTH = metric.widthPixels;     // 屏幕宽度（像素）
 		Constant.DISPLAYMETRICS_HEIGHT = metric.heightPixels;   // 屏幕高度（像素）
-		float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
-		int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
 
-
-
-		//投稿图标
-		ImageView topContribute = (ImageView) findViewById(R.id.ib_push_contribute);
-		topContribute.setOnClickListener(this);
-
-		SingletonWord.getInstance().addAllSnssdks(
-				SnssdkDatabasesManager.createInstance(this).getSnssdkCollect(
-				Constant.TYPE_1_CATEGORY_ID_WORD_FLAG_SNSSDK,
-				Constant.TYPE_2_CATEGORY_ID_RECOEND_FLAG_SNSSDK));
-		if(SingletonWord.getSnssdks().size()==0) {
-
-			onPullDownToRefreshIml();
-		}else {
-			adapter = new SnssdkMainAdapter(this, SingletonWord.getSnssdks());
-			listViewSnssdk.setAdapter(adapter);
-
-		}
 
 	}
 
@@ -446,7 +433,7 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 				id == R.id.popup_main_ll_new_4
 				) {
 			onClickPopupWindow(v);
-		//	popupWindow.dismiss();
+			popupWindow.dismiss();
 			refreshListView.setRefreshing(true);
 			imgCategory2.setImageResource(R.drawable.ic_main_down_arrow_titlebar);
 			onPullDownToRefreshIml();
@@ -527,35 +514,31 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 
 		switch (level) {
 			case Constant.TYPE_2_CATEGORY_ID_RECOEND_FLAG_SNSSDK:
-				//popupImage1 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_1);
-				//popupText1 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_1);
+				popupImage1 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_1);
+				popupText1 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_1);
 				popupImage1.setImageResource(R.drawable.ic_title_favor_pressed);
 				popupText1.setTextColor(Color.RED);
 				break;
 
 			case Constant.TYPE_2_CATEGORY_ID_ESSENCE_FLAG_SNSSDK:
-				//popupImage2 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_2);
-				//popupText2 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_2);
+				popupImage2 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_2);
+				popupText2 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_2);
 				popupImage2.setImageResource(R.drawable.ic_title_best_pressed);
 				popupText2.setTextColor(Color.RED);
 				break;
 			case Constant.TYPE_2_CATEGORY_ID_HOT_FLAG_SNSSDK:
-				//popupImage3 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_3);
-				//popupText3 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_3);
+				popupImage3 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_3);
+				popupText3 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_3);
 				popupImage3.setImageResource(R.drawable.ic_title_hot_pressed);
 				popupText3.setTextColor(Color.RED);
 				break;
 			case Constant.TYPE_2_CATEGORY_ID_FRESH_FLAG_SNSSDK:
-				//popupImage4 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_4);
-				//popupImage4.setImageResource(R.drawable.ic_title_new_pressed);
+				popupImage4 = (ImageView) viewPopupWindow.findViewById(R.id.ig_item_popup_main_4);
+				popupImage4.setImageResource(R.drawable.ic_title_new_pressed);
 				popupText4 = (TextView) viewPopupWindow.findViewById(R.id.txt_item_popup_main_4);
 				popupText4.setTextColor(Color.RED);
 				break;
 		}
-		MyAnimation.addRotateAnimation(this,popupImage1);
-		MyAnimation.addRotateAnimation(this,popupImage2);
-		MyAnimation.addRotateAnimation(this,popupImage3);
-		MyAnimation.addRotateAnimation(this,popupImage4);
 	}
 
 	/**
@@ -729,7 +712,6 @@ public class MainActivity extends Activity implements TaskProcessor, View.OnClic
 	private Handler mHandler = new Handler()
 	{
 		public void handleMessage(Message msg) {
-
 			if(msg.what==1 && mAlpha<255){
 				mAlpha += 50;
 				if(mAlpha>255)
