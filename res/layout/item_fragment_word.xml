@@ -51,13 +51,13 @@
                 android:textColor="#000"
                 android:text="段子"
                 />
-        <ImageView
+        <com.qianfeng.gl4study.snssdk.view.FullDisplayImageView
                 android:id="@+id/item_fragment_image"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
                 android:scaleType="fitXY"
                 android:layout_gravity="center_horizontal"
-                android:visibility="invisible"
+                android:visibility="gone"
                 />
         <com.qianfeng.gl4study.snssdk.view.FullScreenVideoView
                 android:id="@+id/item_fragment_video"
